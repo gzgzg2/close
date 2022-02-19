@@ -1,18 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-02-16T22:38:54+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">개발자 람람이네</title><subtitle>람람이네 집에 오신 걸 환영합니다</subtitle><author><name>람람이</name></author><entry><title type="html">[ramram] SpringBoot - Redis Client 적용기</title><link href="http://localhost:4000/springboot/spring-boot-redis/" rel="alternate" type="text/html" title="[ramram] SpringBoot - Redis Client 적용기" /><published>2022-02-16T00:00:00+09:00</published><updated>2022-02-16T00:00:00+09:00</updated><id>http://localhost:4000/springboot/spring-boot-redis</id><content type="html" xml:base="http://localhost:4000/springboot/spring-boot-redis/"><![CDATA[<h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-02-19T11:46:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">개발자 람람이네</title><subtitle>람람이네 집에 오신 걸 환영합니다</subtitle><author><name>람람이</name></author><entry><title type="html">[ramram] SpringBoot - Redis Client 적용기</title><link href="http://localhost:4000/springboot/spring-boot-redis/" rel="alternate" type="text/html" title="[ramram] SpringBoot - Redis Client 적용기" /><published>2022-02-16T00:00:00+09:00</published><updated>2022-02-16T00:00:00+09:00</updated><id>http://localhost:4000/springboot/spring-boot-redis</id><content type="html" xml:base="http://localhost:4000/springboot/spring-boot-redis/"><![CDATA[<h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
 
 <hr />
 
 <h2 id="들어가며">들어가며</h2>
-
-<hr />
 
 <p>스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.</p>
 
 <p>예제코드로 적용 방법을 알아보자</p>
 
 <h2 id="redis-의존-설정">🌟 Redis 의존 설정</h2>
-
-<hr />
 
 <p>Spring은 다양한 Redis 의존설정 방법을 제공한다.</p>
 
@@ -49,8 +45,6 @@
 </aside>
 
 <h2 id="applicationyml-설정">🌟 A<strong>pplication.yml</strong> 설정</h2>
-
-<hr />
 
 <p>정말 간단하게 Redis 의존을 추가했다. 이제 남은 건 A<strong>pplication.yml</strong> 작성과 Redis Configuration Bean 만 등록하면 된다. 아마도</p>
 
@@ -139,8 +133,6 @@
 </table>
 
 <h2 id="redisconnectionfactory-redistemplate-설정하기">🌟 RedisConnectionFactory, RedisTemplate 설정하기</h2>
-
-<hr />
 
 <p>순조롭게 Yaml 파일 설정도 끝이났다.  이제는 Java를 사용해서 기존에 xml 파일로 설정했던 RedisFactory, RedisTemplate를 변경해보자.</p>
 
@@ -295,8 +287,6 @@
 </ul>
 
 <h2 id="redis-cache-management">🌟 Redis Cache Management</h2>
-
-<hr />
 
 <h3 id="xml-2">XML</h3>
 
