@@ -1,6 +1,5 @@
 ---
 title: "[ramram] SpringBoot - Redis Client 적용기"
-excerpt: "Spring Framwork To SpringBoot"
 categories:
   - SpringBoot
 tags:
@@ -13,7 +12,7 @@ toc: true
 toc_sticky: true
 
 date: 2022-02-16
-last_modified_at: 2022-02-16
+last_modified_at: 2022-02-19
 ---
 # Spring boot - Lettuce 적용기
 
@@ -21,7 +20,6 @@ last_modified_at: 2022-02-16
 
 ## 들어가며
 
----
 
 스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.
 
@@ -29,7 +27,6 @@ last_modified_at: 2022-02-16
 
 ## 🌟 Redis 의존 설정
 
----
 
 Spring은 다양한 Redis 의존설정 방법을 제공한다. 
 
@@ -45,15 +42,15 @@ dependencies {
 
 - 이미지 참고
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dd5f5df-804e-442d-a845-2768daec157f/Untitled.png)
+   ![redis-intellij](https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png)
     
 
 세번째 방법도 두번째 방법과 거의 동일하다. Spring initializr 로 프로젝트 생성 시점에 Spring Data Redis 를 추가하는 것이다.
 
 - 이미지 참고
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1bfbff3e-f156-4f49-9e43-9c04816d93be/Untitled.png)
-    
+   ![initalizr-redis](https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png)
+
 
 <aside>
 💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다
@@ -62,7 +59,6 @@ dependencies {
 
 ## 🌟 A**pplication.yml** 설정
 
----
 
 정말 간단하게 Redis 의존을 추가했다. 이제 남은 건 A**pplication.yml** 작성과 Redis Configuration Bean 만 등록하면 된다. 아마도
 
@@ -98,7 +94,6 @@ Redis 에 관한 정보만 입력한다고 가정하면 이게 끝이다.  설�
 
 ## 🌟 RedisConnectionFactory, RedisTemplate 설정하기
 
----
 
 순조롭게 Yaml 파일 설정도 끝이났다.  이제는 Java를 사용해서 기존에 xml 파일로 설정했던 RedisFactory, RedisTemplate를 변경해보자.
 
@@ -248,7 +243,6 @@ public class RedisKeyExpireMessageListener implements MessageListener {
 
 ## 🌟 Redis Cache Management
 
----
 
 ### XML
 
@@ -336,8 +330,6 @@ config:
 
 ## 🌟 Lettuce를 선택한 이유
 
----
-
 마지막으로 Redis Client로 Lettuce를 선택한 이유를 설명하고자 한다. 
 
 ### Lettuce란?
@@ -369,16 +361,21 @@ lettuce는 Netty 기반의 Redis Client로 동기, 비동기 및 대응적 사�
 
 ## 🌟 Jedis와 Lettuce 비교
 
----
-
 그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자
+<br/>
+<br/>
+<br/>
+1 - Jedis보다 뛰어난 성능
+| Type     | TPS(낮을수록 응답속도 빠름) | Redis CPU | Connections | 응답 속도 |
+| --- | ------ | ----- | ----- | ----- |
+|Jedis |31.000 |20% |515 |1000ms |
+|Lettuce|100,000 |7% |6 |7.5ms |
+  
+<br/>
+<br/>
+<br/>
 
-1. Jedis보다 뛰어난 성능
-
-![img.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ce4e990-ccdd-4bb4-beaf-253110d38023/img.png)
-
-1. Jedis와 Lettuce 기능비교
-
+2 -  Jedis와 Lettuce 기능비교
 | Supported Feature | Lettuce | Jedis |
 | --- | --- | --- |
 | Standalone Connection | O | O |

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-02-19T11:46:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">개발자 람람이네</title><subtitle>람람이네 집에 오신 걸 환영합니다</subtitle><author><name>람람이</name></author><entry><title type="html">[ramram] SpringBoot - Redis Client 적용기</title><link href="http://localhost:4000/springboot/spring-boot-redis/" rel="alternate" type="text/html" title="[ramram] SpringBoot - Redis Client 적용기" /><published>2022-02-16T00:00:00+09:00</published><updated>2022-02-16T00:00:00+09:00</updated><id>http://localhost:4000/springboot/spring-boot-redis</id><content type="html" xml:base="http://localhost:4000/springboot/spring-boot-redis/"><![CDATA[<h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-02-19T12:30:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">개발자 람람이네</title><subtitle>람람이네 집에 오신 걸 환영합니다</subtitle><author><name>람람이</name></author><entry><title type="html">[ramram] SpringBoot - Redis Client 적용기</title><link href="http://localhost:4000/springboot/spring-boot-redis/" rel="alternate" type="text/html" title="[ramram] SpringBoot - Redis Client 적용기" /><published>2022-02-16T00:00:00+09:00</published><updated>2022-02-16T00:00:00+09:00</updated><id>http://localhost:4000/springboot/spring-boot-redis</id><content type="html" xml:base="http://localhost:4000/springboot/spring-boot-redis/"><![CDATA[<h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
 
 <hr />
 
@@ -25,7 +25,7 @@
   <li>
     <p>이미지 참고</p>
 
-    <p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dd5f5df-804e-442d-a845-2768daec157f/Untitled.png" alt="Untitled" /></p>
+    <p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" /></p>
   </li>
 </ul>
 
@@ -35,7 +35,7 @@
   <li>
     <p>이미지 참고</p>
 
-    <p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1bfbff3e-f156-4f49-9e43-9c04816d93be/Untitled.png" alt="Untitled" /></p>
+    <p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" /></p>
   </li>
 </ul>
 
@@ -377,8 +377,6 @@
 
 <h2 id="lettuce를-선택한-이유">🌟 Lettuce를 선택한 이유</h2>
 
-<hr />
-
 <p>마지막으로 Redis Client로 Lettuce를 선택한 이유를 설명하고자 한다.</p>
 
 <h3 id="lettuce란">Lettuce란?</h3>
@@ -418,96 +416,36 @@
 
 <h2 id="jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</h2>
 
-<hr />
+<p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자
+<br />
+<br />
+<br />
+1 - Jedis보다 뛰어난 성능
+| Type     | TPS(낮을수록 응답속도 빠름) | Redis CPU | Connections | 응답 속도 |
+| — | —— | —– | —– | —– |
+|Jedis |31.000 |20% |515 |1000ms |
+|Lettuce|100,000 |7% |6 |7.5ms |</p>
 
-<p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자</p>
+<p><br />
+<br />
+<br /></p>
 
-<ol>
-  <li>Jedis보다 뛰어난 성능</li>
-</ol>
-
-<p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ce4e990-ccdd-4bb4-beaf-253110d38023/img.png" alt="img.png" /></p>
-
-<ol>
-  <li>Jedis와 Lettuce 기능비교</li>
-</ol>
-
-<table>
-  <thead>
-    <tr>
-      <th>Supported Feature</th>
-      <th>Lettuce</th>
-      <th>Jedis</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Standalone Connection</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-    <tr>
-      <td>Master/Replica Connection</td>
-      <td>O</td>
-      <td> </td>
-    </tr>
-    <tr>
-      <td>Redis Sentinel</td>
-      <td>Master Lookup, Sentinel Authentication, Replica Redis</td>
-      <td>Master Lookup</td>
-    </tr>
-    <tr>
-      <td>Redis Cluster</td>
-      <td>Cluster Connection, Cluster Node Connection, Replica Reads</td>
-      <td>Cluster Connection, Cluster Node Connection</td>
-    </tr>
-    <tr>
-      <td>Transport Channers</td>
-      <td>TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets</td>
-      <td>TCP</td>
-    </tr>
-    <tr>
-      <td>Connection Pooling</td>
-      <td>O(using commons-pool2)</td>
-      <td>O(using commons-pool2)</td>
-    </tr>
-    <tr>
-      <td>Other Connection Features</td>
-      <td>Singleton-connection sharing for non-blocking commands</td>
-      <td>JedisShardInfo support</td>
-    </tr>
-    <tr>
-      <td>SSL Support</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-    <tr>
-      <td>Pub/Sub</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-    <tr>
-      <td>Pipelining</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-    <tr>
-      <td>Transactions</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-    <tr>
-      <td>DataType Support</td>
-      <td>Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog</td>
-      <td>Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog</td>
-    </tr>
-    <tr>
-      <td>Reactive (non-blocking) API</td>
-      <td>O</td>
-      <td>O</td>
-    </tr>
-  </tbody>
-</table>
+<p>2 -  Jedis와 Lettuce 기능비교
+| Supported Feature | Lettuce | Jedis |
+| — | — | — |
+| Standalone Connection | O | O |
+| Master/Replica Connection | O |  |
+| Redis Sentinel | Master Lookup, Sentinel Authentication, Replica Redis | Master Lookup |
+| Redis Cluster | Cluster Connection, Cluster Node Connection, Replica Reads | Cluster Connection, Cluster Node Connection |
+| Transport Channers | TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets | TCP |
+| Connection Pooling | O(using commons-pool2) | O(using commons-pool2) |
+| Other Connection Features | Singleton-connection sharing for non-blocking commands | JedisShardInfo support |
+| SSL Support | O | O |
+| Pub/Sub | O | O |
+| Pipelining | O | O |
+| Transactions | O | O |
+| DataType Support | Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog | Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog |
+| Reactive (non-blocking) API | O | O |</p>
 
 <p><strong><em>참고 → O 표시는 지원되는 기능이다.</em></strong></p>
 

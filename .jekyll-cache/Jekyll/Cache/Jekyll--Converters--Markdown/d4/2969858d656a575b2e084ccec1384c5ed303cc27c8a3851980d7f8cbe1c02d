@@ -1,307 +1,4 @@
-<!doctype html>
-<!--
-  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
-  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
-  Free for personal and commercial use under the MIT license
-  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
--->
-<html lang="ko" class="no-js">
-  <head>
-    <!--S-CoreDream-3Light-->
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff">
-
-    <!--Cafe24Ohsquareair-->
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/Cafe24Ohsquareair.woff">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/Cafe24Ohsquareair.woff">
-
-    <meta charset="utf-8">
-
-<!-- begin _includes/seo.html --><title>[ramram] SpringBoot - Redis Client 적용기 - 개발자 람람이네</title>
-<meta name="description" content="Spring Framwork To SpringBoot">
-
-
-  <meta name="author" content="람람이">
-  
-  <meta property="article:author" content="람람이">
-  
-
-
-<meta property="og:type" content="article">
-<meta property="og:locale" content="ko">
-<meta property="og:site_name" content="개발자 람람이네">
-<meta property="og:title" content="[ramram] SpringBoot - Redis Client 적용기">
-<meta property="og:url" content="http://localhost:4000/springboot/spring-boot-redis/">
-
-
-  <meta property="og:description" content="Spring Framwork To SpringBoot">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2022-02-16T00:00:00+09:00">
-
-
-
-  <meta property="article:modified_time" content="2022-02-16T00:00:00+09:00">
-
-
-
-  
-
-  
-
-
-<link rel="canonical" href="http://localhost:4000/springboot/spring-boot-redis/">
-
-
-
-
-<script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    
-      "@type": "Person",
-      "name": "람람이",
-      "url": "http://localhost:4000/"
-    
-  }
-</script>
-
-
-
-
-
-
-
-<!-- end _includes/seo.html -->
-
-
-
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="개발자 람람이네 Feed">
-
-
-<!-- https://t.co/dKP3o1e -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script>
-  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-</script>
-
-<!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
-
-
-
-    <!-- start custom head snippets -->
-
-<!-- insert favicons. use https://realfavicongenerator.net/ -->
-
-<!-- end custom head snippets -->
-
-  </head>
-
-  <body class="layout--single">
-    <nav class="skip-links">
-  <ul>
-    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
-    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
-    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
-  </ul>
-</nav>
-
-    <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
-
-    
-
-<div class="masthead">
-  <div class="masthead__inner-wrap">
-    <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        
-        <a class="site-title" href="/">
-          개발자 람람이네
-          
-        </a>
-        <ul class="visible-links"></ul>
-        
-        <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">토글 메뉴</span>
-          <div class="navicon"></div>
-        </button>
-        <ul class="hidden-links hidden"></ul>
-      </nav>
-    </div>
-  </div>
-</div>
-
-
-    <div class="initial-content">
-      
-
-
-
-<div id="main" role="main">
-  
-  <div class="sidebar sticky">
-  
-
-
-<div itemscope itemtype="https://schema.org/Person" class="h-card">
-
-  
-
-  <div class="author__content">
-    <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">람람이</a>
-    </h3>
-    
-      <div class="author__bio p-note" itemprop="description">
-        <p>잠자는 게 제일 좋은 개발자</p>
-
-      </div>
-    
-  </div>
-
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">팔로우</button>
-    <ul class="author__urls social-icons">
-      
-        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">서울</span>
-        </li>
-      
-
-      
-        
-          
-            <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
-          
-        
-          
-            <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
-          
-        
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <!--
-  <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
-      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
-    </a>
-  </li>
--->
-    </ul>
-  </div>
-</div>
-  
-  </div>
-
-
-
-  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="[ramram] SpringBoot - Redis Client 적용기">
-    <meta itemprop="description" content="Spring Framwork To SpringBoot">
-    <meta itemprop="datePublished" content="2022-02-16T00:00:00+09:00">
-    <meta itemprop="dateModified" content="2022-02-16T00:00:00+09:00">
-
-    <div class="page__inner-wrap">
-      
-        <header>
-          <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/springboot/spring-boot-redis/" class="u-url" itemprop="url">[ramram] SpringBoot - Redis Client 적용기
-</a>
-          </h1>
-          
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          5 분 소요
-        
-      </span>
-    
-  </p>
-
-
-        </header>
-      
-
-      <section class="page__content e-content" itemprop="text">
-        
-          <aside class="sidebar__right sticky">
-            <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</a><ul><li><a href="#들어가며">들어가며</a></li><li><a href="#redis-의존-설정">🌟 Redis 의존 설정</a></li><li><a href="#applicationyml-설정">🌟 Application.yml 설정</a></li><li><a href="#redisconnectionfactory-redistemplate-설정하기">🌟 RedisConnectionFactory, RedisTemplate 설정하기</a><ul><li><a href="#xml">XML</a></li><li><a href="#java">JAVA</a></li></ul></li><li><a href="#redis-message-listener">🌟 Redis Message Listener</a><ul><li><a href="#xml-1">XML</a></li><li><a href="#java-1">JAVA</a></li></ul></li><li><a href="#redis-cache-management">🌟 Redis Cache Management</a><ul><li><a href="#xml-2">XML</a></li><li><a href="#java-2">JAVA</a></li></ul></li><li><a href="#lettuce를-선택한-이유">🌟 Lettuce를 선택한 이유</a><ul><li><a href="#lettuce란">Lettuce란?</a></li><li><a href="#lettuce-장점">Lettuce 장점</a></li><li><a href="#lettuce-단점">Lettuce 단점</a></li></ul></li><li><a href="#jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</a></li></ul></li><li><a href="#reference">🌟**Reference**</a></li></ul>
-
-            </nav>
-          </aside>
-        
-        <h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
+I"|<h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
 
 <hr />
 
@@ -328,7 +25,7 @@
   <li>
     <p>이미지 참고</p>
 
-    <p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" /></p>
+    <p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1dd5f5df-804e-442d-a845-2768daec157f/Untitled.png" alt="Untitled" /></p>
   </li>
 </ul>
 
@@ -338,7 +35,7 @@
   <li>
     <p>이미지 참고</p>
 
-    <p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" /></p>
+    <p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1bfbff3e-f156-4f49-9e43-9c04816d93be/Untitled.png" alt="Untitled" /></p>
   </li>
 </ul>
 
@@ -719,36 +416,122 @@
 
 <h2 id="jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</h2>
 
-<p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자
-<br />
-<br />
-<br />
-1 - Jedis보다 뛰어난 성능
-| Type     | TPS(낮을수록 응답속도 빠름) | Redis CPU | Connections | 응답 속도 |
-| — | —— | —– | —– | —– |
-|Jedis |31.000 |20% |515 |1000ms |
-|Lettuce|100,000 |7% |6 |7.5ms |</p>
+<p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자</p>
 
-<p><br />
-<br />
-<br /></p>
+<ol>
+  <li>Jedis보다 뛰어난 성능</li>
+</ol>
 
-<p>2 -  Jedis와 Lettuce 기능비교
-| Supported Feature | Lettuce | Jedis |
-| — | — | — |
-| Standalone Connection | O | O |
-| Master/Replica Connection | O |  |
-| Redis Sentinel | Master Lookup, Sentinel Authentication, Replica Redis | Master Lookup |
-| Redis Cluster | Cluster Connection, Cluster Node Connection, Replica Reads | Cluster Connection, Cluster Node Connection |
-| Transport Channers | TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets | TCP |
-| Connection Pooling | O(using commons-pool2) | O(using commons-pool2) |
-| Other Connection Features | Singleton-connection sharing for non-blocking commands | JedisShardInfo support |
-| SSL Support | O | O |
-| Pub/Sub | O | O |
-| Pipelining | O | O |
-| Transactions | O | O |
-| DataType Support | Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog | Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog |
-| Reactive (non-blocking) API | O | O |</p>
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>TPS(낮을수록 응답속도 빠름)</th>
+      <th>Redis CPU</th>
+      <th>Connections</th>
+      <th>응답 속도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>:Jedis</td>
+      <td>:31.000</td>
+      <td>:20%</td>
+      <td>:515</td>
+      <td>1000ms</td>
+    </tr>
+    <tr>
+      <td>:Lettuce</td>
+      <td>:100,000</td>
+      <td>:7%</td>
+      <td>:6</td>
+      <td>:7.5ms</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ce4e990-ccdd-4bb4-beaf-253110d38023/img.png" alt="img.png" /></p>
+
+<ol>
+  <li>Jedis와 Lettuce 기능비교</li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Supported Feature</th>
+      <th>Lettuce</th>
+      <th>Jedis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standalone Connection</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Master/Replica Connection</td>
+      <td>O</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Redis Sentinel</td>
+      <td>Master Lookup, Sentinel Authentication, Replica Redis</td>
+      <td>Master Lookup</td>
+    </tr>
+    <tr>
+      <td>Redis Cluster</td>
+      <td>Cluster Connection, Cluster Node Connection, Replica Reads</td>
+      <td>Cluster Connection, Cluster Node Connection</td>
+    </tr>
+    <tr>
+      <td>Transport Channers</td>
+      <td>TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets</td>
+      <td>TCP</td>
+    </tr>
+    <tr>
+      <td>Connection Pooling</td>
+      <td>O(using commons-pool2)</td>
+      <td>O(using commons-pool2)</td>
+    </tr>
+    <tr>
+      <td>Other Connection Features</td>
+      <td>Singleton-connection sharing for non-blocking commands</td>
+      <td>JedisShardInfo support</td>
+    </tr>
+    <tr>
+      <td>SSL Support</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Pub/Sub</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Pipelining</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Transactions</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>DataType Support</td>
+      <td>Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog</td>
+      <td>Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog</td>
+    </tr>
+    <tr>
+      <td>Reactive (non-blocking) API</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong><em>참고 → O 표시는 지원되는 기능이다.</em></strong></p>
 
@@ -768,133 +551,4 @@
 <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html">https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html</a>
 <a href="https://segmentfault.com/a/1190000040331000/en">https://segmentfault.com/a/1190000040331000/en</a>
 <a href="https://mandlife.tistory.com/entry/Springboot-redis-%EC%84%A4%EC%A0%95-Jedis%EB%B3%B4%EB%8B%A4%EB%8A%94-Lettuce">https://mandlife.tistory.com/entry/Springboot-redis-설정-Jedis보다는-Lettuce</a></p>
-
-        
-      </section>
-
-      <footer class="page__meta">
-        
-        
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/tags/#lettuce" class="page__taxonomy-item p-category" rel="tag">lettuce</a><span class="sep">, </span>
-    
-      <a href="/tags/#redis" class="page__taxonomy-item p-category" rel="tag">redis</a><span class="sep">, </span>
-    
-      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a><span class="sep">, </span>
-    
-      <a href="/tags/#springboot" class="page__taxonomy-item p-category" rel="tag">springBoot</a>
-    
-    </span>
-  </p>
-
-
-
-
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/categories/#springboot" class="page__taxonomy-item p-category" rel="tag">SpringBoot</a>
-    
-    </span>
-  </p>
-
-
-        
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-02-16">February 16, 2022</time></p>
-
-      </footer>
-
-      <section class="page__share">
-  
-    <h4 class="page__share-title">공유하기</h4>
-  
-
-  <a href="https://twitter.com/intent/tweet?text=%5Bramram%5D+SpringBoot+-+Redis+Client+%EC%A0%81%EC%9A%A9%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fspringboot%2Fspring-boot-redis%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
-
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fspringboot%2Fspring-boot-redis%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
-
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fspringboot%2Fspring-boot-redis%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-</section>
-
-
-      
-    </div>
-
-    
-  </article>
-
-  
-  
-    <div class="page__related">
-      <h2 class="page__related-title">참고</h2>
-      <div class="grid__wrapper">
-        
-          
-            
-      </div>
-    </div>
-  
-</div>
-    </div>
-
-    
-
-    <div id="footer" class="page__footer">
-      <footer>
-        <!-- start custom footer snippets -->
-
-<!-- end custom footer snippets -->
-        <div class="page__footer-follow">
-  <ul class="social-icons">
-    
-      <li><strong>팔로우:</strong></li>
-    
-
-    
-      
-        
-          <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
-        
-      
-        
-          <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-gitlab" aria-hidden="true"></i> email</a></li>
-        
-      
-    
-  </ul>
-</div>
-
-<div class="page__footer-copyright">&copy; 2022 람람이. Powered by.</div>
-
-      </footer>
-    </div>
-
-    
-  <script src="/assets/js/main.min.js"></script>
-
-
-
-
-
-
-
-
-
-
-  </body>
-</html>
+:ET
