@@ -16,7 +16,6 @@ last_modified_at: 2022-02-19
 ---
 # Spring boot - Lettuce 적용기
 
----
 
 ## 들어가며
 
