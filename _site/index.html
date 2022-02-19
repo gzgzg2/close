@@ -97,6 +97,13 @@
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
 <!-- end custom head snippets -->
+<link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png">
+<link rel="manifest" href="/local/site.webmanifest">
+<link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
   </head>
 
@@ -244,6 +251,70 @@
   </div>
 </div>
   
+
+  
+  <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">1</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+      
+       <span class="nav__sub-title">Java</span>
+            <ul>
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">Spring</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                        <li><a href="/categories/springboot" class="">SpringBoot(1)</a></li>
+                    
+                
+            </ul>
+
+             <span class="nav__sub-title">NetWork</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+
+  
   </div>
 
 
@@ -295,7 +366,7 @@
   </p>
 
 
-    <p class="archive__item-excerpt" itemprop="description">Spring boot - Lettuce 적용기
+    <p class="archive__item-excerpt" itemprop="description">들어가며
 </p>
   </article>
 </div>

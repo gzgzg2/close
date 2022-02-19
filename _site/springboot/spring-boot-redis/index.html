@@ -18,7 +18,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>[ramram] SpringBoot - Redis Client 적용기 - 개발자 람람이네</title>
-<meta name="description" content="Spring boot - Lettuce 적용기">
+<meta name="description" content="들어가며">
 
 
   <meta name="author" content="람람이">
@@ -34,7 +34,7 @@
 <meta property="og:url" content="http://localhost:4000/springboot/spring-boot-redis/">
 
 
-  <meta property="og:description" content="Spring boot - Lettuce 적용기">
+  <meta property="og:description" content="들어가며">
 
 
 
@@ -103,6 +103,13 @@
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
 <!-- end custom head snippets -->
+<link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png">
+<link rel="manifest" href="/local/site.webmanifest">
+<link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
 
   </head>
 
@@ -250,13 +257,77 @@
   </div>
 </div>
   
+
+  
+  <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            📂 <span style="font-family:'Cafe24Oneprettynight';">전체 글 수</style> <span style="font-family:'Coming Soon';">1</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
+      </li>
+      <li>
+      
+       <span class="nav__sub-title">Java</span>
+            <ul>
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">Spring</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                        <li><a href="/categories/springboot" class="">SpringBoot(1)</a></li>
+                    
+                
+            </ul>
+
+             <span class="nav__sub-title">NetWork</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+
+  
   </div>
 
 
 
   <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="[ramram] SpringBoot - Redis Client 적용기">
-    <meta itemprop="description" content="Spring boot - Lettuce 적용기">
+    <meta itemprop="description" content="들어가며">
     <meta itemprop="datePublished" content="2022-02-16T00:00:00+09:00">
     <meta itemprop="dateModified" content="2022-02-19T00:00:00+09:00">
 
@@ -296,60 +367,44 @@
           <aside class="sidebar__right sticky">
             <nav class="toc">
               <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
-              <ul class="toc__menu"><li><a href="#spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</a><ul><li><a href="#들어가며">들어가며</a></li><li><a href="#redis-의존-설정">🌟 Redis 의존 설정</a></li><li><a href="#applicationyml-설정">🌟 Application.yml 설정</a></li><li><a href="#redisconnectionfactory-redistemplate-설정하기">🌟 RedisConnectionFactory, RedisTemplate 설정하기</a><ul><li><a href="#xml">XML</a></li><li><a href="#java">JAVA</a></li></ul></li><li><a href="#redis-message-listener">🌟 Redis Message Listener</a><ul><li><a href="#xml-1">XML</a></li><li><a href="#java-1">JAVA</a></li></ul></li><li><a href="#redis-cache-management">🌟 Redis Cache Management</a><ul><li><a href="#xml-2">XML</a></li><li><a href="#java-2">JAVA</a></li></ul></li><li><a href="#lettuce를-선택한-이유">🌟 Lettuce를 선택한 이유</a><ul><li><a href="#lettuce란">Lettuce란?</a></li><li><a href="#lettuce-장점">Lettuce 장점</a></li><li><a href="#lettuce-단점">Lettuce 단점</a></li></ul></li><li><a href="#jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</a></li></ul></li><li><a href="#reference">🌟**Reference**</a></li></ul>
+              <ul class="toc__menu"><li><a href="#들어가며">들어가며</a></li><li><a href="#redis-의존-설정">🌟 Redis 의존 설정</a></li><li><a href="#applicationyml-설정">🌟 Application.yml 설정</a></li><li><a href="#redisconnectionfactory-redistemplate-설정하기">🌟 RedisConnectionFactory, RedisTemplate 설정하기</a><ul><li><a href="#xml">XML</a></li><li><a href="#java">JAVA</a></li></ul></li><li><a href="#redis-message-listener">🌟 Redis Message Listener</a><ul><li><a href="#xml-1">XML</a></li><li><a href="#java-1">JAVA</a></li></ul></li><li><a href="#redis-cache-management">🌟 Redis Cache Management</a><ul><li><a href="#xml-2">XML</a></li><li><a href="#java-2">JAVA</a></li></ul></li><li><a href="#lettuce를-선택한-이유">🌟 Lettuce를 선택한 이유</a><ul><li><a href="#lettuce란">Lettuce란?</a></li><li><a href="#lettuce-장점">Lettuce 장점</a></li><li><a href="#lettuce-단점">Lettuce 단점</a></li></ul></li><li><a href="#jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</a></li></ul>
 
             </nav>
           </aside>
         
-        <h1 id="spring-boot---lettuce-적용기">Spring boot - Lettuce 적용기</h1>
+        <h2 id="들어가며">들어가며</h2>
 
-<h2 id="들어가며">들어가며</h2>
-
-<p>스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.</p>
-
-<p>예제코드로 적용 방법을 알아보자</p>
+<p>스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.
+예제코드로 적용 방법을 알아보자</p>
 
 <h2 id="redis-의존-설정">🌟 Redis 의존 설정</h2>
 
 <p>Spring은 다양한 Redis 의존설정 방법을 제공한다.</p>
 
-<p>첫번째 방법은 직접 Gradle이나 Maven 설정 파일에 코드를 작성하는 것이다.</p>
+<p>1 - Gradle이나 Maven 설정 파일에 의존 추가하기</p>
 
 <div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">dependencies</span> <span class="err">{</span>
 	<span class="nv">implementation</span> <span class="ss">'org</span><span class="o">.</span><span class="nv">springframework</span><span class="o">.</span><span class="nv">boot:spring-boot-starter-data-redis</span><span class="o">'</span>
 <span class="err">}</span>
 </code></pre></div></div>
+<p><br />
+2 - Intellij tool 을 사용하여 SpringBoot 프로젝트 생성시점에 Spring Data Redis 를 추가하는 방법이다.</p>
 
-<p>두번째 방법으로는 Intellij tool 을 사용하여 SpringBoot 프로젝트 생성시점에 Spring Data Redis 를 추가하는 방법이다.</p>
+<p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" width="550" height="500" /></p>
 
-<ul>
-  <li>
-    <p>이미지 참고</p>
+<p>3 - Spring initializr 로 프로젝트 생성 시점에 Spring Data Redis 추가하기</p>
 
-    <p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" /></p>
-  </li>
-</ul>
+<p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" width="700" height="500" /></p>
 
-<p>세번째 방법도 두번째 방법과 거의 동일하다. Spring initializr 로 프로젝트 생성 시점에 Spring Data Redis 를 추가하는 것이다.</p>
+<p><br /></p>
 
-<ul>
-  <li>
-    <p>이미지 참고</p>
-
-    <p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" /></p>
-  </li>
-</ul>
-
-<aside>
-💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다
-
-</aside>
+<p><code class="language-plaintext highlighter-rouge">💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다</code></p>
 
 <h2 id="applicationyml-설정">🌟 A<strong>pplication.yml</strong> 설정</h2>
 
 <p>정말 간단하게 Redis 의존을 추가했다. 이제 남은 건 A<strong>pplication.yml</strong> 작성과 Redis Configuration Bean 만 등록하면 된다. 아마도</p>
 
-<p><strong>ymal 작성은 매우 간단하다.</strong></p>
+<p>ymal 작성은 매우 간단하다.</p>
 
 <div class="language-scheme highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">spring:</span>
 	<span class="nv">redis:</span>
@@ -364,7 +419,10 @@
 	<span class="nv">password:</span> <span class="ss">'vldpsxl1q2w3e</span><span class="o">'</span>
 </code></pre></div></div>
 
-<p>Redis 에 관한 정보만 입력한다고 가정하면 이게 끝이다.  설정 정보는 아래 표 참조 바람</p>
+<p>Redis 에 관한 정보만 입력한다고 가정하면 이게 끝이다.  설정 정보는 아래 표 참조 바람<br />
+<br /></p>
+
+<p><strong>Redis Option</strong></p>
 
 <table>
   <thead>
@@ -461,9 +519,7 @@
 
 <h3 id="java">JAVA</h3>
 
-<ol>
-  <li>RedisTemplate 설정</li>
-</ol>
+<p><strong>RedisTemplate 설정</strong></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
 <span class="nd">@EnableRedisRepositories</span>
@@ -491,20 +547,18 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>기존 xml 파일은 번거롭게 Serializer 클래스를 매번 bean으로 등록해서 redisTemplate에 주입했다.</p>
+<p>기존 xml 파일은 번거롭게 Serializer 클래스를 매번 bean으로 등록해서 redisTemplate에 주입했다.
+그런데 자바코드는 간단하게 인스턴스만 생성해서 주입하고 있는 것을 확인할 수 있다.</p>
 
-<p>하지만  자바코드는 간단하게 인스턴스만 생성해서 주입하고 있는 것을 확인할 수 있다.</p>
+<p><br /></p>
 
-<aside>
-💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.
+<p><code class="language-plaintext highlighter-rouge">💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.</code></p>
 
-</aside>
+<p><br /></p>
 
 <h2 id="redis-message-listener">🌟 Redis Message Listener</h2>
 
-<hr />
-
-<p>이제 LostSignal 이벤트가 발생할 수 있는 이유 중 하나인 Redis Message Listener를 등록해보자.</p>
+<p>이제 Redis Message Listener를 등록해보자.</p>
 
 <h3 id="xml-1">XML</h3>
 
@@ -539,9 +593,7 @@
 
 <h3 id="java-1">JAVA</h3>
 
-<ol>
-  <li>MessageListenerAdapter 추가</li>
-</ol>
+<p><strong>MessageListenerAdapter 추가</strong></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nd">@Bean</span>
   <span class="kd">public</span> <span class="nc">MessageListenerAdapter</span> <span class="nf">messageListenerAdapter</span><span class="o">(</span><span class="nc">RedisKeyExpireMessageListener</span> <span class="n">redisKeyExpireMessageListener</span><span class="o">)</span> <span class="o">{</span>
@@ -564,9 +616,7 @@
   <span class="o">}</span>
 </code></pre></div></div>
 
-<ol>
-  <li>MessageListenerAdapter 에 주입할 MessageListener 구현</li>
-</ol>
+<p><strong>MessageListenerAdapter 에 주입할 MessageListener 구현</strong></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">RedisKeyExpireMessageListener</span> <span class="kd">implements</span> <span class="nc">MessageListener</span> <span class="o">{</span>
@@ -576,16 +626,12 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
+<p><br />
+❗ spring boot 의 <code class="language-plaintext highlighter-rouge">@EnableAutoConfiguration</code></p>
 
-<ul>
-  <li>
-    <p>❗ spring boot 의 <code class="language-plaintext highlighter-rouge">@EnableAutoConfiguration</code></p>
-
-    <p>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.</p>
-
-    <p>어떻게 보면 정말 편리한 기능이지만, 섬세한 설정이 필요한 경우엔 직접 설정하는 것이 안전하다.</p>
-  </li>
-</ul>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.
+어떻게 보면 정말 편리한 기능이지만, 섬세한 설정이 필요한 경우엔 직접 설정하는 것이 안전하다.
+</code></pre></div></div>
 
 <h2 id="redis-cache-management">🌟 Redis Cache Management</h2>
 
@@ -605,11 +651,7 @@
 </code></pre></div></div>
 
 <h3 id="java-2">JAVA</h3>
-
-<ol>
-  <li>@EnableCaching 어노테이션 추가</li>
-</ol>
-
+<p><strong>@EnableCaching 어노테이션 추가</strong></p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
 <span class="nd">@EnableCaching</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringBootStudyApplication</span> <span class="o">{</span>
@@ -624,10 +666,9 @@
 
 <p>@EnableCaching 어노테이션 뿐만 아니라 xml 파일에서 cacheManger 를 선언해서 사용할 때도 동일하게 동작한다.</p>
 
-<ol>
-  <li>CacheManagerConfig.class</li>
-</ol>
+<p><br /></p>
 
+<p><strong>CacheManagerConfig.class</strong></p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
 <span class="nd">@RequiredArgsConstructor</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CacheManagerConfig</span> <span class="o">{</span>
@@ -651,9 +692,7 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<ol>
-  <li>RedisCacheConfig.class</li>
-</ol>
+<p><strong>RedisCacheConfig.class</strong></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
 <span class="nd">@ConfigurationProperties</span><span class="o">(</span><span class="n">prefix</span><span class="o">=</span><span class="s">"config.redis.cache"</span><span class="o">)</span>
@@ -665,9 +704,7 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<ol>
-  <li>application.yml</li>
-</ol>
+<p><code class="language-plaintext highlighter-rouge">application.yml</code></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">config:</span>
   <span class="nl">redis:</span>
@@ -688,65 +725,159 @@
 
 <h3 id="lettuce-장점">Lettuce 장점</h3>
 
-<ol>
-  <li>connection 인스턴스를 여러 쓰레드에서 공유할 수 있기 때문에 Thread-safe하다.
-    <ul>
-      <li>
-        <p>❗connection 인스턴스를 여러 쓰레드에서 공유할 수 있는 것이 장점인 이유는?</p>
-
-        <p>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.</p>
-
-        <p>이는 애플리케이션이 멀티스레딩+단일 연결을 통해 Redis를 운영할 수 있다면 Redis 서버의 전체 연결 수를 효율화 할 수 있고,</p>
-
-        <p>여러 애플리케이션이 동일한 Redis 서버를 공유할 때 더 나은 안정성과 성능을 얻을 수 있다는 것을 의미한다.</p>
-
-        <p>응용 프로그램의 경우 여러 인스턴스를 유지 관리하는 리소스 소비가 줄어든다.</p>
-      </li>
-    </ul>
-  </li>
+<ul>
+  <li>connection 인스턴스를 여러 쓰레드에서 공유할 수 있기 때문에 Thread-safe하다.</li>
   <li>Lettuce는 비동기로 요청을 처리하기 때문에 성능적인 이점이 있다. (비동기, 동기 둘 다 지원하기 때문에 유연하게 사용가능)</li>
   <li>Jedis보다 다양한 DataType지원</li>
-</ol>
+</ul>
+
+<p><br /></p>
+<details>
+  <summary>❗connection 인스턴스를 여러 쓰레드에서 공유할 수 있는 것이 장점인 이유는?</summary>
+  <div>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.
+    
+이는 애플리케이션이 멀티스레딩+단일 연결을 통해 Redis를 운영할 수 있다면 Redis 서버의 전체 연결 수를 효율화 할 수 있고,
+    
+여러 애플리케이션이 동일한 Redis 서버를 공유할 때 더 나은 안정성과 성능을 얻을 수 있다는 것을 의미한다.
+    
+응용 프로그램의 경우 여러 인스턴스를 유지 관리하는 리소스 소비가 줄어든다.
+</code></pre></div>    </div>
+  </div>
+</details>
 
 <h3 id="lettuce-단점">Lettuce 단점</h3>
 
-<ol>
+<ul>
   <li>connection 인스턴스의 공유라는 점에서 Thread-safe 한 것이기 때문에 Single-Thread로 동작하는 애플리케이션에서 레디스 데이터에 접근할 때는 또다르게 고려할 점이 생긴다.</li>
   <li>하나의 connection을 공유하기 때문에 connection pool을 생성하지 않으면 transaction을 사용할 수 없다.</li>
-</ol>
+</ul>
+
+<p><br /></p>
 
 <h2 id="jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</h2>
 
 <p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자
 <br />
 <br />
-<br />
-1 - Jedis보다 뛰어난 성능
-| Type     | TPS(낮을수록 응답속도 빠름) | Redis CPU | Connections | 응답 속도 |
-| — | —— | —– | —– | —– |
-|Jedis |31.000 |20% |515 |1000ms |
-|Lettuce|100,000 |7% |6 |7.5ms |</p>
+<br /></p>
+
+<p><strong>Jedis보다 뛰어난 성능</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>TPS(낮을수록 응답속도 빠름)</th>
+      <th>Redis CPU</th>
+      <th>Connections</th>
+      <th>응답 속도</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Jedis</td>
+      <td>31.000</td>
+      <td>20%</td>
+      <td>515</td>
+      <td>1000ms</td>
+    </tr>
+    <tr>
+      <td>Lettuce</td>
+      <td>100,000</td>
+      <td>7%</td>
+      <td>6</td>
+      <td>7.5ms</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><br />
 <br />
 <br /></p>
 
-<p>2 -  Jedis와 Lettuce 기능비교
-| Supported Feature | Lettuce | Jedis |
-| — | — | — |
-| Standalone Connection | O | O |
-| Master/Replica Connection | O |  |
-| Redis Sentinel | Master Lookup, Sentinel Authentication, Replica Redis | Master Lookup |
-| Redis Cluster | Cluster Connection, Cluster Node Connection, Replica Reads | Cluster Connection, Cluster Node Connection |
-| Transport Channers | TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets | TCP |
-| Connection Pooling | O(using commons-pool2) | O(using commons-pool2) |
-| Other Connection Features | Singleton-connection sharing for non-blocking commands | JedisShardInfo support |
-| SSL Support | O | O |
-| Pub/Sub | O | O |
-| Pipelining | O | O |
-| Transactions | O | O |
-| DataType Support | Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog | Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog |
-| Reactive (non-blocking) API | O | O |</p>
+<p><strong>Jedis와 Lettuce 기능비교</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Supported Feature</th>
+      <th>Lettuce</th>
+      <th>Jedis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standalone Connection</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Master/Replica Connection</td>
+      <td>O</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Redis Sentinel</td>
+      <td>Master Lookup, Sentinel Authentication, Replica Redis</td>
+      <td>Master Lookup</td>
+    </tr>
+    <tr>
+      <td>Redis Cluster</td>
+      <td>Cluster Connection, Cluster Node Connection, Replica Reads</td>
+      <td>Cluster Connection, Cluster Node Connection</td>
+    </tr>
+    <tr>
+      <td>Transport Channers</td>
+      <td>TCP, OS-native TCP(epoll, kqueue), Unix Domain Sockets</td>
+      <td>TCP</td>
+    </tr>
+    <tr>
+      <td>Connection Pooling</td>
+      <td>O(using commons-pool2)</td>
+      <td>O(using commons-pool2)</td>
+    </tr>
+    <tr>
+      <td>Other Connection Features</td>
+      <td>Singleton-connection sharing for non-blocking commands</td>
+      <td>JedisShardInfo support</td>
+    </tr>
+    <tr>
+      <td>SSL Support</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Pub/Sub</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Pipelining</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>Transactions</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+    <tr>
+      <td>DataType Support</td>
+      <td>Key, String, List, Set, Sorted Set, Hash Server, Stream, Scriping, Geo, HyperLogLog</td>
+      <td>Key, String, List, Set, Sorted Set, Scriping, Geo, HyperLogLog</td>
+    </tr>
+    <tr>
+      <td>Reactive (non-blocking) API</td>
+      <td>O</td>
+      <td>O</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br />
+<br /></p>
 
 <p><strong><em>참고 → O 표시는 지원되는 기능이다.</em></strong></p>
 
@@ -757,15 +888,27 @@
   <li>Jedis에서 지원하지 않는 기능도 Lettuce에서 지원한다.</li>
 </ul>
 
+<p><br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br /></p>
+
 <h1 id="reference">🌟<strong>**Reference</strong>**</h1>
 
-<hr />
+<p><a href="http://arahansa.github.io/docs_spring/redis.html">http://arahansa.github.io/docs_spring/redis.html</a></p>
 
-<p><a href="http://arahansa.github.io/docs_spring/redis.html">http://arahansa.github.io/docs_spring/redis.html</a>
-<a href="https://wnwngus.tistory.com/64">https://wnwngus.tistory.com/64</a>
-<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html">https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html</a>
-<a href="https://segmentfault.com/a/1190000040331000/en">https://segmentfault.com/a/1190000040331000/en</a>
-<a href="https://mandlife.tistory.com/entry/Springboot-redis-%EC%84%A4%EC%A0%95-Jedis%EB%B3%B4%EB%8B%A4%EB%8A%94-Lettuce">https://mandlife.tistory.com/entry/Springboot-redis-설정-Jedis보다는-Lettuce</a></p>
+<p><a href="https://wnwngus.tistory.com/64">https://wnwngus.tistory.com/64</a></p>
+
+<p><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html">https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/cache/annotation/EnableCaching.html</a></p>
+
+<p><a href="https://segmentfault.com/a/1190000040331000/en">https://segmentfault.com/a/1190000040331000/en</a></p>
+
+<p><a href="https://mandlife.tistory.com/entry/Springboot-redis-%EC%84%A4%EC%A0%95-Jedis%EB%B3%B4%EB%8B%A4%EB%8A%94-Lettuce">https://mandlife.tistory.com/entry/Springboot-redis-설정-Jedis보다는-Lettuce</a></p>
 
         
       </section>
@@ -785,8 +928,6 @@
       <a href="/tags/#lettuce" class="page__taxonomy-item p-category" rel="tag">lettuce</a><span class="sep">, </span>
     
       <a href="/tags/#redis" class="page__taxonomy-item p-category" rel="tag">redis</a><span class="sep">, </span>
-    
-      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a><span class="sep">, </span>
     
       <a href="/tags/#springboot" class="page__taxonomy-item p-category" rel="tag">springBoot</a>
     

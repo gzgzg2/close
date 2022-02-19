@@ -16,7 +16,7 @@ $custom-font-cafe24: "Cafe24Ohsquareair" !default;
 
 /* paragraph indention */
 $paragraph-indent: false !default; // true, false (default)
-$indent-var: 1.3em !default;
+$indent-var: 0.6em !default;
 
 /* system typefaces */
 $serif: Georgia, Times, serif !default;
@@ -154,7 +154,7 @@ $small: 600px !default;
 $medium: 768px !default;
 $medium-wide: 900px !default;
 $large: 1024px !default;
-$x-large: 1550 !default;
+$x-large: 1350 !default;
 $max-width: $x-large !default;
 
 /*
