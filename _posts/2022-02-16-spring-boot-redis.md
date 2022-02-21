@@ -1,5 +1,5 @@
 ---
-title: "[ramram] SpringBoot - Redis Client 적용기"
+title: "SpringBoot - Redis Client 적용기"
 categories:
   - SpringBoot
 tags:
@@ -11,7 +11,7 @@ toc: true
 toc_sticky: true
 
 date: 2022-02-16
-last_modified_at: 2022-02-19
+last_modified_at: 2022-02-21
 ---
 
 ## 들어가며

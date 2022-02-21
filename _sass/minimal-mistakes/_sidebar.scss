@@ -51,7 +51,7 @@
   h5,
   h6 {
     margin-bottom: 0;
-    font-family: $custom-font-cafe24;
+    font-family: $custom-font-pretendard;
   }
   
   p,
@@ -134,12 +134,11 @@
   }
 
   img {
-    max-width: 130px;
-    border-radius: 50%;
+    max-width: 200px;
+    border-radius: 10%;
 
     @include breakpoint($large) {
-      padding: 5px;
-      border: 1px solid $border-color;
+      margin-bottom: 8px;
     }
   }
 }
@@ -190,7 +189,7 @@
   position: relative;
   display: table-cell;
   vertical-align: middle;
-  font-family: $sans-serif;
+  font-family: $custom-font-pretendard;
   z-index: 20;
   cursor: pointer;
 
