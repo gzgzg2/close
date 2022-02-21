@@ -8,8 +8,8 @@
 
 $doc-font-size: 16 !default;
 
-/*S-CoreDream-3Light*/
-$custom-font-coredream: "S-CoreDream-3Light" !default;
+/*Pretendard-Regular*/
+$custom-font-pretendard: "Pretendard-Regular" !default;
 
 /*Cafe24Ohsquareair*/
 $custom-font-cafe24: "Cafe24Ohsquareair" !default;
@@ -35,9 +35,9 @@ $bodoni: "Bodoni MT", serif !default;
 $calisto: "Calisto MT", serif !default;
 $garamond: Garamond, serif !default;
 
-$global-font-family: $custom-font-coredream !default;
+$global-font-family: $custom-font-pretendard !default;
 $header-font-family: $custom-font-cafe24 !default;
-$caption-font-family: $custom-font-coredream !default;
+$caption-font-family: $custom-font-pretendard !default;
 
 /* type scale */
 $type-size-1: 2.441em !default; // ~39.056px
@@ -48,6 +48,7 @@ $type-size-5: 1em !default; // ~16px
 $type-size-6: 0.7em !default; // ~12px
 $type-size-7: 0.6875em !default; // ~11px
 $type-size-8: 0.625em !default; // ~10px
+$type-size-9: 0.8em !default; // ~10px
 
 /* headline scale */
 $h-size-1: 1.563em !default; // ~25.008px
@@ -154,16 +155,16 @@ $small: 600px !default;
 $medium: 768px !default;
 $medium-wide: 900px !default;
 $large: 1024px !default;
-$x-large: 1350 !default;
+$x-large: 1380 !default;
 $max-width: $x-large !default;
 
 /*
    Grid
    ========================================================================== */
 
-$right-sidebar-width-narrow: 200px !default;
-$right-sidebar-width: 300px !default;
-$right-sidebar-width-wide: 400px !default;
+$right-sidebar-width-narrow: 320px !default;
+$right-sidebar-width: 400px !default;
+$right-sidebar-width-wide: 500px !default;
 
 /*
    Other
