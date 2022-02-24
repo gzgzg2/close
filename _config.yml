@@ -17,6 +17,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 # Site Settings
 locale                   : "ko"
 title                    : "나비랑 나리 주인님의 블로그"
+right_title               : "about"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "람람이"

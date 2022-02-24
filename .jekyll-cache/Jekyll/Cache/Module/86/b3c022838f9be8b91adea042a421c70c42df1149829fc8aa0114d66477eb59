@@ -1,4 +1,4 @@
-I"D
+I"š
 
 <div class="masthead">
   <div class="masthead__inner-wrap">
@@ -16,6 +16,9 @@
           <div class="navicon"></div>
         </button>
         <ul class="hidden-links hidden"></ul>
+        <a class="site-left-title" href="/layout/about">
+          about
+        </a>
       </nav>
     </div>
   </div>
