@@ -18,6 +18,9 @@
 <loc>http://localhost:4000/categories/network</loc>
 </url>
 <url>
+<loc>http://localhost:4000/categories/nextstep</loc>
+</url>
+<url>
 <loc>http://localhost:4000/categories/oop_book</loc>
 </url>
 <url>
@@ -34,6 +37,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/categories/springboot</loc>
+</url>
+<url>
+<loc>http://localhost:4000/categories/study</loc>
 </url>
 <url>
 <loc>http://localhost:4000/categories/tobi</loc>
