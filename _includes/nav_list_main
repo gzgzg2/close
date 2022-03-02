@@ -66,24 +66,40 @@
                 {% endfor %}
             </ul>
 
-             <span class="nav__sub-title">네트워크</span>
-            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+             <span class="nav__sub-title">기타</span>
             <ul>
-                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
-                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
                 {% for category in site.categories %}
-                    {% if category[0] == "Http" %}
-                        <li><a href="/categories/http" class="">Http ({{category[1].size}})</a></li>
+                    {% if category[0] == "Stduy" %}
+                        <li><a href="/categories/study" class="">스터디 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "OSI" %}
-                        <li><a href="/categories/osi" class="">OSI ({{category[1].size}})</a></li>
+                    {% if category[0] == "NextStep" %}
+                        <li><a href="/categories/nextstep" class="">NextStep ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
+
+            ;  <span class="nav__sub-title">네트워크</span>
+            ; <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            ; <ul>
+            ;     <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+            ;     <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+            ;     {% for category in site.categories %}
+            ;         {% if category[0] == "Http" %}
+            ;             <li><a href="/categories/http" class="">Http ({{category[1].size}})</a></li>
+            ;         {% endif %}
+            ;     {% endfor %}
+            ; </ul>
+            ; <ul>
+            ;     {% for category in site.categories %}
+            ;         {% if category[0] == "OSI" %}
+            ;             <li><a href="/categories/osi" class="">OSI ({{category[1].size}})</a></li>
+            ;         {% endif %}
+            ;     {% endfor %}
+            ; </ul>
       </li>
   </ul>
 </nav>
