@@ -9,6 +9,10 @@
 <lastmod>2022-02-21T00:00:00+09:00</lastmod>
 </url>
 <url>
+<loc>http://localhost:4000/os/os-study-02/</loc>
+<lastmod>2022-03-15T00:00:00+09:00</lastmod>
+</url>
+<url>
 <loc>http://localhost:4000/layout/about</loc>
 </url>
 <url>
@@ -25,6 +29,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/categories/oop</loc>
+</url>
+<url>
+<loc>http://localhost:4000/categories/os</loc>
 </url>
 <url>
 <loc>http://localhost:4000/categories/osi</loc>

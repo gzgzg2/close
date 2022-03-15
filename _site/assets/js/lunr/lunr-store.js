@@ -10,4 +10,10 @@ var store = [{
         "tags": ["springframework","applicationContext","dispatcherServlet","토비의 스프링 3.1"],
         "url": "/tobi/spring-applicationcontext/",
         "teaser": null
+      },{
+        "title": "[운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리",
+        "excerpt":"1. 컴퓨터 구조 ✔️ 전문가적 입장에서 컴퓨터를 말할 때, 보통 CPU와 Memory를 말한다. ✔️ 컴퓨터는 CPU, Memory, I/O Device, Disk, 네트워크 장비들로 이뤄져있다. 2. 컴퓨터 시스템 구조 ✔️  CPU CPU는 매 클럭사이클 마다 메모리에서 instruction을 하나씩 읽어서 실행한다. instruction 수행이 종료되면 Interrupt Line을 체크하고 인터럽트 신호가 확인되면 수행한다. ✔️  Modebit 사용자가 프로그램의 잘못된...","categories": ["OS"],
+        "tags": ["운영체제","컴퓨터 구조","OS","Operating System"],
+        "url": "/os/os-study-02/",
+        "teaser": null
       }]
