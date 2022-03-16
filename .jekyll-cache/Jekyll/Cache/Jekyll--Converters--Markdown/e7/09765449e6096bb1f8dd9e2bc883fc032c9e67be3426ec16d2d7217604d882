@@ -1,4 +1,39 @@
-I"�
+I",
+<div class="list__item">
+  <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-03/" rel="permalink">[운영체제 스터디] 프로세스와 쓰레드
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 프로세스
+</p>
+  </article>
+</div>
+
 <div class="list__item">
   <article class="archive__item" itemscope="" itemtype="https://schema.org/CreativeWork">
     

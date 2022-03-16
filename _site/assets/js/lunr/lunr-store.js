@@ -16,4 +16,10 @@ var store = [{
         "tags": ["운영체제","컴퓨터 구조","OS","Operating System"],
         "url": "/os/os-study-02/",
         "teaser": null
+      },{
+        "title": "[운영체제 스터디] 프로세스와 쓰레드",
+        "excerpt":"1. 프로세스 “Process is a program in execution” ✔️ 프로세스의 문맥(context) CPU 수행 상태를 나타내는 하드웨어 문맥 하드웨어 문맥 Program Counter 각종 register 프로세스의 주소 공간 (프로세스마다 각자의 주소공간을 가지고 있음) code, data, stack 프로세스 관련 커널 자료 구조 PCB (Process Control Block) Kernel stack ✔️ 프로세스는 상태가 변경되며 수행된다 Running CPU를...","categories": ["OS"],
+        "tags": ["프로세스","스케줄러","OS","Operating System","쓰레드","Thread"],
+        "url": "/os/os-study-03/",
+        "teaser": null
       }]
