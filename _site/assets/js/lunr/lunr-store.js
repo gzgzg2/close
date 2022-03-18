@@ -11,6 +11,12 @@ var store = [{
         "url": "/tobi/spring-applicationcontext/",
         "teaser": null
       },{
+        "title": "[운영체제 스터디] 운영체제란 무엇인가?",
+        "excerpt":"1. 운영체제란 무엇인가? 컴퓨터 하드웨어 바로 윗단에 설치되는 소프트웨어를 말한다. 운영체제는 하드웨어와 소프트웨어를 연결하는 소프트웨어 계층이다. ✔️ 운영체제의 주요역할 하드웨어 자원을 효율적으로 관리 사용자가 컴퓨터를 쉽게 다룰 수 있게 GUI 인터페이스 제공 ✔️ 자원이란 CPU, 메모리, 하드웨어 뿐만 아니라 소프트웨어 자원까지 포함하여 부르는 말이다. 자원관리는 운영체제의 중요한 역할 중 하나이다* ✔️ 협의의 운영체제(커널)...","categories": ["OS"],
+        "tags": ["운영체제란?","운영체제의 목적","운영체제 구조","Operating System"],
+        "url": "/os/os-study-01/",
+        "teaser": null
+      },{
         "title": "[운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리",
         "excerpt":"1. 컴퓨터 구조 ✔️ 전문가적 입장에서 컴퓨터를 말할 때, 보통 CPU와 Memory를 말한다. ✔️ 컴퓨터는 CPU, Memory, I/O Device, Disk, 네트워크 장비들로 이뤄져있다. 2. 컴퓨터 시스템 구조 ✔️  CPU CPU는 매 클럭사이클 마다 메모리에서 instruction을 하나씩 읽어서 실행한다. instruction 수행이 종료되면 Interrupt Line을 체크하고 인터럽트 신호가 확인되면 수행한다. ✔️  Modebit 사용자가 프로그램의 잘못된...","categories": ["OS"],
         "tags": ["운영체제","컴퓨터 구조","OS","Operating System"],

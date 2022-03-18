@@ -1,0 +1,979 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[운영체제 스터디] 운영체제란 무엇인가? - 나비랑 나리 주인님의 블로그</title>
+<meta name="description" content="1. 운영체제란 무엇인가?">
+
+
+  <meta name="author" content="ramram">
+  
+  <meta property="article:author" content="ramram">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="나비랑 나리 주인님의 블로그">
+<meta property="og:title" content="[운영체제 스터디] 운영체제란 무엇인가?">
+<meta property="og:url" content="http://localhost:4000/os/os-study-01/">
+
+
+  <meta property="og:description" content="1. 운영체제란 무엇인가?">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-14T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-03-14T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/os/os-study-01/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "람람이",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="나비랑 나리 주인님의 블로그 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+<link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png">
+<link rel="manifest" href="/local/site.webmanifest">
+<link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          나비랑 나리 주인님의 블로그
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+        <a class="site-left-title" href="/layout/about">
+          about
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/navi_1.jpeg" alt="ramram" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">ramram</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>잠자는 게 제일 좋은 개발자</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">서울</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+
+  
+  <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            <span style="font-family:'Pretendard-Regular';">전체 글 (</style><span style="font-family:'Pretendard-Regular';">5)</style>
+      </li>
+      <li>
+      
+       <span class="nav__sub-title">자바</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">스프링</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                        <li><a href="/categories/springboot" class="">스프링부트(1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+            <span class="nav__sub-title">독서</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/tobi" class="">토비의 스프링 3.1(1)</a></li>
+                    
+                
+                    
+                
+            </ul>
+
+             <span class="nav__sub-title">기타</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/os" class="">운영체제 (3)</a></li>
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[운영체제 스터디] 운영체제란 무엇인가?">
+    <meta itemprop="description" content="1. 운영체제란 무엇인가?">
+    <meta itemprop="datePublished" content="2022-03-14T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-03-14T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/os/os-study-01/" class="u-url" itemprop="url">[운영체제 스터디] 운영체제란 무엇인가?
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-운영체제란-무엇인가">1. 운영체제란 무엇인가?</a></li><li><a href="#2-운영체제의-목적">2. 운영체제의 목적</a></li><li><a href="#3-운영-체제의-분류">3. 운영 체제의 분류</a><ul><li><a href="#️동시-작업-가능-여부">✔️ 동시 작업 가능 여부</a></li><li><a href="#️사용자의-수">✔️ 사용자의 수</a></li><li><a href="#️처리-방식">✔️ 처리 방식</a></li><li><a href="#️몇-가지-용어">✔️ 몇 가지 용어</a></li><li><a href="#️운영-체제의-예">✔️ 운영 체제의 예</a></li></ul></li><li><a href="#4-운영체제의-구조">4. 운영체제의 구조</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="1-운영체제란-무엇인가">1. 운영체제란 무엇인가?</h2>
+
+<blockquote>
+  <p>컴퓨터 하드웨어 바로 윗단에 설치되는 소프트웨어를 말한다.
+운영체제는 하드웨어와 소프트웨어를 연결하는 소프트웨어 계층이다.</p>
+
+</blockquote>
+
+<p>✔️ 운영체제의 주요역할</p>
+
+<ul>
+  <li>하드웨어 자원을 효율적으로 관리</li>
+  <li>사용자가 컴퓨터를 쉽게 다룰 수 있게 GUI 인터페이스 제공</li>
+</ul>
+
+<p>✔️ 자원이란 CPU, 메모리, 하드웨어 뿐만 아니라 소프트웨어 자원까지 포함하여 부르는 말이다. 자원관리는 운영체제의 중요한 역할 중 하나이다*</p>
+
+<p>✔️ 협의의 운영체제(커널)</p>
+
+<ul>
+  <li>운영체제의 핵심 부분으로 전원이 켜짐과 동시에 메모리에 상주하는 부분</li>
+</ul>
+
+<p>✔️ 광의의 운영체제</p>
+
+<ul>
+  <li>커널 뿐만 아니라 각종 시스템 유틸리티를 포함한 개념</li>
+  <li>항상 메모리에 올려두는 것이 아닌 별도의 프로그램으로서 사실상 운영체제의 일부라고 보긴 어렵지만 운영체제와 함께 설치되기 때문에 넓은 의미로 포함시킨다.</li>
+</ul>
+
+<h2 id="2-운영체제의-목적">2. 운영체제의 목적</h2>
+
+<p>✔️ 운영체제의 핵심은 하드웨어를 효율적으로 관리할 수 있게 하는 것</p>
+
+<p>✔️ 주어진 자원으로 최대한의 성능을 내도록</p>
+
+<p>✔️ 사용자가 컴퓨터를 편리하게 사용할 수 있는 환경을 제공하는 것</p>
+
+<ul>
+  <li>사용자간의 형평성 있는 자원 분배</li>
+</ul>
+
+<p>✔️ 사용자 및 운영체제 자신을 보호</p>
+
+<p>✔️ 프로세스, 파일, 메세지(소프트웨어 자원) 등을 관리</p>
+
+<p>✔️ 운영체제의 자원? (하드웨어)</p>
+
+<ul>
+  <li>CPU, RAM, IO 장치 등등</li>
+</ul>
+
+<h2 id="3-운영-체제의-분류">3. 운영 체제의 분류</h2>
+
+<h3 id="️동시-작업-가능-여부">✔️ 동시 작업 가능 여부</h3>
+
+<ul>
+  <li>단일 작업(sigle tasking)
+    <ul>
+      <li>한 번에 하나의 작업만 처리</li>
+    </ul>
+  </li>
+  <li>다중 작업(multi tasking)
+    <ul>
+      <li>동시에 두 개 이상의 작업 처리</li>
+      <li>현대의 운영체제 들은 대부분 다중 작업이 가능한 운영체제</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="️사용자의-수">✔️ 사용자의 수</h3>
+
+<p>여러 사용자가 동시에 접근할 수 있는지를 기준으로 구분</p>
+
+<ul>
+  <li>단일 사용자(sigle user)
+예 ) MS-DOS, MS Windows</li>
+  <li>다중 사용자(multi user)
+예 ) UNIX, NT server</li>
+</ul>
+
+<h3 id="️처리-방식">✔️ 처리 방식</h3>
+
+<ul>
+  <li>일괄 처리(bath processing)
+    <ul>
+      <li>작업 요청의 일정량 모아서 한꺼번에 처리</li>
+      <li>작업이 완전 종료될 때까지 기다려야함
+  예 ) 초기 Punch Card 처리 시스템</li>
+    </ul>
+  </li>
+  <li>시분할(time sharing)
+    <ul>
+      <li>여러 작업을 수행할 때 컴퓨터 처리 능력을 일정한 시간 단위로 분할하여 사용</li>
+      <li>일괄 처리 시스템에 비해 짧은 응답을 가짐</li>
+      <li>interactive한 방식</li>
+      <li>범용 컴퓨터의 처리방식</li>
+    </ul>
+  </li>
+  <li>실시간(Realtime OS)
+    <ul>
+      <li>정해진 시간 안에 어떠한 일이 반드시 종료됨이 보장되어야 하는 실시간 시스템을 위한 OS
+  예 ) 원자로/공장 제어, 미사일 제어, 반도체 장비, 로보트 제어</li>
+    </ul>
+  </li>
+  <li>실시간 시스템의 개념 확장
+    <ul>
+      <li>Hard realtime system (경성 실시간 시스템)</li>
+      <li>Soft realtime sysytem(연성 실시간 시스템)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="️몇-가지-용어">✔️ 몇 가지 용어</h3>
+
+<ul>
+  <li>Multitasking (여러 프로그램이 실행되는 것)</li>
+  <li>Multiprogramming (메모리에 여러 프로그램이 올라가있음을 강조)</li>
+  <li>Time sharing (Multitasking과 유사하지만 CPU 강조)</li>
+  <li>Multiprocess</li>
+  <li>Multiprocessor
+    <ul>
+      <li>하나의 컴퓨터에 CPU(processor)가 여러 개 붙어 있음을 의미</li>
+    </ul>
+  </li>
+  <li>구분
+    <ul>
+      <li>위의 용어들은 컴퓨터에서 여러 작업을 동시에 수행하는 것을 뜻한다</li>
+      <li>Multiprogramming은 여러 프로그램이 메모리에 올라가 있음을 강조</li>
+      <li>Time Sharing은 CPU의 시간을 분할하여 나누어 쓴다는 의미를 강조</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="️운영-체제의-예">✔️ 운영 체제의 예</h3>
+
+<ul>
+  <li>UNIX
+    <ul>
+      <li>코드의 대부분을 C언어로 작성 됨</li>
+      <li>높은 이식성</li>
+      <li>최소한의 커널 구조</li>
+      <li>복잡한 시스템에 맞게 확장 용이</li>
+      <li>소스 코드 공개</li>
+      <li>프로그램 개발에 용이</li>
+      <li>대형 컴퓨터를 위해 만들어짐</li>
+      <li>다양한 버전
+        <ul>
+          <li>System V, FreeBSD, SunOs, Solaris</li>
+          <li>Linux (Unix 소스코드 기반)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>DOS(Disk Operating System)
+    <ul>
+      <li>MS사에서 1981년 IBM-PC를 위해 개발</li>
+      <li>단일 사용자용 운영체제, 메모리 관리 능력의 한계(주 기억 장치 : 640KB)</li>
+    </ul>
+  </li>
+  <li>MS Windows
+    <ul>
+      <li>MS사의 다중 작업용 GUI 기반 운영 체제</li>
+      <li>Plug and Play, 네트워크 환경 강화</li>
+      <li>DOS용 응용 프로그램과 호환성 제공</li>
+      <li>불안정성 (초창기 Windows)</li>
+      <li>풍부한 자원 소프트웨어</li>
+    </ul>
+  </li>
+  <li>Hanheld device를 위한 OS
+    <ul>
+      <li>PalmOS, Pocket PC (WinCE), Tiny OS</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="4-운영체제의-구조">4. 운영체제의 구조</h2>
+
+<p><strong>CPU, Memory, I/O Device, Disk (운영체제는 각 자원들을 관리한다)</strong></p>
+
+<p>✔️ CPU 스케줄링</p>
+
+<ul>
+  <li>어떤 프로그램에게 우선순위를 할당할지?
+    <ul>
+      <li>짧은 간격으로 프로그램을 교체 함 (시분할)</li>
+      <li>프로그램이 실행된 순서대로 우선순위를 할당하면 작업이 길어질 경우 나머지 프로그램 응답시간이 길어지기 때문에 사용하지 않는다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ 메모리 관리</p>
+
+<ul>
+  <li>한정된 메모리를 어떻게 관리하나?
+    <ul>
+      <li>프로그램 실행에 필요한 최소한의 정보만을 메모리에 올려 둠</li>
+      <li>CPU에서 사용될 가능성이 낮은 정보들을 DISK에 내려둔다.</li>
+      <li>CPU에서 사용될 가능성이 낮은 정보를 어떻게 판단하는지?
+        <ul>
+          <li>데이터가 메모리에 올라간 이후로 자주 사용된 데이터이면 사용될 가능성이 높은 정보로 판단한다</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ DISK 파일관리</p>
+
+<ul>
+  <li>DISK 스케줄링 (엘리베이터 스케줄링과 유사함 CPU 스케줄링과는 다르다)
+    <ul>
+      <li>DISK에 들어온 요청들을 HEAD와 가까운 위치에 들어온 요청이 있다면 먼저 처리하고 DISK HEAD의 이동을 최소화한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ I/O Device</p>
+
+<ul>
+  <li>다른 자원들에 비해 느리다.</li>
+  <li>입출력관리 인터럽트
+    <ul>
+      <li>I/O Device가 작업을 처리해야할 경우 CPU에게 인터럽트 신호를 준다</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br />
+<br />
+<br /></p>
+
+<hr />
+
+<p><strong>[질문 리스트]</strong></p>
+
+<ol>
+  <li>운영체제의 정의를 설명하고 그 기능에 대해 아는대로 설명해주세요
+    <ul>
+      <li>운영체제는 컴퓨터 하드웨어 바로 위에 설치되어 사용자 및 다른 소프트웨어와 하드웨어를 연결하는 소프트웨어 계층이다.
+ 운영체제는 사용자가 컴퓨터를 쉽게 다룰 수 있게 GUI 인터페이스 제공하고, 하드웨어 자원을 효율적으로 사용할 수 있게 도와준다.</li>
+    </ul>
+  </li>
+  <li>운영체제 운용 방법 중 하나인 시분할 시스템에 대해서 설명해주세요
+    <ul>
+      <li>시분할 시스템은 여러 작업을 수행할 때 CPU를 일정한 시간 단위로 프로그램에게 할당하여 처리해줌으로써 각 사용자에게 독립된 컴퓨터를 사용하는 느낌을 준다. 라운드 로빈(Round Robin)방식이라고도 한다.</li>
+      <li>하나의 CPU는 같은 시점에서 여러 개의 작업을 동시에 수행할 수 없기 때문에, CPU의 전체 사용시간을 작은 작업 시간량으로 쪼개어그 시간량 동안만 번갈아가면서 CPU를 할당하여 각 작업을 처리하는 방법이다.모든 작업이 동시에 진행되는 것처럼 대화식 처리가 가능하다. 각 작업에 대한 응답시간을 최소화 하는 것이 목적이다.</li>
+    </ul>
+  </li>
+  <li>운영체제의 개념을 좁은 의미와 넓은 의미로 나누어 간략하게 설명하세요
+    <ul>
+      <li>운영체제의 좁은 의미는 운영체제 커널을 의미하고 커널은 운영체제의 핵심 부분임으로 전원이 켜짐과 동시에 메모리에 상주합니다.
+운영체제의 넓은 의미는 운영체제의 커널과 각종 주변 유틸리티 시스템을 포함한 개념입니다<em>.</em></li>
+    </ul>
+  </li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#operating-system" class="page__taxonomy-item p-category" rel="tag">Operating System</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C-%EA%B5%AC%EC%A1%B0" class="page__taxonomy-item p-category" rel="tag">운영체제 구조</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80" class="page__taxonomy-item p-category" rel="tag">운영체제란?</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%9D%98-%EB%AA%A9%EC%A0%81" class="page__taxonomy-item p-category" rel="tag">운영체제의 목적</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-14">March 14, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5B%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C+%EC%8A%A4%ED%84%B0%EB%94%94%5D+%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80+%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F%20http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/tobi/spring-applicationcontext/" class="pagination--pager" title="SpringFramework - Web ApplicationContext
+">이전</a>
+    
+    
+      <a href="/os/os-study-02/" class="pagination--pager" title="[운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-03/" rel="permalink">[운영체제 스터디] 프로세스와 쓰레드
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 프로세스
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-02/" rel="permalink">[운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 컴퓨터 구조
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/tobi/spring-applicationcontext/" rel="permalink">SpringFramework - Web ApplicationContext
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1.  IoC 컨테이너 : 빈 팩토리와 애플리케이션 컨텍스트
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/springboot/spring-boot-redis/" rel="permalink">SpringBoot - Redis Client 적용기
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">들어가며
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-gitlab" aria-hidden="true"></i> email</a></li>
+        
+      
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 람람이. Powered by.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
