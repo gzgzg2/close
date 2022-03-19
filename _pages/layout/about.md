@@ -16,8 +16,6 @@ permalink: layout/about
 
 **Email.** parkuram12@gmail.com
 
-**Phone.** 010-3604-1458
-
 ### *Channel.*
 
 **Blog.** [https://gzgzg2.github.io/](https://gzgzg2.github.io/) 
