@@ -13,6 +13,7 @@ toc_sticky: true
 
 date: 2022-02-21
 last_modified_at: 2022-02-21
+comments: true
 ---
 
 ## 1.  IoC 컨테이너 : 빈 팩토리와 애플리케이션 컨텍스트

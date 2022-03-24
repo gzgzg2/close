@@ -20,8 +20,8 @@ title                    : "나비랑 나리 주인님의 블로그"
 right_title               : "about"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "람람이"
-description              : "Spring back-end 개발자 람람"
+name                     : "람람"
+description              : "Spring back-end"
 url                      : # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gzgzg2/blog-comments" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -37,7 +37,7 @@ comments:
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
-    # https://developers.facebook.com/docs/plugins/comments
+ # https://developers.facebook.com/docs/plugins/comments
     appid                :
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
@@ -264,7 +264,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: # true
+      comments: true
       share: true
       related: true
       sidebar_main: true

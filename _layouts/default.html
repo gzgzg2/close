@@ -28,6 +28,8 @@
         {% include_cached search/search_form.html %}
       </div>
     {% endif %}
+    
+    {% include scripts.html %}
 
     <div id="footer" class="page__footer">
       <footer>
@@ -35,8 +37,6 @@
         {% include_cached footer.html %}
       </footer>
     </div>
-
-    {% include scripts.html %}
 
   </body>
 </html>
