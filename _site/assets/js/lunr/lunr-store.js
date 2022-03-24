@@ -28,4 +28,22 @@ var store = [{
         "tags": ["프로세스","스케줄러","OS","Operating System","쓰레드","Thread"],
         "url": "/os/os-study-03/",
         "teaser": null
+      },{
+        "title": "[운영체제 스터디] 프로세스의 특성과 CPU 스케줄링",
+        "excerpt":"1. CPU and I/O Bursts In Program Execution 어떤 프로그램이든 프로그램을 실행한다는 것은 CPU Burst와 I/O Burst를 반복하게 되는 것이다. ❓CPU Burst CPU에서 instruction을 수행하는 것 ❓ I/O Burst I/O를 instruction을 수행하는 작업 💡 프로세스의 특성 분류 ✔️ I/O-bound process CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 Job (many short CPU bursts) ✔️CPU-bound...","categories": ["OS"],
+        "tags": ["CPU 스케줄링","Round Robin","SJF 스케줄링","FCFS","우선순위 스케줄링"],
+        "url": "/os/os-study-04-02/",
+        "teaser": null
+      },{
+        "title": "[운영체제 스터디] 프로세스 생성과 프로세스의 협력",
+        "excerpt":"1. 프로세스와 관련한 시스템 콜 ✔️ fork() create a child (copy) ✔️ exec() overlay new image ✔️ wait() sleep until child is done ✔️ exit() frees all the resources, notify parent 2. 프로세스 생성 (Process Creation) ‼️  Copy-on-wirte(COW) 자원의 내용이 변경될 때 메모리 영역을 복제하고 변경되지 않을 경우에는 부모 프로세스의...","categories": ["OS"],
+        "tags": ["프로세스 생성","부모 프로세스","자식 프로세스","Operating System"],
+        "url": "/os/os-study-04/",
+        "teaser": null
+      },{
+        "title": "[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화",
+        "excerpt":"1. Multilevel Queue (SingleCore Cpu 기준) ✔️ Multilevel Feedback Queue보다 프로세스 차별적인 방식 ✔️ Ready queue를 여러 개로 분할 foreground (interactive) background (batch - no human interaction) ✔️  각 큐는 독립적인 스케줄링 알고리즘을 가짐 foreground - RR (라운드 로빈) 사용자와 대화하는 프로세스이기 때문에 응답시간이 짧은 것이 중요하다 background - FCFS (선입선출) 사용자와...","categories": ["OS"],
+        "tags": ["멀티 피드백 큐","멀티레벨 큐","프로세스 동기화","Operating System"],
+        "url": "/os/os-study-05/",
+        "teaser": null
       }]

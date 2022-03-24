@@ -1,0 +1,938 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화 - 나비랑 나리 주인님의 블로그</title>
+<meta name="description" content="1. Multilevel Queue (SingleCore Cpu 기준)">
+
+
+  <meta name="author" content="ramram">
+  
+  <meta property="article:author" content="ramram">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="나비랑 나리 주인님의 블로그">
+<meta property="og:title" content="[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화">
+<meta property="og:url" content="http://localhost:4000/os/os-study-05/">
+
+
+  <meta property="og:description" content="1. Multilevel Queue (SingleCore Cpu 기준)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-03-23T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-03-23T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/os/os-study-05/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "람람이",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="나비랑 나리 주인님의 블로그 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+<link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png">
+<link rel="manifest" href="/local/site.webmanifest">
+<link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          나비랑 나리 주인님의 블로그
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+        <a class="site-left-title" href="/layout/about">
+          about
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/navi_1.jpeg" alt="ramram" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">ramram</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>잠자는 게 제일 좋은 개발자</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">서울</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+
+  
+  <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            <span style="font-family:'Pretendard-Regular';">전체 글 (</style><span style="font-family:'Pretendard-Regular';">8)</style>
+      </li>
+      <li>
+      
+       <span class="nav__sub-title">자바</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">스프링</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                        <li><a href="/categories/springboot" class="">스프링부트(1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+            <span class="nav__sub-title">독서</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/tobi" class="">토비의 스프링 3.1(1)</a></li>
+                    
+                
+                    
+                
+            </ul>
+
+             <span class="nav__sub-title">기타</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/os" class="">운영체제 (6)</a></li>
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화">
+    <meta itemprop="description" content="1. Multilevel Queue (SingleCore Cpu 기준)">
+    <meta itemprop="datePublished" content="2022-03-23T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-03-23T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/os/os-study-05/" class="u-url" itemprop="url">[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#1-multilevel-queue-singlecore-cpu-기준">1. Multilevel Queue (SingleCore Cpu 기준)</a></li><li><a href="#2-multilevel-feedback-queue-singlecore-cpu-기준">2. Multilevel Feedback Queue (SingleCore Cpu 기준)</a><ul><li><a href="#21-multilevel-feedback-queue-예시">2.1 Multilevel Feedback Queue 예시</a></li></ul></li><li><a href="#3-멀티코어-cpu의-경우-고려해야할-점">3. 멀티코어 CPU의 경우 고려해야할 점</a></li><li><a href="#4-real-time-scheduling">4. Real-Time Scheduling</a></li><li><a href="#5-thread-scheduling">5. Thread Scheduling</a></li><li><a href="#6-process-synchronization">6. Process Synchronization</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="1-multilevel-queue-singlecore-cpu-기준">1. Multilevel Queue (SingleCore Cpu 기준)</h2>
+
+<p>✔️ Multilevel Feedback Queue보다 프로세스 차별적인 방식</p>
+
+<p>✔️ Ready queue를 여러 개로 분할</p>
+
+<ul>
+  <li>foreground (interactive)</li>
+  <li>background (batch - no human interaction)</li>
+</ul>
+
+<p>✔️  각 큐는 독립적인 스케줄링 알고리즘을 가짐</p>
+
+<ul>
+  <li>foreground - RR (라운드 로빈)
+    <ul>
+      <li>사용자와 대화하는 프로세스이기 때문에 응답시간이 짧은 것이 중요하다</li>
+    </ul>
+  </li>
+  <li>background - FCFS (선입선출)
+    <ul>
+      <li>사용자와 대화없이 CPU만 사용하는 batch형 작업이기 때문에 응답시간이 빠를 필요가 없다</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️  큐에 대한 스케줄링이 필요</p>
+
+<ul>
+  <li>Fixed priority scheduling
+    <ul>
+      <li>serve all from foreground then from background</li>
+      <li>Possibility of starvation
+        <ul>
+          <li>우선순위가 높은 작업이 종료되지 않으면 우선순위가 낮은 프로세스는 영원히 실행되지 못하는 문제가 발생할 수 있다.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Time slice
+    <ul>
+      <li>각 큐에  CPU time을 적절한 비율로 할당</li>
+      <li>starvation을 막기위해 전체 CPU 사용시간을 우선순위가 높은 foreground 작업에 80% 할당하고 우선순위가 낮은 background 작업에 20%를 할당하게 한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-multilevel-feedback-queue-singlecore-cpu-기준">2. Multilevel Feedback Queue (SingleCore Cpu 기준)</h2>
+
+<p>✔️  프로세스가 다른 큐로 이동할 수 있음</p>
+
+<p>✔️  에이징(aging)을 이와 같은 방식으로 구현할 수 있음</p>
+
+<p>✔️ Multilevel-feedback-queue scheduler를 이루고 있는 요소들</p>
+
+<ul>
+  <li>Queue의 수</li>
+  <li>각 큐의 scheduling algorithm</li>
+  <li>Process를 상위 큐로 보내는 기준</li>
+  <li>Process를 하위 큐로 내쫓는 기준</li>
+  <li>프로세스가 CPU 서비스를 받으려 할 때 들어갈 큐를 결정하는 기준</li>
+</ul>
+
+<p>✔️  처음 실행되는 작업은 우선순위를 가장 높게 받음</p>
+
+<h3 id="21-multilevel-feedback-queue-예시">2.1 Multilevel Feedback Queue 예시</h3>
+
+<p>✔️ Three queues:</p>
+
+<ul>
+  <li>Q0 - time quantum 8 milliseconds</li>
+  <li>Q1 -  time quantun 16 milliseconds</li>
+  <li>Q2 - FCFS (선입선출)</li>
+</ul>
+
+<p>✔️ Schduling</p>
+
+<ul>
+  <li>새로운 작업이 Q0으로 들어간다.</li>
+  <li>CPU를 잡아서 할당 시간 8milliseconds 동안 수행된다</li>
+  <li>Q0에서 할당받은 시간내에 작업을 다 끝내지 못했으면 Q1로 내려간다.</li>
+  <li>Q1에 줄서서 기다렸다가 CPU를 할당받고 16ms 동안 수행된다.</li>
+  <li>Q1에서 할당받은 시간내에 작업을 끝내지 못한 경우 Q2로 쫓겨난다.</li>
+</ul>
+
+<h2 id="3-멀티코어-cpu의-경우-고려해야할-점">3. 멀티코어 CPU의 경우 고려해야할 점</h2>
+
+<blockquote>
+  <p>CPU가 여러 개인 경우 스케줄링은 더욱 복잡해진다.</p>
+
+</blockquote>
+
+<p>✔️ Homogeneous processor인 경우</p>
+
+<ul>
+  <li>Queue에 한줄로 세워서 각 프로세서가 알아서 꺼내가게 할 수 있다.</li>
+  <li>반드시 특정 프로세스에세 수행되어야 하는 프로세스가 있는 경우에는 문제가 복잡해진다.</li>
+</ul>
+
+<p>✔️ Load sharing</p>
+
+<ul>
+  <li>일부 프로세서에 job이 몰리지 않도록 부하를 적절히 공유하는 메커니즘이 필요하다</li>
+  <li>별개의 큐를 두는 방법 vs 공동 큐를 사용하는 방법</li>
+</ul>
+
+<p>✔️ Symmetric Multiprocessing (SMP)</p>
+
+<ul>
+  <li>각 프로세서가 각자 알아서 스케줄링 결정</li>
+</ul>
+
+<p>✔️ Asymmetric multiprocessing</p>
+
+<ul>
+  <li>비대칭형 다중 처리기
+    <ul>
+      <li>하나의 프로세서가 시스템 데이터의 접근과 공유를 책임지고 나머지 프로세서는 거기에 따라 움직이는 방식</li>
+    </ul>
+  </li>
+  <li>대칭형 다중 처리기
+    <ul>
+      <li>CPU가 각자 알아서 스케줄링하는 방식</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="4-real-time-scheduling">4. Real-Time Scheduling</h2>
+
+<p>✔️ Hard real-time systems</p>
+
+<ul>
+  <li>Hard real-time task는 정해진 시간 안에 반드시 끝내도록 스케줄링해야 함</li>
+</ul>
+
+<p>✔️ Soft real-time computing</p>
+
+<ul>
+  <li>Soft real-time task는 일반 프로세스에 비해 높은 priority를 갖도록 해야 함</li>
+</ul>
+
+<p>✔️ EDF (Earlist Deadline scheduling)</p>
+
+<ul>
+  <li>실시간 환경에서는 먼저 온 요청보다 데드라인이 다가온 요청을 먼저 처리하는 스케줄링</li>
+  <li>연성 실시간 시스템처럼 일반 작업과 VOD 작업 등이 혼합된 환경에서는 데드라인이 존재하는 프로세스에게 일반 프로세스보다 높은 우선 순위를 할당한다.</li>
+</ul>
+
+<h2 id="5-thread-scheduling">5. Thread Scheduling</h2>
+
+<p>✔️ Local Scheduling</p>
+
+<ul>
+  <li>User level thread의 경우 사용자 수준의 thread library에 의해 어떤 thread를 스케줄링할지 결정
+    <ul>
+      <li>이 경우에 운영체제는 해당 thread의 존재를 알지 못한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ Global Sheduling</p>
+
+<ul>
+  <li>Kernel level thread의 경우 일반 프로세스와 마찬 가지로 커널의 단기 스케줄러가 어떤 thread를 스케줄할지 결정</li>
+</ul>
+
+<h2 id="6-process-synchronization">6. Process Synchronization</h2>
+
+<blockquote>
+  <p>멀티 프로세서 시스템의 경우 메모리 주소공간을 공유하는 CPU 프로세스가 여럿 있는 경우 Race Condition의 가능성이 있다. 아래 내용들은 Race Condition 발생 원인과 이를 해결하기 위한 프로세스 동기화 방법이다.</p>
+
+</blockquote>
+
+<p>✔️ <strong>Race Condition?</strong></p>
+
+<blockquote>
+  <p>여러 프로세스들이 동시에 공유데이터에 접근하여 경쟁하는 상태이다.</p>
+
+  <p>여러 프로세스가 동시에 공유데이터에 접근하게되면 데이터의 불일치 문제를 발생시킬 수 있다.</p>
+
+  <p>일관성 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 메커니즘이 필요하다</p>
+
+</blockquote>
+
+<p>✔️ <strong>OS에서 Race Condition은 언제 발생하는가?</strong></p>
+
+<ul>
+  <li>Kernel에서 수행 중 인터럽트 발생 시</li>
+  <li>Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우</li>
+  <li>N 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우</li>
+</ul>
+
+<p>‼️  <strong>한 프로세스가 공유 데이터를 사용하고 있을 때 다른 프로세스가 접근하면 안되는 이유</strong> ‼️</p>
+
+<ul>
+  <li>각 프로세스의 <strong>code segment</strong>에는 공유 데이터를 접근하는 코드인 <strong>ciritical section</strong>이 존재한다.</li>
+  <li>이 경우에 하나의 프로세스가 <strong>critical section</strong>에 있을 때 다른 모든 프로세스는 <strong>critical section</strong>에 들어갈 수 없어야 한다.</li>
+</ul>
+
+<p><strong>✔️ Race Condition은 어떻게 방지하는가?</strong></p>
+
+<ul>
+  <li>Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우
+    <ul>
+      <li>커널 모드에서 수행 중일 때는 CPU를 선점하지 않고 커널모드에서 사용자 모드로 돌아갈 때 CPU를 선점하는 방식</li>
+    </ul>
+  </li>
+  <li>Multiprocessor에서 shared memory 내의 kernel data
+    <ul>
+      <li>방법 1) 한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법</li>
+      <li>방법 2) 커널 배우에 있는 각 공유 데이터에 접근할 때마다 그 데이터에 대한 lock / unlock을 하는 방법</li>
+    </ul>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#operating-system" class="page__taxonomy-item p-category" rel="tag">Operating System</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%A9%80%ED%8B%B0-%ED%94%BC%EB%93%9C%EB%B0%B1-%ED%81%90" class="page__taxonomy-item p-category" rel="tag">멀티 피드백 큐</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%A9%80%ED%8B%B0%EB%A0%88%EB%B2%A8-%ED%81%90" class="page__taxonomy-item p-category" rel="tag">멀티레벨 큐</a><span class="sep">, </span>
+    
+      <a href="/tags/#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4-%EB%8F%99%EA%B8%B0%ED%99%94" class="page__taxonomy-item p-category" rel="tag">프로세스 동기화</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-03-23">March 23, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5B%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C+%EC%8A%A4%ED%84%B0%EB%94%94%5D+%EB%8B%A4%EB%8B%A8%EA%B3%84+%ED%81%90+%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81%EA%B3%BC+%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4+%EB%8F%99%EA%B8%B0%ED%99%94%20http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-05%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-05%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-05%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/os/os-study-04/" class="pagination--pager" title="[운영체제 스터디] 프로세스 생성과 프로세스의 협력
+">이전</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-04/" rel="permalink">[운영체제 스터디] 프로세스 생성과 프로세스의 협력
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 프로세스와 관련한 시스템 콜
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-04-02/" rel="permalink">[운영체제 스터디] 프로세스의 특성과 CPU 스케줄링
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. CPU and I/O Bursts In Program Execution
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-03/" rel="permalink">[운영체제 스터디] 프로세스와 쓰레드
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 프로세스
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-02/" rel="permalink">[운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1. 컴퓨터 구조
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-gitlab" aria-hidden="true"></i> email</a></li>
+        
+      
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 람람이. Powered by.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
