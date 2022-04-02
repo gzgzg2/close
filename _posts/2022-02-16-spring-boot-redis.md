@@ -12,6 +12,7 @@ toc_sticky: true
 
 date: 2022-02-16
 last_modified_at: 2022-02-21
+comments: true
 ---
 
 ## 들어가며
