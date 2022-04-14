@@ -1,0 +1,1188 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[운영체제 스터디] 데드락과 데드락 발생조건 4가지 - 나비랑 나리 주인님의 블로그</title>
+<meta name="description" content="🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟">
+
+
+  <meta name="author" content="ramram">
+  
+  <meta property="article:author" content="ramram">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko">
+<meta property="og:site_name" content="나비랑 나리 주인님의 블로그">
+<meta property="og:title" content="[운영체제 스터디] 데드락과 데드락 발생조건 4가지">
+<meta property="og:url" content="http://localhost:4000/os/os-study-08/">
+
+
+  <meta property="og:description" content="🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-04-04T00:00:00+09:00">
+
+
+
+  <meta property="article:modified_time" content="2022-04-04T00:00:00+09:00">
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/os/os-study-08/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "람람",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="나비랑 나리 주인님의 블로그 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+<link rel="apple-touch-icon" sizes="180x180" href="/local/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/local/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/local/favicon-16x16.png">
+<link rel="manifest" href="/local/site.webmanifest">
+<link rel="mask-icon" href="/local/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          나비랑 나리 주인님의 블로그
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+        <a class="site-left-title" href="/layout/about">
+          about
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/assets/images/navi_1.jpeg" alt="ramram" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">ramram</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>잠자는 게 제일 좋은 개발자</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">서울</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+  
+
+  
+  <!--전체 글 수를 세기 위한 연산. sum 변수에 전체 글 수 저장-->
+
+
+
+<nav class="nav__list">
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">토글 메뉴</label>
+  <ul class="nav__items" id="category_tag_menu">
+      <!--전체 글 수-->
+      <li>
+            <span style="font-family:'Pretendard-Regular';">전체 글 (</style><span style="font-family:'Pretendard-Regular';">12)</style>
+      </li>
+      <li>
+      
+       <span class="nav__sub-title">자바</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+        <span class="nav__sub-title">스프링</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                        <li><a href="/categories/springboot" class="">스프링부트(1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+            <span class="nav__sub-title">독서</span>
+            <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
+            <ul>
+                <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
+                <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                        <li><a href="/categories/tobi" class="">토비의 스프링 3.1(1)</a></li>
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+
+             <span class="nav__sub-title">기타</span>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/os" class="">운영체제 (9)</a></li>
+                    
+                
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                        <li><a href="/categories/network-study" class="">네트워크 스터디 (1)</a></li>
+                    
+                
+            </ul>
+            <ul>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+      </li>
+  </ul>
+</nav>
+
+  
+  </div>
+
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[운영체제 스터디] 데드락과 데드락 발생조건 4가지">
+    <meta itemprop="description" content="🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟">
+    <meta itemprop="datePublished" content="2022-04-04T00:00:00+09:00">
+    <meta itemprop="dateModified" content="2022-04-04T00:00:00+09:00">
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/os/os-study-08/" class="u-url" itemprop="url">[운영체제 스터디] 데드락과 데드락 발생조건 4가지
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu"><li><a href="#️deadlock">⚠️ Deadlock</a><ul><li><a href="#1-deadlock-발생의-4가지-조건">1. Deadlock 발생의 4가지 조건</a></li><li><a href="#2-resource-allocation-graph-자원할당-그래프">2. Resource-Allocation Graph (자원할당 그래프)</a><ul><li><a href="#1️⃣graph---1">1️⃣ Graph - 1</a></li><li><a href="#2️⃣graph---2">2️⃣ Graph - 2</a></li></ul></li><li><a href="#3-deadlock의-처리-방법">3. Deadlock의 처리 방법</a><ul><li><a href="#31-deadlock-prevention">3.1 Deadlock Prevention</a></li><li><a href="#32-deadlock-avoidance">3.2 Deadlock Avoidance</a></li><li><a href="#1️⃣resource-allocoation-graph-alogorithm">1️⃣ Resource Allocoation Graph Alogorithm</a></li><li><a href="#2️⃣bankers-algorithm">2️⃣ Banker’s Algorithm</a></li><li><a href="#33deadlock-detection-and-recovery">3.3 Deadlock Detection and recovery</a></li><li><a href="#1️⃣wait-for-graph-algorithm">1️⃣ Wait-for graph Algorithm</a></li><li><a href="#2️⃣-multiple-instance인-경우에-사용되는-알고리즘">2️⃣  Multiple instance인 경우에 사용되는 알고리즘</a></li><li><a href="#34deadlock-ignorance">3.4 Deadlock Ignorance</a></li><li><a href="#reference">Reference</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
+
+<h1 id="️deadlock">⚠️ Deadlock</h1>
+
+<p>✔️ Deadlock</p>
+
+<ul>
+  <li>이련의 프로세스들이 서로가 가진 자원을 기다리며 block된 상태</li>
+</ul>
+
+<p>✔️ Resource(자원)</p>
+
+<ul>
+  <li>하드웨어, 소프트웨어 등을 포함하는 개념</li>
+  <li>(예) I/O device. CPU cycle, memory space, semaphore 등</li>
+  <li>프로세스가 자원을 사용하는 절차
+    <ul>
+      <li>요청 (Request),획득 (Allocate),사용 (Use), 반납 (Release)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="1-deadlock-발생의-4가지-조건">1. Deadlock 발생의 4가지 조건</h2>
+
+<p>✔️ Mutual exclusion (상호배제)</p>
+
+<ul>
+  <li>매 순간 하나의 프로세스만이 자원을 사용할 수 있음</li>
+</ul>
+
+<p>✔️ No Preemption(비선점)</p>
+
+<ul>
+  <li>프로세스 자원을 스스로 내어놓을 뿐 강제로 빼앗기지 않음</li>
+</ul>
+
+<p>✔️ Hold and wait</p>
+
+<ul>
+  <li>내가 가진 자원은 양보하지 않으면서 다른 프로세스의 자원을 기다리면서 보유 자원을 내놓지않고 계속 가지고 있는 현상</li>
+</ul>
+
+<p>✔️ Circular wait</p>
+
+<ul>
+  <li>자원을 기다리는 프로세스간에 사이클이 형성되어야 함</li>
+  <li>프로세스 P0, P1 …… P5 이 있을 때
+    <ul>
+      <li>P0은 P1에 가진 자원을 기다림</li>
+      <li>P1은 P2가 가진 자원을 기다림</li>
+      <li>P2는 P3가 가진 자원을 기다림</li>
+      <li>P4는 P0이 가진 자원을 기다림</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="2-resource-allocation-graph-자원할당-그래프">2. Resource-Allocation Graph (자원할당 그래프)</h2>
+
+<p>✔️  <strong>Graph에서 Deadlock 확인 방법</strong></p>
+
+<p>그래프에 cycle이 없으면 deadlock이 아니다</p>
+
+<p>그래프에 cycle이 있을 때 자원의 인스턴스가 여러개이면 deadlock 일 수도 있고 아닐수도 있다.</p>
+
+<h3 id="1️⃣graph---1">1️⃣ Graph - 1</h3>
+
+<p><strong>Vertex</strong></p>
+
+<ul>
+  <li>Process P = {P1, P2, …. Pn}</li>
+  <li>Resource R = {R1, R2, …. Rn}</li>
+</ul>
+
+<p><strong>Edge</strong></p>
+
+<ul>
+  <li>R2를 보유한 상태로 P1 → R1 자원을 요청</li>
+  <li>R2와 R1을 보유한 상태로 P2 → R3 자원을 요청</li>
+  <li>P3가 R3를 보유</li>
+</ul>
+
+<p><strong>DeadLock ?</strong></p>
+
+<ul>
+  <li>P3에 할당된 R3가 해제될 수 있기 때문에 Cycle은 있으나 <strong>deadlock은 아니다.</strong></li>
+</ul>
+
+<p><img width="254" alt="스크린샷 2022-04-03 오후 7 06 49" src="https://user-images.githubusercontent.com/56028408/161425754-ce5a67f4-0051-4f91-84d7-00279f5e6654.png" /></p>
+
+<h3 id="2️⃣graph---2">2️⃣ Graph - 2</h3>
+
+<p><strong>Vertex</strong></p>
+
+<ul>
+  <li>Process P = {P1, P2, …. Pn}</li>
+  <li>Resource R = {R1, R2, …. Rn}</li>
+</ul>
+
+<p><strong>Edge</strong></p>
+
+<ul>
+  <li>R2를 보유한 상태로 P1 → R1 자원을 요청</li>
+  <li>R2와 R1을 보유한 상태로 P2 → R3 자원을 요청</li>
+  <li>P3가 R3를 보유한 상태로 P3 → R2 요청</li>
+</ul>
+
+<p><strong>DeadLock ?</strong></p>
+
+<ul>
+  <li>프로세스가 서로 가진 자원을 놓지 않고 다른 자원을 기다리고 있기 때문에 <strong>Deadlock 발생</strong></li>
+</ul>
+
+<p><img width="238" alt="스크린샷 2022-04-03 오후 7 07 06" src="https://user-images.githubusercontent.com/56028408/161425752-4a3dd02a-6ac2-4112-ac99-2a6ed349f6b7.png" /></p>
+
+<h2 id="3-deadlock의-처리-방법">3. Deadlock의 처리 방법</h2>
+
+<p>✔️ Deadlock Prevention</p>
+
+<p>✔️ Deadlock Avoidance</p>
+
+<p>✔️ Deadlock Detection and recovery</p>
+
+<p>✔️ Deadlock Ignorance</p>
+
+<ul>
+  <li>Deadlock을 시스템이 책임지지 않음</li>
+  <li>UNIX를 포함한 대부분의 OS가 채택</li>
+</ul>
+
+<h3 id="31-deadlock-prevention">3.1 Deadlock Prevention</h3>
+
+<blockquote>
+  <p>자원 할당 시 Deadlock의 4가지 필요 조건 중 어느 하나가 만족되지 않도록 하는 것</p>
+
+</blockquote>
+
+<p>✔️ Mutual Exclusion</p>
+
+<ul>
+  <li>공유해서는 안되는 자원의 경우 반드시 성립해야 함</li>
+</ul>
+
+<p>✔️ Hold and Wait</p>
+
+<ul>
+  <li>프로세스가 자원을 요청할 때 다른 어떤 자원도 가지고 있지 않아야 한다</li>
+  <li>방법 1. 프로세스 시작 시 모든 필요한 자원을 할당받게 하는 법</li>
+  <li>방법 2. 다른 필요한 자원이 있으면 보유 자원을 내려놓고 다시 요청</li>
+</ul>
+
+<p>✔️ No Preemption(비선점)</p>
+
+<ul>
+  <li>Process가 어떤 자원을 기다려야 하는 경우 이미 보유한 자원이 선점됨</li>
+  <li>모든 필요한 자원을 얻을 수 있을 때 그 프로세스는 다시 시작된다.</li>
+  <li>State를 쉽게 저장할 수 있고 복원할 수 있는 자원에서 주로 사용된다 (CPU, Memory)</li>
+</ul>
+
+<p>✔️ Circular Wait</p>
+
+<ul>
+  <li>모든 자원 유형에 할당 순서를 정하여 정해진 순서대로만 자원 할당
+    <ul>
+      <li>예를 들어 순서가 3인 자원 R1를 보유 중인 프로세스가 순서가 1인 자원 R2를 할당받기 위해서는 우선 R1를  반납해야한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>⚠️  <strong>하지만 아직 발생할지 안할지도 모르는 Deadlock을 위와같은 방법으로 미리 예방하게 된다면 사용성을 저하시키고 성능을 감소되는 문제가 발생할 수 있다. 추가로 기아현상의 위험도 발생한다 ⚠️</strong> </p>
+
+<h3 id="32-deadlock-avoidance">3.2 Deadlock Avoidance</h3>
+
+<blockquote>
+  <p>자원 요청에 대한 부가정보를 이용해서 자원 할당이 deadlock으로부터 안전(safe)한지 확인하고 할당한다. 시스템이 unsafe state에 들어가지 않는 것을 보장한다.</p>
+
+  <p>프로세스들이 필요로 하는 각 자원을 예측하거나 별 최대 사용량을 미리 선언하도록 하는 방법이다.</p>
+
+</blockquote>
+
+<p><img width="284" alt="스크린샷 2022-04-03 오후 3 50 26" src="https://user-images.githubusercontent.com/56028408/161425758-2893dc77-0790-4cbd-af5a-26b7aa9af242.png" /></p>
+
+<p>✔️ safe state</p>
+
+<ul>
+  <li>시스템 내의 프로세스들에 대한 safe sequence가 존재하는 상태</li>
+  <li>시스템이 safe state에 있으면 deadlock이 발생하지 않음</li>
+</ul>
+
+<p>✔️ unsafe state</p>
+
+<ul>
+  <li>시스템이 unsafe state에 있으면 deadlock 발생 가능성이 있음</li>
+</ul>
+
+<p>✔️ avoidance 알고리즘</p>
+
+<ul>
+  <li>Resource Allocation Graph alogorithm
+    <ul>
+      <li>자원의 인스턴스가 하나일 경우 사용하는 알고리즘</li>
+    </ul>
+  </li>
+  <li>Banker’s Algorithm
+    <ul>
+      <li>자원의 인스턴스가 여러개일 경우 사용하는 알고리즘</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="1️⃣resource-allocoation-graph-alogorithm">1️⃣ Resource Allocoation Graph Alogorithm</h3>
+
+<blockquote>
+  <p>이전에 소개한 Resource Allocoation Graph에서 점선(Clain edge)이 추가된 알고리즘</p>
+
+  <p>점선은 미래에 사용될 수 있는 자산을 가리킨다.</p>
+
+</blockquote>
+
+<p>✔️ Claim edge</p>
+
+<ul>
+  <li>프로세스가 자원을 미래에 요구할 수 있다는 것을 뜻함 (점선)</li>
+  <li>프로세스가 해당 자원 요청시 Claime edge가 request edge로 바뀜 (실선)</li>
+  <li>요청자원이 해제되면 assignment edge는 다시 claim edge로 변경됨</li>
+</ul>
+
+<p>✔️ request edge가 assignment edge로 변경 시 (점선을 포함하여) cycle이 생기지 않는 경우에만 요청 자원을 할당한다.</p>
+
+<p>✔️ Cycle 생성 여부 조사시 프로세스의 수가 n일 때 O(n2)시간이 걸린다.</p>
+
+<p>✔️ <strong>Resource Allocoation Graph Alogorithm 예시</strong></p>
+
+<p><img width="961" alt="스크린샷 2022-04-03 오후 7 32 33" src="https://user-images.githubusercontent.com/56028408/161425750-3e18dec7-0642-4e3f-8ae9-0d8344aa0261.png" /></p>
+
+<ol>
+  <li>P1과 P2가 미래에 R2를 요청할 가능성이 있음.</li>
+  <li>P2가 R1을 요청한 상태로 R2자원을 요청함.</li>
+  <li>P2가 R2을 할당받음 하지만 실제로 <strong>Resource Allocoation Graph Alogorithm</strong> 점선을 포함하여 cycle이 생성될 경우 자원을 내어주지 않기 때문에 R2를 할당받지 못한다. P2가 R2를 할당받으려면 R1을 소유하고 있는 P1이 R2를 할당받은 후 P1의 작업이 끝나서 R1과 R2가 해제될 때 P2가 할당받을 수 있다.</li>
+</ol>
+
+<h3 id="2️⃣bankers-algorithm">2️⃣ Banker’s Algorithm</h3>
+
+<blockquote>
+  <p>자원의 인스턴스가 여러개일 경우 사용되는 알고리즘</p>
+
+  <p>모든 프로세스의 자원의 최대 사용량을 미리 명시하여 최대 사용량이 available 가능한 자원으로 충족 될 경우에만 자원을 내어준다.</p>
+
+</blockquote>
+
+<p>✔️  가정</p>
+
+<ul>
+  <li>모든 프로세스는 자원의 최대 사용량을 미리 명시한다.</li>
+  <li>프로세스가 요청 자원을 모두 할당받은 경우 유한시간 안에 이들 자원을 다시 반납한다.</li>
+</ul>
+
+<p>✔️  방법</p>
+
+<ul>
+  <li>기본 개념 : 자원 요청시 safe 상태를 유지할 경우에만 할당</li>
+  <li>총 요청 자원의 수가 가용 자원의 수보다 적은 프로세스를 선택함 만약 그런 프로세스가 없다면 unsafe한 상태</li>
+  <li>그런 프로세스가 있으면 그 프로세스에게 자원을 할당</li>
+  <li>할당받은 프로세스가 종료되면 모든 자원을 반납</li>
+  <li>모든 프로세스가 종료될 때까지 이러한 과정을 반복</li>
+</ul>
+
+<p>✔️ <strong>Banker’s Algorithm 예시</strong></p>
+
+<p>Allocation</p>
+
+<ul>
+  <li>현재 소유하고 있는 자원</li>
+</ul>
+
+<p>Max</p>
+
+<ul>
+  <li>최대로 요청할 수 있는 자원의 수</li>
+</ul>
+
+<p>Available</p>
+
+<ul>
+  <li>가용 자원의 수</li>
+</ul>
+
+<p>Need</p>
+
+<ul>
+  <li>앞으로 요청할수도 있는 남은 자원의 수 (Max - Allocation)</li>
+</ul>
+
+<p><img width="508" alt="스크린샷 2022-04-03 오후 7 50 06" src="https://user-images.githubusercontent.com/56028408/161425748-e1727a31-270f-4a79-a9e5-8de74c0c8366.png" /></p>
+
+<p>✔️ 5개의 프로세스가 존재한다고 가정한다.</p>
+
+<p>✔️ 3개의 자원이 존재한다  A(10), B(5), C(7) 각 자원은 10, 5, 7개의 인스턴스를 가지고 있다.</p>
+
+<p>✔️  현재 가용 자원보다 Need 자원의 더 클 경우에 해당 프로세스는 자원을 할당받지 못한다. 자원 할당이 가능한 프로세스를 순서대로 나열하면 &lt;P1, P3, P4, P2, P0&gt; 이 된다.</p>
+
+<h3 id="33deadlock-detection-and-recovery">3.3 Deadlock Detection and recovery</h3>
+
+<blockquote>
+  <p>Deadlock 발생은 허용하되 그에 대한 detection 루틴을 두어 deadlock 발견시 recover한다.</p>
+
+  <blockquote>
+    <p>Resource type 당 single instance인 경우 자원할당 그래프에서의 cycle이 곧 deadlock을 의미한다.</p>
+
+    <p>Resource type 당 multiple instance인 경우 Banker’s algorithm과 유사한 방법을 활용한다.</p>
+
+  </blockquote>
+</blockquote>
+
+<h3 id="1️⃣wait-for-graph-algorithm">1️⃣ Wait-for graph Algorithm</h3>
+
+<ul>
+  <li>자원당 하나의 인스턴스를 가지고 있을 경우 사용됨</li>
+  <li>Wait-for graph
+    <ul>
+      <li>자원할당 그래프의 변형</li>
+      <li>프로세스만으로 node를 구성함
+        <ul>
+          <li>P1이 가지고 있는 자원을 P2가 기다리는 경우 P2 → P1</li>
+          <li>Avoidance에선 P2 → R1 → P1</li>
+        </ul>
+      </li>
+      <li>그래프에 점선이 없음</li>
+    </ul>
+  </li>
+  <li>Algorithm
+    <ul>
+      <li>Wait-for graph에 사이클이 존재하는지를 주기적으로 조사함 O(n2)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img width="458" alt="스크린샷 2022-04-03 오후 8 05 13" src="https://user-images.githubusercontent.com/56028408/161425744-b3764fa2-5213-4e4e-8254-a41d87ad2cf2.png" /></p>
+
+<p><strong>⚠️  Graph에 Cycle이 존재할 경우 Deadlock Detection ⚠️</strong></p>
+
+<h3 id="2️⃣-multiple-instance인-경우에-사용되는-알고리즘">2️⃣  Multiple instance인 경우에 사용되는 알고리즘</h3>
+
+<blockquote>
+  <p><strong>Banker’s Algorithm</strong> 과 비슷하지만 최대 요청가능한 자산을 예측하지 않고 Allocation, Request, Available 만 관리한다.</p>
+
+</blockquote>
+
+<p><img width="398" alt="스크린샷 2022-04-03 오후 8 11 22" src="https://user-images.githubusercontent.com/56028408/161425742-92f20077-6814-48c3-ac8b-3ab0da0981a5.png" /></p>
+
+<p>사용중인 자원을 해제한다는 가정하에 가용자원으로 safe sequence를 확인해보면 &lt;P0, P2, P3, P1, P4&gt; 와 같은 순서가 나타난다.</p>
+
+<p><strong>🌟 Request는 추가요청가능량이 아니라 현재 실제로 요청한 자원량을 나타낸다 🌟</strong></p>
+
+<p>✔️ Recovery</p>
+
+<ul>
+  <li>Process termination
+    <ul>
+      <li>Deadlock에 연루된 모든 프로세스를 Abork 한다.</li>
+      <li>Deadlock에 연루된 프로세스를 하나씩 Abork 해보고 해결되는 지 확인한다.</li>
+    </ul>
+  </li>
+  <li>Resource Preemption
+    <ul>
+      <li>Deadlock에 연루된 프로세스 중에 비용을 최소화할 victim을 선점하여 자원을 뺏는다.</li>
+      <li>Safe State로 Rollback하여 Process를 재시작한다.</li>
+      <li>Stavation 문제 발생 위험
+        <ul>
+          <li>동일한 프로세스가 계속해서 victim으로 선점되는 경우
+            <ul>
+              <li>cost factor에 Rollback횟수도 고려한다.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="34deadlock-ignorance">3.4 Deadlock Ignorance</h3>
+
+<blockquote>
+  <p>Deadlock이 일어나지 않는다고 생각하고 아무런 조치도 취하지 않는 방법으로 대부분의 범용 OS가 채택한 방법이다.</p>
+
+  <blockquote>
+    <p>Deadlock은 매우 드물게 발생하므로 deadlock에 대한 조치 자체가 더 큰 overhead일 수 있다</p>
+
+    <p>만약, 시스템에 deadlock이 발생한 경우 시스템이 비정상적으로 작동하는 것을 사용자가 느낀 후 직접 process를 죽이는 방법 등으로 대처한다.</p>
+
+  </blockquote>
+</blockquote>
+
+<h3 id="reference"><strong>Reference</strong></h3>
+
+<hr />
+
+<p>이화여자대학교 반효경 교수님 운영체제 강의</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#%EB%8D%B0%EB%93%9C%EB%9D%BD" class="page__taxonomy-item p-category" rel="tag">데드락</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%8D%B0%EB%93%9C%EB%9D%BD-%EB%B0%9C%EC%83%9D-4%EA%B0%80%EC%A7%80-%EC%A1%B0%EA%B1%B4" class="page__taxonomy-item p-category" rel="tag">데드락 발생 4가지 조건</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EB%B0%98%ED%9A%A8%EA%B2%BD" class="page__taxonomy-item p-category" rel="tag">반효경</a><span class="sep">, </span>
+    
+      <a href="/tags/#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C" class="page__taxonomy-item p-category" rel="tag">운영체제</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#os" class="page__taxonomy-item p-category" rel="tag">OS</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time class="dt-published" datetime="2022-04-04">April 4, 2022</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5B%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C+%EC%8A%A4%ED%84%B0%EB%94%94%5D+%EB%8D%B0%EB%93%9C%EB%9D%BD%EA%B3%BC+%EB%8D%B0%EB%93%9C%EB%9D%BD+%EB%B0%9C%EC%83%9D%EC%A1%B0%EA%B1%B4+4%EA%B0%80%EC%A7%80%20http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-08%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');  false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-08%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');  false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fos%2Fos-study-08%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0');  false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/os/os-study-07/" class="pagination--pager" title="[운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이
+">이전</a>
+    
+    
+      <a href="/networkstudy/network-study-01/" class="pagination--pager" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다
+">다음</a>
+    
+  </nav>
+
+
+    </div>
+
+    
+      <div class="page__comments">
+  
+  
+      <h4 class="page__comments-title">댓글남기기</h4>
+      <section id="utterances-comments"></section>
+    
+</div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">참고</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/networkstudy/network-study-01/" rel="permalink">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">📗 Chapter_01 웹 브라우저가 메세지를 만든다
+1. HTTP 리퀘스트 메세지를 작성한다
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-07/" rel="permalink">[운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-06/" rel="permalink">[운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/os/os-study-05/" rel="permalink">[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+
+</div>
+
+
+    </div>
+
+    
+    
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'gzgzg2/blog-comments');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('label', 'Comment 💬');
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/gzgzg2" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="parkuram12@gmail.com" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-gitlab" aria-hidden="true"></i> email</a></li>
+        
+      
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 람람. Powered by.</div>
+
+      </footer>
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,279 @@
+I"/<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
+
+<h2 id="1-프로세스">1. 프로세스</h2>
+
+<blockquote>
+  <p>“Process is a program in execution”</p>
+
+</blockquote>
+
+<p>✔️ 프로세스의 문맥(context)</p>
+
+<ul>
+  <li>CPU 수행 상태를 나타내는 하드웨어 문맥
+    <ul>
+      <li>하드웨어 문맥
+        <ul>
+          <li>Program Counter</li>
+          <li>각종 register</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>프로세스의 주소 공간 (프로세스마다 각자의 주소공간을 가지고 있음)
+    <ul>
+      <li>code, data, stack</li>
+    </ul>
+  </li>
+  <li>프로세스 관련 커널 자료 구조
+    <ul>
+      <li>PCB (Process Control Block)</li>
+      <li>Kernel stack</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ 프로세스는 상태가 변경되며 수행된다</p>
+
+<ul>
+  <li>Running
+    <ul>
+      <li>CPU를 잡고 Instruction을 수행중인 상태</li>
+    </ul>
+  </li>
+  <li>Ready
+    <ul>
+      <li>CPU를 기다리는 상태(메모리 등 다른 조건을 모두 만족하고)</li>
+    </ul>
+  </li>
+  <li>Blocked (wait, sleep)
+    <ul>
+      <li>CPU를 주어도 당장 Instruction을 수행할 수 있는 상태</li>
+      <li>Process 자신이 요청한 event가 즉시 만족되지 않아 이를 기다리는 상태</li>
+    </ul>
+  </li>
+  <li>Suspended (stopped)
+    <ul>
+      <li>외부적인 이유로 프로세스의 수행이 정지된 상태
+        <ul>
+          <li>사용자가 프로그램을 일시 정지시킨 경우 (break key)</li>
+          <li>메모리에 너무 많은 프로세스가 올라와 있을 때</li>
+          <li>시스템이 특정한 이유로 프로세스를 잠시 중단시킨 경우</li>
+        </ul>
+      </li>
+      <li>프로세스는 통째로 디스크에 swap out 된다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>❗New : 프로세스가 생성중인 상태</p>
+
+<p>❗Termonated: 수행(execution)이 끝난 상태</p>
+
+<p>❗Blocked: 자신이 요청한 event가 만족되면 Ready</p>
+
+<p>❗Suspended: 외부에서 resume해 주어야 Active</p>
+
+<h3 id="프로세스-상태도">🌟 프로세스 상태도</h3>
+
+<p><img src="https://user-images.githubusercontent.com/67252475/158180436-40a50fc5-2c26-4935-a195-b00796adbc1a.png" alt="image" /></p>
+
+<h2 id="2-pcb">2. PCB</h2>
+
+<ul>
+  <li>운영체제가 각 프로세스를 관리하기 위해 프로세스당 유지하는 정보</li>
+  <li>다음의 구성 요소를 가진다(구조체로 유지)
+    <ul>
+      <li>OS가 관리상 사용하는 정보
+        <ul>
+          <li>process state, process ID</li>
+          <li>scheduling Information, priority</li>
+        </ul>
+      </li>
+      <li>CPU 수행 관련 하드웨어 값
+        <ul>
+          <li>Program counter, registers</li>
+        </ul>
+      </li>
+      <li>메모리 관련
+        <ul>
+          <li>Code, data, stack의 위치 정보</li>
+        </ul>
+      </li>
+      <li>파일 관련
+        <ul>
+          <li>Open file descriptors</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="3-문맥-교환-context-switch">3. 문맥 교환 (Context Switch)</h2>
+
+<p>✔️ CPU를 한 프로세스에서 다른 프로세르로 넘겨주는 과정</p>
+
+<p>✔️ CPU가 다른 프로세스에게 넘어갈 때 운영체제는 다음을 수행</p>
+
+<ul>
+  <li>CPU를 내어주는 프로세스의 상태를 그 프로세스의 PCB에 저장</li>
+  <li>CPU를 새롭게 얻는 프로세스의 상태를 PCB에서 읽어옴
+    <ul>
+      <li>프로세스가 이전에  실행 중이던 상태부터 다시 실행하기 위해</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">문맥교환은</span> <span class="o">**</span><span class="kt">Timer</span> <span class="kt">Interuppt</span><span class="o">**</span><span class="n">가</span> <span class="n">발생하거나</span> <span class="o">**</span><span class="kt">I</span><span class="o">/</span><span class="kt">O</span> <span class="kt">SystemCall</span><span class="o">**</span><span class="n">이</span> <span class="n">발생할</span> <span class="n">때</span> <span class="n">이뤄진다</span><span class="o">.</span> 
+<span class="n">사용자</span> <span class="n">프로그램이</span> <span class="o">**</span><span class="kt">Interuppt</span><span class="o">**</span><span class="n">를</span> <span class="n">발생시키거나</span> <span class="o">**</span><span class="kt">SystemCall</span><span class="o">**</span><span class="n">을</span> <span class="n">하여</span> <span class="n">사용자</span> <span class="n">모드에서</span> <span class="n">커널모드로</span> <span class="n">변경되는</span> <span class="n">것은</span>
+<span class="n">문맥교환이</span> <span class="n">아니다</span><span class="o">.</span> 
+
+<span class="n">사용자모드에서</span> <span class="n">커널모드로</span> <span class="n">변경되는</span> <span class="n">것도</span> <span class="n">문맥교환은</span> <span class="n">이러나지</span> <span class="n">않았지만</span> <span class="n">이전에</span> <span class="n">실행했던</span> 
+<span class="n">사용자</span> <span class="n">프로그램이</span> <span class="n">실행</span> <span class="n">중이던</span> <span class="n">정보를</span> <span class="kt">PCB에</span> <span class="n">저장하기</span> <span class="n">때문에</span> <span class="n">약간의</span> <span class="n">문맥은</span> <span class="n">저장이</span> <span class="n">되지만</span>
+<span class="n">문맥교환처럼</span> <span class="n">프로세스</span> <span class="n">자체가</span> <span class="n">변경되는</span> <span class="n">것보다</span> <span class="n">오버헤드가</span> <span class="n">적다</span><span class="o">.</span>
+
+<span class="n">문맥교환이</span> <span class="n">발생하면</span> <span class="n">해당</span> <span class="n">프로세스가</span> <span class="n">사용하던</span> <span class="o">**</span><span class="kt">Cache</span> <span class="kt">Memory</span><span class="o">**</span><span class="n">를</span> <span class="o">**</span><span class="kt">Flush</span><span class="o">**</span> <span class="n">해야하기</span> <span class="n">때문에</span> <span class="n">커널모드와</span> <span class="n">사용자모드</span> 
+<span class="n">스위칭보다</span> <span class="n">상당한</span> <span class="n">오버헤드가</span> <span class="n">발생한다</span><span class="o">.</span>
+</code></pre></div></div>
+
+<p>💡 프로세스의 문맥이란 프로세스 실행상태와 프로세스 자원 등 커널에서 관리하는 <strong>프로세스 실행 정보</strong>를 말한다.</p>
+
+<h2 id="4-프로세스를-스케줄링하기-위한-큐">4. 프로세스를 스케줄링하기 위한 큐</h2>
+
+<p>✔️  Job queue</p>
+
+<ul>
+  <li>현재 시스템 내에 있는 모든 프로세스의 집합</li>
+</ul>
+
+<p>✔️ Ready queue</p>
+
+<ul>
+  <li>현재 메모리 내에 있으면서 CPU를 잡아서 실행되기를 기다리는 프로세스의 집합</li>
+</ul>
+
+<p>✔️ Device queue</p>
+
+<ul>
+  <li>I/O device의 처리를 기다리는 프로세스의 집합</li>
+</ul>
+
+<blockquote>
+  <p>💡 이와 같은 큐는 소프트웨어 자원을 기다리는 경우에도 필요하다. 예를 들면 공유 데이터에 대한 접근 권한은 소프트웨어 자원으로 분류될 수 있다. 어떠한 프로세스가 공유 데이터를 사용하는 중에 다른 프로세스가 같은 데이터를 접근하면 일관성이 훼손될 수 있기 때문에 매 시점 하나의 프로세스만이 접근할 수 있도록 해야한다.</p>
+</blockquote>
+
+<h2 id="5-스케줄러-scheduler">5. 스케줄러 (Scheduler)</h2>
+
+<p>✔️  Long-term scheduler (장기 스케줄러 or Job Scheduler)</p>
+
+<ul>
+  <li>시작 프로세스 중(new 상태의 프로세스) 어떤 것들을 ready queue로 보낼지 결정</li>
+  <li>프로세스에 메모리(및 각종 자원)을 주는 문제</li>
+  <li>degree of Multiprogramming을 제어</li>
+  <li>time sharing system에는 보통 장기 스케줄러가 없음 (무조건 ready 상태)</li>
+  <li>현대의 운영체제에는 장기 스케줄러가 없다</li>
+</ul>
+
+<p>✔️ Short-term scheduler (단기 스케줄러 or CPU scheduler)</p>
+
+<ul>
+  <li>어떤 프로세스를 다음번에 running 시킬지 결정</li>
+  <li>프로세스에 CPU를 주는 문제</li>
+  <li>충분히 빨라야 함 (milliseconde 단위)</li>
+</ul>
+
+<p>✔️ Medium-Tern Scheduler (중기 스케줄러 or Swapper)</p>
+
+<ul>
+  <li>여유 공간 마련을 위해 프로세스를 통째로 메모리에서 디스크로 쫓아냄</li>
+  <li>프로세스에게서 memory를 뺏는 문제</li>
+  <li>degree of Multiprogramming을 제어</li>
+</ul>
+
+<blockquote>
+  <p>💡 스왑아웃 대상 0순위는 봉쇄상태의 프로세스다.</p>
+
+  <p>봉쇄상태의 프로세스를 스왑아웃 시켜도 메모리가 부족하면 타이머 인터럽트가 발생하여 준비큐로 이동하는 프로세스를 추가적으로 스왑아웃 시킨다.</p>
+
+  <p>준비큐에 너무 많은 프로세스가 존재하면 개별 프로세스에 배정되는 메모리양이 지나치게 적어지고 CPU를 한번 할당받은 후 다시 할당받기 까지 오랜 시간이 소요되기 때문이다.</p>
+</blockquote>
+
+<h2 id="6-thread">6. Thread</h2>
+
+<blockquote>
+  <p>“A Theard ( or Lightweigth process) is a basic unit of CPU utilization”</p>
+
+</blockquote>
+
+<p>✔️ Thread의 구성 (CPU 수행과 관련)</p>
+
+<ul>
+  <li>program counter</li>
+  <li>register set</li>
+  <li>stack space</li>
+</ul>
+
+<p>✔️ Thread가 동료 Thread와 공유하는 부분 (=task)</p>
+
+<ul>
+  <li>code section</li>
+  <li>data section</li>
+  <li>OS resource</li>
+</ul>
+
+<p>✔️  전통적인 개념의 heavyweight process는 하나의 thread를 가지고 있는 task로 볼 수 있다.</p>
+
+<p>✔️  다중 쓰레드로 구성된 태스크 구조에서는 하나의 서버 쓰레드가 블럭된 상태인 동안에도 동일한 태스크     내의 다른 쓰레드가 실행되어 빠른 처리가 가능하다.</p>
+
+<p>✔️  동일한 작업을 수행하는 다중 스레드가 협력하여 높은 처리율과 성능 향상을 얻을 수 있다.</p>
+
+<p>✔️  스레드를 사용하면 병렬성을 높일 수 있다.</p>
+
+<ul>
+  <li>멀티코어 컴퓨터에서 얻는 장점</li>
+</ul>
+
+<p>✔️  멀티 프로세스보다 멀티 스레드가 가볍다.</p>
+
+<ul>
+  <li>멀티 프로세스의 경우 각각의 프로세스마다 자원을 별도로 생성하는 반면, 멀티 스레드는 CPU 수행과 관련된 부분만 생성하고 code, data, os 자원같은 경우 프로세스의 메모리 영역을 참조한다.</li>
+</ul>
+
+<blockquote>
+  <p>💡 멀티 쓰레드 웹 서버를 예로 들면, 한 요청이 끝날 때까지 기다렸다가 다음 요청을 처리하는 게 아닌 쓰레드마다 각각의 요청을 처리할 수 있다.</p>
+</blockquote>
+
+<h2 id="7-thread-의-장점">7. Thread 의 장점</h2>
+
+<p>✔️ Responsiveness</p>
+
+<ul>
+  <li>multi-threaded
+    <ul>
+      <li>만약 하나의 Thread 블럭되면 (eg network) 또 다른 Thread 작업을 이어간다. (eg display)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ Resource Sharing</p>
+
+<ul>
+  <li>여러개의 Thread 코드영역, 데이터 영역 등 프로세스 자원(CPU 수행에 필요한 자원)을 공유할 수 있다.</li>
+</ul>
+
+<p>✔️ Economy</p>
+
+<ul>
+  <li>프로세스 문맥교환과 프로세스 생성은 Thread 스위칭, Thread 생성보다 오버헤드가 상당히 크다
+    <ul>
+      <li>솔라리스 운영체제의 경우 오버헤드가 각각 30배 5배</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ Utilization of MP Architecutres</p>
+
+<ul>
+  <li>각 쓰레드가 서로 다른 CPU에서 병렬적으로 수행될 수 있다. (멀티 프로세서 환경)</li>
+</ul>
+:ET

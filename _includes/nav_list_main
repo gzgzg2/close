@@ -76,6 +76,13 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
+                    {% if category[0] == "networkStudy" %}
+                        <li><a href="/categories/network-study" class="">네트워크 스터디 ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for category in site.categories %}
                     {% if category[0] == "NextStep" %}
                         <li><a href="/categories/nextstep" class="">NextStep ({{category[1].size}})</a></li>
                     {% endif %}
