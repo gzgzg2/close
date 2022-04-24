@@ -30,11 +30,28 @@ svg:
 # Build settings
 # theme: minima
 highlighter-theme: monokai
+comments:
+  provider: "utterances" # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
 date_format: "%Y-%M-%D"
 plugins:
   - jekyll-feed
 category_dir: category/
 tag_dir: tag/
+
+# Defaults
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+      sidebar_main: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.
