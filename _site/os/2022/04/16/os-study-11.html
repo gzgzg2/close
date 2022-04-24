@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<link rel="icon" type="image/png" href="/public/favicon/favicon.ico">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="나비랑 나리 주인님의 블로그" /></head>
+<style>@import url(/public/css/syntax/monokai.css);</style>
+  <title>나비랑 나리 주인님의 블로그</title>
+  <!-- <link href="/public/css/bootstrap.min.css" rel="stylesheet"> -->
+
+  <link href="/public/css/style.css" rel="stylesheet">
+  <body>
+  	<div class="container"> 
+		<div class="sidebar">
+			<div class="sidebar-item sidebar-header">
+	<div class='sidebar-brand'>
+		<a href="/about/">나비랑 나리 주인님의 블로그</a>
+	</div>
+	<div class='sidebar-brand'>
+		<div class="profile-image">
+			<img src="/public/img/navi_3.jpeg"></img>
+		</div>
+	</div>
+	<p class="lead">잠자는 시간이 제일 좋아</p></div>
+
+
+<div class="sidebar-item sidebar-nav">
+	<ul class="nav">
+      <li class="nav-title">Pages</li>
+	  <li>
+	  	<a class="nav-item" href="/">Articles</a>
+	  </li>
+	  
+	  
+	    
+	  
+	    
+	      
+	        <li>
+	        	<a class="nav-item" href="/about/">
+	            	About
+	            </a>
+	        </li>
+	      
+	    
+	  
+	    
+	      
+	    
+	  
+	    
+	  
+	    
+	  
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-nav">
+  	<ul class="nav">
+			<li class="nav-title">Categories</li>
+	    
+	    <li>
+	    	<a class="nav-item" href="/category/#SpringBoot">
+				<span class="name">SpringBoot</span>
+				<span class="badge">1</span>
+	    	</a>
+ 		</li>
+	    
+	    <li>
+	    	<a class="nav-item" href="/category/#Tobi">
+				<span class="name">Tobi</span>
+				<span class="badge">1</span>
+	    	</a>
+ 		</li>
+	    
+	    <li>
+	    	<a class="nav-item" href="/category/#OS">
+				<span class="name">OS</span>
+				<span class="badge">12</span>
+	    	</a>
+ 		</li>
+	    
+	    <li>
+	    	<a class="nav-item" href="/category/#networkStudy">
+				<span class="name">networkStudy</span>
+				<span class="badge">1</span>
+	    	</a>
+ 		</li>
+	    
+	  </nav>
+	</ul>
+</div>
+
+<div class="sidebar-item sidebar-footer">
+	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+</div>
+		</div>
+		<div class="content">
+			<article class="post">
+	<header class="post-header">
+		<div class="post-title"> 
+			[운영체제 스터디] 가상 메모리와 Page Fault
+		</div>
+		<time class="post-date dt-published" datetime="2022-04-16T00:00:00+09:00" itemprop="datePublished">2022/04/16
+		</time>		
+	</header>
+
+	<div class="post-content">
+		<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
+
+<h1 id="️virtual-memory">🗳️ Virtual Memory</h1>
+
+<blockquote>
+  <p>물리적 메모리의 주소변환은 운영체제가 관여하지 않지만 Virtual Memory 기법은 운영체제가 관여한다.</p>
+
+</blockquote>
+
+<h2 id="1-demand-paging">1. Demand Paging</h2>
+
+<blockquote>
+  <p>실제로 사용자 프로그램에선 자주 사용되지 않는 코드가 대부분이다.</p>
+
+  <p>Demand Paging 기법은 실제로 사용될 경우 메모리에 올리기 때문에 많은 프로세스를 메모리에 동시에 올릴 수 있다.</p>
+
+  <p>Demand Paging 기법에선 무조건 한번은 page fault가 발생한다. (참조될 경우에 메모리에 올리기 때문)</p>
+
+  <ul>
+    <li>실제로 필요할 때 page를 메모리에 올리는 것
+      <ul>
+        <li>I/O 양의 감소
+          <ul>
+            <li>한정된 메모리 공간을 조금 더 효율적으로 사용할 수 있기 때문에 Disk 에서 읽어오는 일이 적어짐</li>
+          </ul>
+        </li>
+        <li>Memory 사용량 감소</li>
+        <li>빠른 응답 시간</li>
+        <li>더 많은 사용자 수용</li>
+      </ul>
+    </li>
+    <li>Valid / Invalid bit의 사용
+      <ul>
+        <li>Invalid 의 의미
+          <ul>
+            <li>사용되지 않는 주소 영역인 경우</li>
+            <li>페이지가 물리적 메모리에 없는 경우</li>
+          </ul>
+        </li>
+        <li>처음에는 모든 page entry가 invalid로 초기화</li>
+        <li>address translation 시에 Invalid bit이 set되어 있으면
+          <ul>
+            <li>“page fault”</li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<h2 id="2-page-fault">2. Page Fault</h2>
+
+<ul>
+  <li>invalid page를 접근하면 MMU가 trap을 발생시킴 (page fault trap)</li>
+  <li>Kernel mode로 들어가서 page fault handler가 invoke됨</li>
+  <li>다음과 같은 순서로 page fault를 처리한다.
+    <ul>
+      <li>invalid reference? (eg. bad address, protection violation) → abort process</li>
+      <li>Get an empty frame (없으면 뺏어온다: 다른 페이지가 할당된 frame에 replace)</li>
+    </ul>
+  </li>
+  <li>메모리를 획득하면 해당 페이지를 disk에서 momory로 읽어온다
+    <ul>
+      <li>disk I/O가 끝나기까지 이 프로세스는 CPU를 preempt 당함 (block)</li>
+      <li>Disk read가 끝나면 page tables entry 기록, valid/invalid bit = “vaild”</li>
+      <li>ready queue에 process를 insert → dispatch later</li>
+      <li>이 프로세스가 CPU를 잡고 다시 running</li>
+      <li>아까 중단되었던 instruction을 재개</li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️ <strong>Steps in Handling a Page Fault</strong></p>
+
+<ol>
+  <li>페이지 테이블 엔트리에 접근한다.</li>
+  <li>접근한 엔트리의 Invalid bit이 invalid이면 trap을 발생시킨다.</li>
+  <li>커널모드로 변경되어 page가 저장된 하드디스크에 접근한다.</li>
+  <li>page를 비어있는 page frame으로 이동시킨다. 이때 비어있는 page frame이 존재하지 않을경우 다른 페이지가 할당된 frame에 replace한다</li>
+  <li>새로 할당된 page frame number를 입력하고 invalid bit을 수정한다.</li>
+  <li>trap에 의해 중단되었던 명령어를 다시 수행한다.</li>
+</ol>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/162662911-5e53ed58-7416-496d-8f00-797fe1f456cc.png" alt="image" /></p>
+
+<p><strong>✔️ Performace of Demand Paging</strong></p>
+
+<ul>
+  <li>Page Fault Rate  0≤ p ≤ 1.0
+    <ul>
+      <li>if p = 0 no page fault</li>
+      <li>if p = 1, every reference is a fault</li>
+    </ul>
+  </li>
+  <li>Effective Access Time
+    <ul>
+      <li>
+        <p>(1 - p) x memory access + P (OS &amp; HW page fault overhead</p>
+
+        <ul>
+          <li>
+            <p>[swap page out if needed]</p>
+          </li>
+          <li>
+            <p>swap page in</p>
+          </li>
+          <li>
+            <p>OS &amp; HW restart overhead)</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>🌟   실제로 시스템에서  Page Fault Rate를 조사해본 결과 0.09 값이 측정된다. 즉 대부분의 경우는 메모리에서 직접 주소변환이 이뤄진다는 것이다.</strong></p>
+
+<h3 id="22-empty-frame이-없는-경우">2.2 Empty Frame이 없는 경우</h3>
+
+<p><strong>✔️  Page replacement</strong></p>
+
+<ul>
+  <li>어떤 frame을 빼앗아올지 결정해야 함</li>
+  <li>곧바로 사용되지 않을 page를 쫓아내는 것이 좋음</li>
+  <li>동일한 페이지가 여러번 메모리에서 쫓겨났다가 다시 들어올 수 있음</li>
+  <li>운영체제의 역할</li>
+</ul>
+
+<p><strong>✔️  Replacement Algorithm</strong></p>
+
+<ul>
+  <li>page-fault rate을 최소화하는 것이 목표</li>
+  <li>알고리즘의 평가
+    <ul>
+      <li>주어진 page reference string에 대해 page fault를 얼마나 내는지 조사</li>
+    </ul>
+  </li>
+  <li>reference string
+    <ul>
+      <li>시간순서에 따라 나열된 page frame (참조된 순서로 나열됨)</li>
+      <li>reference string의 예
+        <ul>
+          <li>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>✔️ Page Replacement 흐름</strong></p>
+
+<ol>
+  <li>swap out할 victim page를 선점하여 backing store에 swap out시킨다. 이때 변경사항이 있으면 변경된 내용을 저장하고 swap out한다.</li>
+  <li>victim page가 저장되어있던 page table 엔트리의 valid/invalid bit를 invalid 로 수정한다</li>
+  <li>swap out이 완료되면 victim page가 존재하던 frame에 trap을 발생시킨 page를 할당한다.</li>
+  <li>새롭게 할당된 page가 존재하는 page table 엔트리의 frame number를 수정한다.</li>
+</ol>
+
+<p><strong>💡 victim page</strong></p>
+
+<ul>
+  <li>page replacement에 의해 swap out 되는 페이지를 victim page 라고 한다</li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/162663269-0ad00235-1654-44ad-aa55-bb1e862cd25e.png" alt="image" /></p>
+
+<h3 id="23-optimal-algorithm">2.3 Optimal Algorithm</h3>
+
+<blockquote>
+  <p>MIN(OPT): 가장 먼 미래에 참조되는 page를 replace</p>
+
+</blockquote>
+
+<p><strong>✔️ Optimal Alogrithm?</strong></p>
+
+<ul>
+  <li>미래의 참조를 어떻게 아는가?
+    <ul>
+      <li>미래를 모두 짐작해야하기 때문에 Offline algorithm 실제로 사용되진 않음</li>
+    </ul>
+  </li>
+  <li>다른 알고리즘 성능에 대한 upper bound 제공
+    <ul>
+      <li>Belady’s optimal algorithm, MIN, OPT 등으로 불림</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>✔️ Optimal Alogrithm 예시</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/162663068-66b5c86c-af59-4cf2-bd73-7451c519efa3.png" alt="image" /></p>
+
+<p><strong>[ 가정 ]</strong></p>
+
+<ul>
+  <li>빨간색 숫자는 page fault가 발생한 page</li>
+  <li>연보라색 숫자는 메모리로 바로 참조되는 page</li>
+</ul>
+
+<p><strong>[ 예시 ]</strong></p>
+
+<ol>
+  <li>1,2,3,4번 page의 참조가 발생하여 메모리에 할당한다.</li>
+  <li>1번과 2번 page가 메모리에서 바로 참조된다.</li>
+  <li>다음 순서로 5번 page가 참조되어 page fault가 발생한다.</li>
+  <li>이때 page frame은 모두 꽉 차있는 상태이므로 swap out할 page를 선점한다.</li>
+  <li>가장 먼 미래에 참조되는 4번 page를 swap out한다.</li>
+</ol>
+
+<h3 id="24-fifo-first-in-first-out-algorithm">2.4 FIFO (First In First Out) Algorithm</h3>
+
+<blockquote>
+  <p>가장 먼저들어온 page를 내쫓는 알고리즘</p>
+
+</blockquote>
+
+<p>✔️ <strong>FIFO Anomaly (Belady’s Anomaly)</strong></p>
+
+<ul>
+  <li>more frames ≠ less page fault</li>
+  <li>frame이 많을수록 page fault가 더 자주 일어난다.</li>
+</ul>
+
+<p><strong>✔️ FIFO (First In First Out) Algorithm 예시</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/162662867-f815886e-bb6b-4e4f-847a-5db4b5d26653.png" alt="image" /></p>
+
+<p><strong>[가정]</strong></p>
+
+<ul>
+  <li>빨간색 숫자는 page fault가 발생한 page</li>
+  <li>연보라색 숫자는 메모리로 바로 참조되는 page</li>
+</ul>
+
+<p><strong>[예시]</strong></p>
+
+<ol>
+  <li>1,2,3 번 page가 참조되어 page fault가 발생한다.</li>
+  <li>그 이후 4번 page가 참조되어 가장 먼저 들어온 1번 page가 swap out되고 4번 page가 할당된다.</li>
+  <li>1번 page가 재참조되어 1번 다음으로 빨리 들어왔던 2번 page를 swap out하고 1번 page를 할당한다.</li>
+  <li>가장 먼저 할당되었던 page를 swap out하면서 반복</li>
+</ol>
+
+<h3 id="25-lru-least-recently-used-algorithm">2.5 LRU (Least Recently Used) Algorithm</h3>
+
+<blockquote>
+  <p>LRU : 가장 오래 전에 참조된 것을 swap out 시키는 알고리즘</p>
+
+  <p>가장 오래전에 참조된 알고리즘을 swap out하기 때문에 swap out 되는 page의 인지도는 체크하지 않는다. (여러번 참조되었냐의 여부 확인 안함)</p>
+
+</blockquote>
+
+<p><strong>✔️  LRU (Least Recently Used) Algorithm 예시</strong></p>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/162662841-9832b9ff-10e3-4dd8-a32e-8c837bc550d2.png" alt="image" /></p>
+
+<p><strong>[가정]</strong></p>
+
+<ul>
+  <li>빨간색 숫자는 page fault가 발생한 page</li>
+  <li>연보라색 숫자는 메모리로 바로 참조되는 page</li>
+</ul>
+
+<p><strong>[예시]</strong></p>
+
+<ol>
+  <li>1,2,3,4 번 page가 참조되어 page fault가 발생한다.</li>
+  <li>1번과 2번 page를 직접 메모리에서 참조한다.</li>
+  <li>5번 page가 page fault가 발생하여 오래전에 참조되었던 3번 page가 swap out 된다.</li>
+  <li>가장 오래전에 참조되었던 page를 swap out하면서 반복</li>
+</ol>
+
+<h3 id="26-lfu-least-frequently-used-algorithm">2.6 LFU (Least Frequently Used) Algorithm</h3>
+
+<blockquote>
+  <p>LFU: 참조 횟수(reference count)가 가장 적은 페이지를 지움</p>
+
+</blockquote>
+
+<p>✔️  최저 참조 횟수인 page가 여럿 있는 경우</p>
+
+<ul>
+  <li>LFU 알고리즘 자체에서는 여러 page 중 임의로 선정한다</li>
+  <li>성능 향상을 위해 가장 오래 전에 참조된 page를 지우게 구현할 수도 있다</li>
+</ul>
+
+<p>✔️  장단점</p>
+
+<ul>
+  <li>LRU처럼 직전 참조 시점만 보는 것이 아니라 장기적인 시간 규모를 보기 때문에 page의 인기도를 좀 더 정확히 반영할 수 있음</li>
+  <li>참조 시점의 최근성을 반영하지 못함</li>
+  <li>LRU보다 구현이 복잡함</li>
+</ul>
+
+<p><strong>✔️ LRU와 LFU 알고리즘 예제</strong></p>
+
+<p> 
+<img src="https://user-images.githubusercontent.com/56028408/162662834-97cd9c40-0a3b-443e-8a78-c37091d0fc31.png" alt="image" /></p>
+
+<p><strong>[가정]</strong></p>
+
+<ol>
+  <li>page frame은 4칸이 존재함</li>
+  <li>5번 page를 page fault 발생시켜야 하는 상황</li>
+</ol>
+
+<p><strong>[예시]</strong></p>
+
+<ol>
+  <li>1번 페이지가 가장 먼저 할당되었고 1번 페이지는 총 4번 참조되었다.</li>
+  <li>1번 페이지 이후 2번 페이지가 할당되었고 2번 페이지는 총 3번 참조되었다.</li>
+  <li>2번 페이지 이후 3번 페이지가 할당되었고 3번 페이지는 총 2번 참조되었다.</li>
+  <li>마지막으로 4번 페이지가 할당되고 4번 페이지는 총 1번 참조되었다.</li>
+</ol>
+
+<p><strong>[결과]</strong></p>
+
+<ul>
+  <li>LRU : 가장 오래전에 참조된 1번 page를 삭제함</li>
+  <li>LFU : 가장 최근에 할당되었음에도 적게 참조된 4번 page를 삭제함</li>
+</ul>
+
+<h3 id="28-paging-system에서-lru-lfu-가능한가">2.8 Paging System에서 LRU, LFU 가능한가?</h3>
+
+<p>운영체제가 Page fault가 발생한 page를 물리적 메모리에 replace 한다. 그런데 비어있는 frame이 없을 경우 해당하는 알고리즘에 맞게  frame을 쫓아내야 하는데 이미 메모리에 해당 page가 존재할 경우 OS의 지원이 아닌 하드웨어 지원으로 주소변환이 일어나기 때문에 page의 참조 시간이나 page의 참조 횟수를 알 수 있는 방법이 없다. 즉 가상메모리 환경의 Page Fault 기법에서는 LRU, LFU 알고리즘을 사용할 수가 없다.</p>
+
+<h3 id="29-clock-algorithm">2.9 Clock Algorithm</h3>
+
+<blockquote>
+  <p>LRU의 근사(approximation) 알고리즘</p>
+
+</blockquote>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/163078507-2723e003-3bbf-419c-b93a-9414b7b08f0f.png" alt="image" /></p>
+
+<p>✔️ Clock Algorithm</p>
+
+<ul>
+  <li>여러 명칭으로 불림
+    <ul>
+      <li>Second cahnge alogorithm</li>
+      <li>NUR (Not Used Recently) 또는 NRU ( Not Recently Used)</li>
+    </ul>
+  </li>
+  <li>Reference bit을 사용해서 교체 대상 페이지 선정 (circular list)</li>
+  <li>reference bit가 0인 것을 찾을 때까지 포인터를 하나씩 앞으로 이동</li>
+  <li>포인터 이동하는 중에 참조되지 않은 reference bit 1은 모두 0으로 바꿈</li>
+  <li>Reference bit이 0인 것을 찾으면 그 페이지를 교체</li>
+  <li>한 바퀴 되돌아와서도(=second chance) 0이면 그때에는 replace 당함</li>
+  <li>자주 사용되는 페이지라면 second change가 올 때 1</li>
+  <li>Clock algorithm의 개선
+    <ul>
+      <li>reference bit과 modified bit (dirty bit)을 함께 사용</li>
+      <li>reference bit → 1 최근에 참조된 페이지</li>
+      <li>modified bit(=dirty bit) → 1 최근에 변경된 페이지 (I/O를 동반하는 페이지)
+        <ul>
+          <li>메모리에서 write가 발생할 때 1로 세팅</li>
+          <li>page fault를 발생시킬 때 modified bit가 0인 page들을 먼저 쫓아내면 disk I/O 수행시간이 적어지는 장점이 있음</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>🌟  <strong>이미 메모리에 할당된 페이지를 참조할 때  reference bit을 변경하는 것은 OS가 아니라 하드웨어의 역할이다. 운영체제는 비트를 주기적으로 검사하여 reference bit이 0인 page를 replace 하는 역할을 한다.</strong></p>
+
+<h2 id="3-page-frame의-allocation">3. Page Frame의 Allocation</h2>
+
+<p>💡  Allocation problem: 각 process에 얼마만큼의 page frame을 할당할 것인가?</p>
+
+<p><strong>✔️ Allocation의 필요성</strong></p>
+
+<ul>
+  <li>메모리 참조 명령어 수행시 명령어, 데이터 등 여러 페이지 동시 참조
+    <ul>
+      <li>명령어 수행을 위해 최소한 할당되어야 하는 frame의 수가 있음</li>
+    </ul>
+  </li>
+  <li>Loop를 구성하는 page들은 한꺼번에 allocate 되는 것이 유리함
+    <ul>
+      <li>최소한의 allcation이 없으면 매 loop 마다 page fault</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>✔️ Allocation Scheme</strong></p>
+
+<ul>
+  <li>Equal allocation: 모든 프로세스에 똑같은 갯수 할당</li>
+  <li>Proportional allocation: 프로세스 크기에 비례하여 할당</li>
+  <li>Priority allocation: 프로세스의 priority에 따라서 다르게 할당</li>
+</ul>
+
+<h2 id="4-global-vs-local-replacement">4. Global vs Local Replacement</h2>
+
+<p><strong>✔️ Global replacement</strong></p>
+
+<ul>
+  <li>Replace 시 다른 process에 할당된 frame을 빼앗아 올 수 있다</li>
+  <li>Process별 할당량을 조절하는 또 다른 방법</li>
+  <li>FIFO, LRU, LFU 등의 알고리즘을 global repacement로 사용시에 해당한다</li>
+  <li>Working set, PFF 알고리즘 사용</li>
+</ul>
+
+<p><strong>✔️  Local Replacement</strong></p>
+
+<ul>
+  <li>자신에게 할당된 frame 내에서만 replacement</li>
+  <li>FIFO, LRU, LFU 등의 알고리즘을 process 별로 운영시</li>
+</ul>
+
+<h2 id="5-다양한-캐싱-환경">5. 다양한 캐싱 환경</h2>
+
+<p><strong>✔️ 캐싱 기법</strong></p>
+
+<ul>
+  <li>한정된 빠른 공간(=캐쉬)에 요청된 데이터를 저장해 두었다가 후속 요청시 캐쉬로부터 직접 서비스하는 방식</li>
+  <li>paging system 외에도 cache memory, buffer caching, Web caching 등 다양한 분야에서 사용됨</li>
+</ul>
+
+<p><strong>✔️ 캐쉬 운영의 시간 제약</strong></p>
+
+<ul>
+  <li>교체 알고리즘에서 삭제할 항목을 결정하는 일에 지나치게 많은 시간이 걸리는 경우 실제 시스템에서 사용할 수 없음</li>
+  <li>Buffer caching이나 Web caching의 경우
+    <ul>
+      <li>O(1)에서 O(log n) 정도까지 허용</li>
+    </ul>
+  </li>
+  <li>Paging system인 경우
+    <ul>
+      <li>page fault인 경우에만 OS가 관여함</li>
+      <li>페이지가 이미 메모리에 존재하는 경우 참조시각 등의 정보를 OS가 알 수 없음</li>
+      <li>O(1)인 LRU의 list 조작조차 불가능</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="6-thrashing">6. Thrashing</h2>
+
+<blockquote>
+  <p>프로세스의 원활한 수행에 필요한 최소한의 page frame 수를 할당 받지 못한 경우 발생하는 현상</p>
+
+</blockquote>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/163078491-4d5715f3-ec1f-47a4-839d-f4f94ac0764a.png" alt="image" /></p>
+
+<ol>
+  <li>Page fault rate이 매우 높아짐</li>
+  <li>CPU utillization이 매우 낮아짐</li>
+  <li>OS는 MPD(Multiprogramming degree)를 높여아 한다고 판단</li>
+  <li>또 다른 프로세스가 시스템에 추가됨 (higher MPD)</li>
+  <li>프로세스당 할당된 frame의 수가 더욱 감소</li>
+  <li>프로세스는 page의 swap in / swap out으로 매우 바쁨</li>
+  <li>대부분의 시간에는 CPU가 한가함</li>
+  <li>low throughput</li>
+</ol>
+
+<p><strong>✔️  대충 살펴봐도 프로세스 성능이 상당히 저하될 수 있는 현상이다. 이를 예방하기 위한 방법이 없을까?</strong></p>
+
+<p> 있다 ! 앞서 설명한 Working set, PFF(Page-Fault Frequency) Scheme가 Thrashing 문제를 해결하기 위한 알고리즘이다.</p>
+
+<h3 id="61-working-set-model">6.1 Working-Set Model</h3>
+
+<p>✔️ Locality of reference</p>
+
+<ul>
+  <li>프로세스는 특정 시간 동안 일정 장소만을 집중적으로 참조한다.</li>
+  <li>집중적으로 참조되는 해당 page들의 집합을 locality set이라 한다.</li>
+</ul>
+
+<p>✔️ Working-set Model</p>
+
+<ul>
+  <li>Locality에 기반하여 프로세스가 일정 시간 동안 원활하게 수행되기 위해 한꺼번에 메모리에 올라와 있어야하는 page들의 집합을 Working Set 이라고 정의한다.</li>
+  <li>Working Set 모델에서는 process의 working set 전체가 메모리에 올라와 있어야 수행되고 그렇지 않을 경우 모든 frame을 반납한 후 swap out (suspend)</li>
+  <li>Thrashing을 방지함</li>
+  <li>Multiprogramming degree를 결정함</li>
+</ul>
+
+<h3 id="62-working-set-alogorithm">6.2 Working-Set Alogorithm</h3>
+
+<p>✔️ <strong>Working set 결정 방법</strong></p>
+
+<ul>
+  <li>Working set window를 통해 알아낸다</li>
+  <li>window size가 델타 인 경우
+    <ul>
+      <li>시각 t 에서의 working set WS (t)
+        <ul>
+          <li>Time interval [델타] 사이에 참조된 서로 다른 페이지들의 집합</li>
+        </ul>
+      </li>
+      <li>Working set에 속한 page는 메모리에 유지, 속하지 않은 것은 버림 (즉, 참조된 후 델타 시간 동안 해당 page를 메모리에 유지한 후 버림)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/56028408/163078480-dbd22313-a45b-41cb-a30d-32a63203984e.png" alt="image" /></p>
+
+<h3 id="63-pff-page-fault-frequency-scheme">6.3 PFF (Page-Fault Frequency) Scheme</h3>
+
+<ul>
+  <li>Page-fault rate의 상한값과 하한값을 둔다
+    <ul>
+      <li>Page fault rate이 상한값을 넘으면 frame을 더 할당한다</li>
+      <li>Page fault rate이 하한값 이하이면 할당 frame 수를 줄인다.</li>
+    </ul>
+  </li>
+  <li>빈 frame이 없으면 일부 프로세스를 swap out 한다</li>
+</ul>
+
+<h2 id="7-page-size의-결정">7. Page Size의 결정</h2>
+
+<ul>
+  <li>Page size를 감소시키면
+    <ul>
+      <li>페이지 수 증가</li>
+      <li>페이지 테이블 크기 증가</li>
+      <li>Internal fregmentation 감소</li>
+      <li>Disk transfer의 효율성 감소
+        <ul>
+          <li>Seek/rotation vs transfer</li>
+        </ul>
+      </li>
+      <li>필요한 정보만 메모리에 올라와 메모리 이용이 효율적
+        <ul>
+          <li>Locality의 활용 측면에서는 좋지 않음</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>✔️  현재 Trend</p>
+
+<ul>
+  <li>Larger page size</li>
+</ul>
+
+<h3 id="reference"><strong>Reference</strong></h3>
+
+<hr />
+
+<p>이화여자대학교 반효경 교수님 운영체제 강의</p>
+
+	</div>
+</article>
+		</div>
+	</div>
+  </body>
+</html>

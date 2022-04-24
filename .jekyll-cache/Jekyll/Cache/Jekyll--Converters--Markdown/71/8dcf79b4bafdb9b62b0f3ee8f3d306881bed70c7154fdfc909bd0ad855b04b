@@ -1,4 +1,4 @@
-I"s|<h2 id="들어가며">들어가며</h2>
+I"�{<h2 id="들어가며">들어가며</h2>
 
 <p>스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.
 예제코드로 적용 방법을 알아보자</p>
@@ -24,7 +24,7 @@
 
 <p><br /></p>
 
-<p><code class="language-plaintext highlighter-rouge">💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다</code></p>
+<p><code class="highlighter-rouge">💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다</code></p>
 
 <h2 id="applicationyml-설정">🌟 A<strong>pplication.yml</strong> 설정</h2>
 
@@ -178,7 +178,7 @@
 
 <p><br /></p>
 
-<p><code class="language-plaintext highlighter-rouge">💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.</code></p>
+<p><code class="highlighter-rouge">💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.</code></p>
 
 <p><br /></p>
 
@@ -212,9 +212,9 @@
 </code></pre></div></div>
 
 <ol>
-  <li><code class="language-plaintext highlighter-rouge">MessageListenerAdapter</code> 빈에  <code class="language-plaintext highlighter-rouge">MessageListener</code> 를 주입한다.</li>
-  <li><code class="language-plaintext highlighter-rouge">RedisMessageListenerContainer</code> 빈 등록 <code class="language-plaintext highlighter-rouge">connectionFactory</code>, <code class="language-plaintext highlighter-rouge">messageListeners</code> 주입</li>
-  <li><code class="language-plaintext highlighter-rouge">redisKeyExpireMessageListener</code> 가 수신할 채널 혹은 패턴을 등록한다. 패턴은 이벤트 또는 채널명이 될 수 있다.</li>
+  <li><code class="highlighter-rouge">MessageListenerAdapter</code> 빈에  <code class="highlighter-rouge">MessageListener</code> 를 주입한다.</li>
+  <li><code class="highlighter-rouge">RedisMessageListenerContainer</code> 빈 등록 <code class="highlighter-rouge">connectionFactory</code>, <code class="highlighter-rouge">messageListeners</code> 주입</li>
+  <li><code class="highlighter-rouge">redisKeyExpireMessageListener</code> 가 수신할 채널 혹은 패턴을 등록한다. 패턴은 이벤트 또는 채널명이 될 수 있다.</li>
 </ol>
 
 <h3 id="java-1">JAVA</h3>
@@ -253,9 +253,9 @@
 <span class="o">}</span>
 </code></pre></div></div>
 <p><br />
-❗ spring boot 의 <code class="language-plaintext highlighter-rouge">@EnableAutoConfiguration</code></p>
+❗ spring boot 의 <code class="highlighter-rouge">@EnableAutoConfiguration</code></p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.
 어떻게 보면 정말 편리한 기능이지만, 섬세한 설정이 필요한 경우엔 직접 설정하는 것이 안전하다.
 </code></pre></div></div>
 
@@ -330,7 +330,7 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p><code class="language-plaintext highlighter-rouge">application.yml</code></p>
+<p><code class="highlighter-rouge">application.yml</code></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">config:</span>
   <span class="nl">redis:</span>
@@ -362,7 +362,7 @@
   <summary>❗connection 인스턴스를 여러 쓰레드에서 공유할 수 있는 것이 장점인 이유는?</summary>
   <div>
 
-    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.
     
 이는 애플리케이션이 멀티스레딩+단일 연결을 통해 Redis를 운영할 수 있다면 Redis 서버의 전체 연결 수를 효율화 할 수 있고,
     
