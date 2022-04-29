@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다"
+title: "[네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다"
 categories:
   - networkStudy
 tags:
