@@ -1,4 +1,329 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-24T18:41:18+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[운영체제 스터디] 가상 메모리와 Page Fault</title><link href="http://localhost:4000/os/2022/04/16/os-study-11.html" rel="alternate" type="text/html" title="[운영체제 스터디] 가상 메모리와 Page Fault" /><published>2022-04-16T00:00:00+09:00</published><updated>2022-04-16T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/16/os-study-11</id><content type="html" xml:base="http://localhost:4000/os/2022/04/16/os-study-11.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-29T12:51:56+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-29T00:00:00+09:00</published><updated>2022-04-29T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/29/network-study-02</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html">&lt;h1 id=&quot;-chapter_02-tcpip의-데이터를-전기-신호로-만들어-보낸다&quot;&gt;📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다&lt;/h1&gt;
+&lt;h3 id=&quot;2장의-요점-짚고-넘어가기-&quot;&gt;🌟 2장의 요점 짚고 넘어가기 🌟&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Chapter 02에선 OS에 내장된 프로토콜 스택이 처음 등장한다. 프로토콜 스택은 네트워크 제어용 소프트웨어이다. 프로토콜 스택은 브라우저에서 받은 메세지를 패킷 속에 저장하고, 수신처 주소 등의 제어 정보를 덧붙인다. 프로토콜 스택은 통신 오류가 발생했을 때 패킷을 고쳐서 보내거나 통신의 기본을 조절하는 등의 다양한 역할을 한다.&lt;/p&gt;
+
+  &lt;p&gt;이뿐만 아니라 프로토콜 스택은 패킷을 LAN어댑터(이더넷이나 무선 LAN으로 통신할 때 사용하는 하드웨어)에 넘긴다. 그리고 LAN 어댑터가 패킷을 전기신호로 변환하고 LAN의 케이블에 송출하는 과정을 통해 패킷이 네트워크 속으로 전달된다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;1-소켓을-작성한다&quot;&gt;&lt;strong&gt;1. 소켓을 작성한다.&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;1️⃣프로토콜-스택의-내부-구성&quot;&gt;&lt;strong&gt;1️⃣ 프로토콜 스택의 내부 구성&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;아래 이미지는 브라우저에서 데이터를 전송했을 때 어떠한 소프트웨어와 하드웨어를 거쳐 서버에 도착하는 지&lt;/p&gt;
+
+&lt;p&gt;간단하게 요약한 이미지이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/164371689-8ed7cd05-d86f-4853-bbb5-9d900e6b5ef0.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ 네트워크 어플리케이션&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;브라우저, 메일러, 웹 서버, 메일 서버 등의 프로그램이 여기에 해당됨&lt;/li&gt;
+  &lt;li&gt;네트워크 어플리케이션부터 아래로 향하여 데이터 송 수신 등의 일을 의뢰함&lt;/li&gt;
+  &lt;li&gt;Socket
+    &lt;ul&gt;
+      &lt;li&gt;네트워크 애플리케이션 아랫부분에는 Socket 라이브러리가 존재하고 그 안에는 리졸버가 내장되어 있음&lt;/li&gt;
+      &lt;li&gt;Socket 라이브러리는 DNS서버에서 목적지의 IP 주소를 조회하는 역할을 담당함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  프로토콜 스택&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로토콜 스택은 OS 내부에 존재하는 네트워크 제어용 소프트웨어이다.&lt;/li&gt;
+  &lt;li&gt;TCP, UDP 프로토콜을 사용하는 소프트웨어
+    &lt;ul&gt;
+      &lt;li&gt;프로토콜 스택의 윗부분에는 TCP, UDP 프로토콜을 사용하여 데이터 송수신을 담당하는 부분이 존재한다. 이 둘이 어플리케이션의 의뢰를 받아 송수신 동작을 실행한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;IP 프로토콜을 사용하는 소프트웨어
+    &lt;ul&gt;
+      &lt;li&gt;데이터를 작게 나눈 패킷을 통신 상대까지 운반하는 것이 해당 소프트웨어의 주 역할&lt;/li&gt;
+      &lt;li&gt;IP 안에는 ICMP와 ARP라는 프로토콜을 다루는 부분이 존재함&lt;/li&gt;
+      &lt;li&gt;ICMP는 패킷을 운반할 때 발생하는 오류를 통지하거나 제어용 메세지를 통지할 때 사용됨&lt;/li&gt;
+      &lt;li&gt;ARP는 IP 주소에 대응하는 이더넷의 MAC 주소를 조사할 때 사용됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ LAN 드라이버&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;LAN 어댑터의 하드웨어를 제어함&lt;/li&gt;
+  &lt;li&gt;LAN 드라이버 아래에 있는 LAN 어댑터가 실제 송 수신 동작, 즉 케이블에 대해 신호를 송 수신 하는 동작을 실행함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡 프로토콜&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;스택이란&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;네트워크&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어용&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어이다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;프로토콜&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;스택은&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;저장하거나&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷을&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LAN&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;어댑터에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;넘기는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;역할을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;💡 브라우저나&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;메일&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;등의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;일반적인&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;애플리케이션이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;데이터를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;경우에는&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;사용&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;💡 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DNS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;대한&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;조회&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;등에서&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;짧은&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어용&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;데이터를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송수신할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;경우에는&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UDP&lt;/span&gt;&lt;span class=&quot;err&quot;&gt; 사용&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  소켓의 메세지 송신 동작&lt;/strong&gt;  &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/164371702-c3a06672-64e0-4ee6-8419-da6472697a41.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;2️⃣소켓의-실체는-통신-제어용-제어-정보&quot;&gt;2️⃣ 소켓의 실체는 통신 제어용 제어 정보&lt;/h3&gt;
+
+&lt;p&gt;프로토콜 스택은 내부에 제어 정보를 기록하는 메모리 영역을 가지고 있다. 해당 영역에는 통신 동작 제어에 필요한 제어 정보를 기록한다. 대표적으로 &lt;strong&gt;통신 상대의 IP주소, 포트번호, 통신 동작 진행 상태&lt;/strong&gt; 등이 있다.&lt;/p&gt;
+
+&lt;p&gt;본래 소켓은 개념적인 것이고 실체가 존재하지 않는다. 굳이 말하자면 프로토콜 스택 내부에 저장된 제어 정보가 소켓의 실체라고 할 수 있다. 프로토콜 스택은 소켓에 기록된 제어 정보를 참조하면서 동작한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;3️⃣소켓을-호출했을-때의-동작&quot;&gt;3️⃣ 소켓을 호출했을 때의 동작&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  socket()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;애플리케이션이 socket을 호출하여 프로토콜 스택에게 소켓을 만들 것을 의뢰한다. 이때 프로토콜 스택은 소켓 한 개 분량의 메모리 영역을 확보하고 초기 상태임을 나타내는 제어 정보를 기록한다. 이 과정을 통해 소켓이 생성된다.&lt;/li&gt;
+  &lt;li&gt;소켓이 생성되면 소켓을 나타내는 디스크립터를 애플리케이션에 알려준다. 디스크립터는 프로토콜 스택의 내부에 있는 다수의 소켓 중 어느 것을 가리키는지 나타내는 번호표와 같다. 디스크립터는 프로토콜 스택이 데이터 송 수신 동작을 의뢰할 때 통지한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-서버에-접속한다&quot;&gt;2. 서버에 접속한다.&lt;/h2&gt;
+
+&lt;h3 id=&quot;1️⃣접속의-의미&quot;&gt;&lt;strong&gt;1️⃣&lt;/strong&gt;  접속의 의미&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;이더넷이나 통신 회선은 항상 케이블이 연결되어 있으므로 데이터를 신호로 변환하여 송신하기만 하면 언제든 통신이 가능하다. 하지만 소켓을 만든 직후에는 아무런 정보도 기록되어 있지 않기 때문에 통신 상대와의 사이에 제어 정보를 주고받아서 데이터 송 수신이 가능한 상태로 만드는 작업이 필요하다. 여기에서 주고받는 제어정보는 IP나 포트번호 등이다. 접속 동작에서 주고받는 제어 정보는 통신의 규칙으로 정해져 있다.&lt;/p&gt;
+
+  &lt;p&gt;접속을 시도할 때는 제어 정보를 주고받는 것 뿐만 아니라 송 수신 데이터를 일시적으로 저장할 버퍼 메모리 확보도 이때 같이 실행된다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;2️⃣맨-앞부분에-제어-정보를-기록한-헤더를-배치한다&quot;&gt;2️⃣ 맨 앞부분에 제어 정보를 기록한 헤더를 배치한다.&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  헤더란?&lt;/strong&gt; &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;헤더는 클라이언트와 서버가 서로 연락을 절충하기 위해 주고받는 정보가 포함되어 있다.&lt;/li&gt;
+  &lt;li&gt;헤더에는 데이터를 송 수신 하는 동작이나 연결을 끊는 동작도 포함되어 있기 때문에 통신 동작 전체에서 필요한 내용을 검토하여 TCP 프로토콜의 사양으로 규정하고 있다.&lt;/li&gt;
+  &lt;li&gt;클라이언트와 서버 사이에 주고받는 패킷 맨 앞부분부터 부가된 제어정보를 헤더라고 한다.&lt;/li&gt;
+  &lt;li&gt;이더넷이나 IP에도 동일한 헤더가 존재하기 때문에 &lt;strong&gt;TCP 헤더, 이더넷 헤더(=Mac 헤더), IP헤더&lt;/strong&gt;와 같이 구분하여 사용해야 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  소켓에 기록되는 정보&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로토콜 스택의 동작을 제어하기 위한 정보
+    &lt;ul&gt;
+      &lt;li&gt;애플리케이션에서 통지된 정보&lt;/li&gt;
+      &lt;li&gt;통신 상대로부터 받은 정보&lt;/li&gt;
+      &lt;li&gt;송 수신 동작의 진행 상황&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;프로토콜 스택이 소켓에 기록된 정보를 참조하면서 움직이기 때문에 소켓의 제어 정보는 프로토콜 스택과 일체화 되어있다 해도 무방하다.&lt;/li&gt;
+  &lt;li&gt;소켓에 기록되는 정보는 상대측에서 볼 수 없다. 이미 서로 필요한 정보를 헤더로 주고받기 때문에 통신에는 문제가 없다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;🌟 &lt;/span&gt; &lt;span class=&quot;err&quot;&gt;통신&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;동작에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;이용하는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;다음의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;두&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;종류&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기입되는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소켓에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록되는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;3️⃣접속-동작의-실체&quot;&gt;3️⃣ 접속 동작의 실체&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ connet()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;여기에 서버측의 IP 주소와 포트 번호를 입력하면 명령이 프로토콜 스택의 TCP 담당 부분에 전달된다.&lt;/li&gt;
+  &lt;li&gt;그러면 TCP 담당 부분은 목적지 서버측의 TCP 담당 부분과의 사이에 제어 정보를 주고 받는다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  클라이언트와 서버의 대화 과정&lt;/strong&gt; &lt;/p&gt;
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;데이터&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;동작의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;개시를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;나타내는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록한&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;만든다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+    &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;내용&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;중&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;중요한&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;것은&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신처와&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;포트번호이다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;이를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;통해&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신처와&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;지정할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;있다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+    
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더가&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;만들어지면&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;이를&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;건네주어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신하도록&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;의뢰한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;동작을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;거쳐&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;네트워크를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;통해&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버에&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;패킷이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;도착하면&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버측의&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어가&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;이를&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;에게&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;전달한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+
+&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버측의&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어가&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;헤더를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;조사하여&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록되어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;있는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;포트&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;해당하는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소켓을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;찾아낸다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
+   &lt;span class=&quot;err&quot;&gt;해당하는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소켓이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;발견되면&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;해당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소켓에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;필요한&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록하고&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;접속&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;동작&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;상태를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;진행&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;중으로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;변경한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+    
+&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;번&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;과정이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;끝나면&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버의&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;응답을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;돌려보내기&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;위해&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;담당&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소프트웨어에게&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;의뢰한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
+
+&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;이때&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;라는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;컨트롤&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;비트도&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;설정하여&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;돌려보낸다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
+
+&lt;span class=&quot;mi&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;클라이언트에게&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정상적으로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;돌아왔으면&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;조사하여&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버측의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;접속&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;동작이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;성공했는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;지&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;확인한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
+   &lt;span class=&quot;err&quot;&gt;서버&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;측의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;접속이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;성공했으면&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;클라이언트&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;소켓에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소나&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;포트&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;등과&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;함께&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;접속&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;완료를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;나타내는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정보를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+    
+&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;마지막으로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;클라이언트에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;정상적으로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;도착했다는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;것을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;알리기&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;위해&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;비트를&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;만든&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TCP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;헤더를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;서버측에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;반송한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;🌟 ACK는 패킷이 대상에게 잘 도착했는지 확인하는 용도로 사용된다.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;3-데이터를-송수신-한다&quot;&gt;3. 데이터를 송수신 한다.&lt;/h2&gt;
+
+&lt;h3 id=&quot;1️⃣프로토콜-스택에--http-리퀘스트-메세지를-넘긴다&quot;&gt;&lt;strong&gt;1️⃣ 프로토콜 스택에  HTTP 리퀘스트 메세지를 넘긴다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;connect에서 애플리케이션에 제어가 되돌아오면 데이터 송 수신 동작이 들어간다. 데이터 송 수신 동작은 애플리케이션이 &lt;strong&gt;✔️ write()&lt;/strong&gt; 를 호출하여 송신 데이터를 프로토콜 스택에 건네주는 곳부터 시작된다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;프로토콜 스택은 받은 데이터의 내용을 곧바로 송신하는 것이 아니라 일단 프로토콜 스택 내부의 송신용 버퍼 메모리 영역에 저장하고 애플리케이션이 다음 데이터를 건네주기를 기다린다.&lt;/p&gt;
+
+&lt;p&gt;송신용 버퍼에 저장하는 이유는 애플리케이션에서 프로토콜 스택에 건네주는 데이터의 길이는 애플리케이션마다 상이하기 때문이다.  이러한 상황에서 받은 데이터를 곧바로 보내는 방법은 작은 패킷을 많이 보낼 수 있지만 네트워크 이용 효율이 저하되므로 어느 정도 데이터를 저장하고 나서 송 수신 동작을 진행한다.&lt;/p&gt;
+
+&lt;p&gt;송신 버퍼에 어느 정도의 데이터가 담겼을 때 송신한다는 규칙은 OS의 종류나 버전마다 달라지지만 &lt;strong&gt;MTU&lt;/strong&gt;나 &lt;strong&gt;타이밍&lt;/strong&gt;을 바탕으로 어느정도 판단할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ MTU?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;한 패킷으로 운반할 수 있는 디지털 데이터의 최대 길이 이더넷에서는 보통 1500 바이트&lt;/li&gt;
+  &lt;li&gt;MTU에는 패킷의 맨 앞부분에 헤더가 포함되어 있음, 여기부터 헤더를 제외한 것이 하나의 패킷으로 운반할 수 있는 데이터의 최대 길이가 됨 이것을 &lt;strong&gt;MSS&lt;/strong&gt; 라고 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ MSS?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;헤더를 제외하고 한 개의 패킷으로 운반할 수 있는 TCP의 데이터 최대 길이&lt;/li&gt;
+  &lt;li&gt;애플리케이션에서 받은 데이터가 MSS를 초과하거나 MSS에 가까운 길이에 이르기까지 데이터를 저장하고 송신동작을 진행하면 패킷이 잘게 나눠질 걱정을 하지 않아도 된다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/164371712-2c075fc2-7133-48aa-837b-c3bf552b4f15.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;타이밍?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;애플리케이션의 송신 속도가 느려지는 경우 MSS에 가깝게 데이터를 저장하면 여기에서 시간이 걸려 송신 동작이 지연되므로 버퍼에 데이터가 모이지 않아도 적당한 곳에서 송신 동작을 실행해야 한다. 따라서 프로토콜 스택은 일정한 시간이 경과하면 패킷을 송신할 수 있게 내부에 타이머라는 소프트웨어를 둔다.&lt;/p&gt;
+
+&lt;p&gt;두 가지의 판단요소가 존재하지만 이 둘은 상반되는 면도 존재한다. &lt;strong&gt;MSS&lt;/strong&gt; 바탕을 중시하면 패킷 길이가 길어져서 네트워크 이용 효율이 높아지지만 버퍼에 머무는 시간만큼 송신 동작이 지연될 우려가 존재한다. 반대로 타이밍을 중시하면 지연은 적어지지만 이용 효율이 떨어지므로 양자를 절충해서 적당히 시간을 가늠하여 송신 동작을 실행해야 한다. 그러나 TCP 프로토콜 사양에는 절충에 대한 규약은 없으므로 실제 판단은 프로토콜 스택을 만드는 개발자의 몫이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2️⃣데이터가-클-때는-분할하여-보낸다&quot;&gt;2️⃣ 데이터가 클 때는 분할하여 보낸다&lt;/h3&gt;
+
+&lt;p&gt;HTTP 리퀘스트 메세지는 보통 그다지 길지 않은 것이 대부분이다. 하지만 항상 예외는 존재하기에 HTTP 리퀘스트 메세지가 한 개의 패킷에 전부 들어가지 못할 경우, 송신 버퍼에 들어있는 데이터를 맨 앞부터 차례대로 MSS의 크기에 맞게 분할하고 분할한 조각을 한 개씩 패킷에 넣어 송신한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/164371676-1c0fa15f-f6bb-4a7d-8df4-77c61fdae138.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;3️⃣-ack-번호를-사용하여-패킷이-도착했는지-확인한다&quot;&gt;3️⃣  ACK 번호를 사용하여 패킷이 도착했는지 확인한다.&lt;/h3&gt;
+
+&lt;p&gt;데이터 송신동작은 앞서 설명한 것 만으로는 끝나지 않는다. TCP는 송신한 패킷이 상대에게 도착했는지 확인하고 도착하지 않았으면 다시 송신하는 기능이 있으므로 패킷을 송신한 후에는 확인 동작으로 넘어간다.&lt;/p&gt;
+
+&lt;p&gt;먼저 TCP 담당 소프트웨어는 데이터를 조각으로 분할할 때 조각이 통신 개시부터 따져서 몇 번째 바이트에 해당 하는지 세어둔다. 이 값을 시퀀스 번호라고 하며 TCP 헤더에 기록한다. 이렇게 시퀀스 번호를 기록할 경우 수신측에서 패킷의 누락여부를 확인할 수 있다. 수신측은 전달 받은 데이터의 바이트 크기를 확인하고 이를 ACK 번호에 기록하고 이 값에 1을 더하여 송신측에 전달한다.&lt;/p&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;예시&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;총 4381바이트의 데이터를 전송한다고 가정한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[누락되지 않은 경우]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;시퀀스 번호 1 , 데이터 크기 : 1460바이트
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 1461&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시퀀스 번호 1461, 데이터 크기 : 1460바이트
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 2921&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시퀀스 번호 2921, 데이터 크기 : 1460바이트
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 4381&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;[누락된 경우]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;시퀀스 번호 1 , 데이터 크기 : 1460바이트
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 1461&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시퀀스 번호 1461, 데이터 크기 : 1460바이트
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 전송하지 않음&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;시퀀스 번호 1461, 데이터 크기 : 1460바이트 (재전송)
+    &lt;ol&gt;
+      &lt;li&gt;ACK 번호 2921&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;🌟 &lt;/span&gt; &lt;span class=&quot;err&quot;&gt;시퀀스&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호와&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷이&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신측에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;도착한&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;것을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;확인한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;🌟 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;통지할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;때는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;단순히&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;값을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;설정할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;뿐만&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;아니라&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;제어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;비트의&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;비트도&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;설정한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt; 
+&lt;span class=&quot;err&quot;&gt;이렇게하면&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ACK&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;필드가&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;유효하다는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;의미가&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;된다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;4️⃣-패킷-평균-왕복-시간으로-ack-번호의-대기-시간을-조정한다&quot;&gt;&lt;strong&gt;4️⃣  패킷 평균 왕복 시간으로 ACK 번호의 대기 시간을 조정한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;ACK 번호가 돌아오는 것을 기다리는 시간을 &lt;strong&gt;타임아웃 값&lt;/strong&gt; 이라고 한다.&lt;/p&gt;
+
+&lt;p&gt;네트워크가 혼잡하면 ACK 번호가 돌아오는 시간이 지연될 수 있다. 이때 ACK 번호가 돌아오기전에 패킷을 재전송하면 혼잡한 네트워크를 악화시키는 사태가 발생한다.&lt;/p&gt;
+
+&lt;p&gt;이러한 문제를 방지하기 위해 대기 시간을 적절하게 설정해야한다. 대기 시간이 너무 짧으면 패킷을 자주 보내게 되고 대기시간을 너무 길게 설정하면 패킷을 다시 보내는 동작이 지연되어 속도 저하의 원인이 되기 때문이다.&lt;/p&gt;
+
+&lt;p&gt;보통 TCP는 ACK 번호가 돌아오는 시간을 기준으로 대기 시간을 판단하여 동적으로 변경하는 방법을 취한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;5️⃣-윈도우-제어-방식으로-효율적으로-ack-번호를-관리한다&quot;&gt;&lt;strong&gt;5️⃣  윈도우 제어 방식으로 효율적으로 ACK 번호를 관리한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;ACK 번호가 돌아올 때까지의 시간동안 아무 일도 하지 않고 기다리는 것은 자원과 시간 낭비이다.&lt;/p&gt;
+
+&lt;p&gt;낭비를 줄이기 위해 TCP는 윈도우 제어 방식에 따라 송신과 ACK 번호 통지의 동작을 실행한다.&lt;/p&gt;
+
+&lt;p&gt;윈도우 제어 방식이란 한 개의 패킷을 보낸 후 ACK 번호를 기다리지 않고 차례대로 연속해서 복수의 패킷을 보내는 방법을 말한다. 이럴 경우 ACK 번호가 돌아올 때까지의 시간이 낭비되지 않는다.&lt;/p&gt;
+
+&lt;p&gt;주의할 점은 ACK 번호를 기다리지 않고 차례로 패킷을 보내면 수신측의 능력을 초과하여 패킷을 보내는 사태가 발생할 수 있다.&lt;/p&gt;
+
+&lt;p&gt;수신측은 패킷을 수신하면 수신측 버퍼 메모리에 일시 보관한다. 수신측에서는 ACK 번호를 계산하는 작업이나 조각을 연결하여 원래 데이터를 복원하고 애플리케이션에 넘겨주어야 수신 버퍼에 저장된 데이터가 사용되어 사라진다. 하지만 송신측이 수신측의 처리속도보다 빠른 속도로 패킷을 송신하면 수신 버퍼에 데이터가 쌓이지 않고 사라질 수 있다.&lt;/p&gt;
+
+&lt;p&gt;이러한 문제를 방지하기 위해 수신측은 송신측에 수신가능한 데이터의 양을 통지한다. 수신 가능한 양은 TCP 헤더의 윈도우 필드에 기록하여 송신측에 알린다.&lt;/p&gt;
+
+&lt;h3 id=&quot;6️⃣ack-번호와-윈도우를-합승한다&quot;&gt;&lt;strong&gt;6️⃣ ACK 번호와 윈도우를 합승한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;수신측은 네트워크 효율성 저하를 방지하기 위해 ACK 번호나 윈도우를 통지할 때 소켓을 바로 보내지 않고 잠시 기다린다. 기다리는 사이에 통지 동작이 발생하면 양쪽을 상승시켜서 한 개의 패킷으로 묶어서 전송한다.&lt;/p&gt;
+
+&lt;p&gt;예를 들자면 ACK 번호의 송신을 대조할 때 윈도우 통지가 발생하면 ACK 번호와 윈도우를 한개의 패킷에 합승 시켜서 통지하여 패킷의 수를 줄이는 것이다.&lt;/p&gt;
+
+&lt;p&gt;연속으로 ACK 번호 통지가 발생할 때도 마찬가지다. ACK 번호는 수신한 데이터의 끝이 어디인지를 송신측에 알리는 것이므로 ACK 번호가 통지가 연속적으로 발생하면 마지막 ACK 번호만 송신하고 나머지의 것은 생략해도 상관없다. 윈도우 통지도 마찬가지이다. 윈도우 통지가 연속적으로 발생하면 수신버퍼에 빈 공간이 늘어난다는 의미이므로 마지막 통지만 전달해도 문제가 발생하지 않는다.&lt;/p&gt;
+
+&lt;h3 id=&quot;7️⃣http-응답-메세지를-수신한다&quot;&gt;&lt;strong&gt;7️⃣ HTTP 응답 메세지를 수신한다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;HTTP 리퀘스트 메세지를 보내면 웹 서버에서 응답 메세지가 돌아오기를 기다리고, 응답 메세지가 돌아오면 그것을 수신한다.&lt;/p&gt;
+
+&lt;p&gt;데이터를 수신하면 수신한 데이터 조각과 TCP 헤더의 내용을 조사하여 누락된 데이터가 있는 지 검사하고 문제가 없으면 송신측에 ACK 번호를 반송한다. 그리고 데이터의 조각을 수신 버퍼에 일시 보관하고 데이터 조각을 연결하여 애플리케이션에게 건네준다. 이를 정확하게 설명하자면 수신 버퍼에 저장된 데이터를 애플리케이션 메모리 영역에 옮기고 제어권을 애플리케이션에게 되돌려준다.&lt;/p&gt;
+
+&lt;h2 id=&quot;4-서버에서-연결을-끊어-소켓을-말소한다&quot;&gt;4. 서버에서 연결을 끊어 소켓을 말소한다.&lt;/h2&gt;
+
+&lt;h3 id=&quot;1️⃣데이터-보내기를-완료했을-때-연결을-끊는다&quot;&gt;&lt;strong&gt;1️⃣ 데이터 보내기를 완료했을 때 연결을 끊는다.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;데이터의 송 수신 동작이 완료되면 대상과의 연결을 끊는다. 이때 연결 끊기를 시도하는 대상은 서버나 클라이언트의 구분이 없다. 만약 서버에서 먼저 연결을 끊는다고 가정하면 서버측의 프로토콜 스택이 TCP 헤더를 생성하고 컨트롤비트인 FIN의 값을 1로 설정하여 클라이언트에게 전송한다. 이때 서버측은 소켓이 연결 끊기 동작에 들어갔다는 것을 기록한다. 서버에서 FIN을 설정한 TCP 헤더가 클라이언트에게 도착하면 클라이언트는 자신의 소켓에 서버가 연결끊기 작업에 들어갔다는 것을 기록하고 서버측에 FIN 값을 수신했다는 의미로 ACK 값을 전송한다.&lt;/p&gt;
+
+&lt;p&gt;클라이언트측 소켓이 애플리케이션에 데이터를 전부 전달하면 클라이언트측의 애플리케이션도 close를 호출하여 데이터 송 수신 동작을 중지한다. 그러면 클라이언트의 프로토콜 스택도 서버와 마찬가지로 TCP 헤더에 FIN 값을 1로 설정하여 서버측에 전송한다. 서버측에서 ACK 값이 되돌아오면 서버와의 대화는 끝이난 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;[연결 끊기 동작]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;클라이언트가 FIN 송신&lt;/li&gt;
+  &lt;li&gt;서버가 ACK 번호 송신&lt;/li&gt;
+  &lt;li&gt;서버가 FIN 송신&lt;/li&gt;
+  &lt;li&gt;클라이언트가 ACK 번호 송신&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;🌟  이때 연결 종료의 순서는 클라이언트와 서버가 서로 바뀔수도 있다.&lt;/strong&gt; &lt;/p&gt;
+
+&lt;h3 id=&quot;2️⃣소켓을-말소한다&quot;&gt;2️⃣ 소켓을 말소한다.&lt;/h3&gt;
+
+&lt;p&gt;서버와의 대화가 끝나면 더이상 소켓을 사용하여 서버와 대화할 수 없다. 하지만 이때 바로 소켓을 말소시키면 ACK 번호의 응답이 늦어 FIN을 재전송 할 때 기록 정보가 제거되어 어느 소켓이 수신 대상인지 알 수 없게 된다. 뿐만아니라 동일한 포트로 새롭게 생성된 소켓이 FIN을 수신하여 오동작이 발생할 수 있다. 이러한 문제 때문에 소켓을 바로 말소하지 않고 일정시간 기다린 후 말소한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://velog.io/@anhesu11/HTTP-%EA%B8%B0%EB%B3%B8-%EC%9D%B4%EB%A1%A0-%EC%A0%95%EB%A6%AC&quot;&gt;https://velog.io/@anhesu11/HTTP-기본-이론-정리&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;성공과 실패를 결정하는 1%의 네트워크&lt;/p&gt;</content><author><name></name></author><category term="3 way handshake" /><category term="4 way handshake" /><category term="Socket" /><category term="DNS" /><category term="TCP" /><category term="성공과 실패를 위한 네트워크 1%의 원리" /><summary type="html">📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다 🌟 2장의 요점 짚고 넘어가기 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 가상 메모리와 Page Fault</title><link href="http://localhost:4000/os/2022/04/16/os-study-11.html" rel="alternate" type="text/html" title="[운영체제 스터디] 가상 메모리와 Page Fault" /><published>2022-04-16T00:00:00+09:00</published><updated>2022-04-16T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/16/os-study-11</id><content type="html" xml:base="http://localhost:4000/os/2022/04/16/os-study-11.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
 
 &lt;h1 id=&quot;️virtual-memory&quot;&gt;🗳️ Virtual Memory&lt;/h1&gt;
 
@@ -542,7 +867,348 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="가상 메모리" /><category term="요구 페이징" /><category term="page fault" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 불연속할당</title><link href="http://localhost:4000/os/2022/04/15/os-study-10.html" rel="alternate" type="text/html" title="[운영체제 스터디] 불연속할당" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-10</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-10.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="가상 메모리" /><category term="요구 페이징" /><category term="page fault" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소</title><link href="http://localhost:4000/os/2022/04/15/os-study-09.html" rel="alternate" type="text/html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-09</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-09.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
+
+&lt;h1 id=&quot;️memory-management-1&quot;&gt;🗳️ Memory Management 1&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-논리적-주소와-물리적-주소&quot;&gt;1. 논리적 주소와 물리적 주소&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  논리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로세스마다 독립적으로 가지는 주소 공간&lt;/li&gt;
+  &lt;li&gt;각 프로세스마다 0번지부터 시작&lt;/li&gt;
+  &lt;li&gt;CPU가 보는 주소는 &lt;strong&gt;logical address&lt;/strong&gt;이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  물리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;실제 메모리에 올라가는 위치&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;12-주소-바인딩address-binding&quot;&gt;1.2 주소 바인딩(Address Binding)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로세스의 물리적 메모리 주소를 결정하는 것&lt;/p&gt;
+
+  &lt;p&gt;Symbolic Address → Logical Address → Physical Address&lt;/p&gt;
+
+  &lt;p&gt;🌟 &lt;strong&gt;Symbolic Address?&lt;/strong&gt; 프로그래머가 사용하는 심볼릭한 주소&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;사용자 프로그램&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;logical address만을 다룬다&lt;/li&gt;
+  &lt;li&gt;실제 physical address를 볼 수 없으며 알 필요가 없다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Compile time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;물리적 메모리 주소(physical address)가 컴파일 시 알려짐&lt;/li&gt;
+  &lt;li&gt;시작 위치 변경시 재컴파일&lt;/li&gt;
+  &lt;li&gt;컴파일러는 절대 코드(absolute code) 생성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;❗ &lt;strong&gt;논리적 메모리 주소가 물리적 메모리의 주소가 되므로 여유있는 메모리 공간이 있어도 고정적인 메모리 주소를 갖기 때문에 비효율적&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️  &lt;strong&gt;Load time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램 실행 시 물리적 주소가 결정되는 방식&lt;/li&gt;
+  &lt;li&gt;컴파일러가 재배치 가능한 코드를 생성한 경우 발생 가능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️  &lt;strong&gt;Run time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램 실행 도중 물리적 메모리 주소가 변경될 수 있는 방식&lt;/li&gt;
+  &lt;li&gt;CPU가 주소를 참조할 때마다 binding을 점검해야 함 (address mapping table)&lt;/li&gt;
+  &lt;li&gt;하드웨어적인 지원이 필요함
+    &lt;ul&gt;
+      &lt;li&gt;(base and limit registers, &lt;strong&gt;MMU&lt;/strong&gt;)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;현대에서 주로 사용되는 방식&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Memory-Management Unit (MMU)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;MMU
+    &lt;ul&gt;
+      &lt;li&gt;logical address를 physical address로 매핑해 주는 Hardware device&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;MMU scheme
+    &lt;ul&gt;
+      &lt;li&gt;사용자 프로세스가 CPU에서 수행되며 생성해내는 모든 주소값에 대해 base register (=relocation register)의 값을 더한다&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;💡 &lt;strong&gt;운영체제 및 사용자 프로세스 간의 메모리 보호를 위해 사용하는 레지스터&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;relocation register
+    &lt;ul&gt;
+      &lt;li&gt;프로세스의 물리적 메모리 시작위치를 저장한다 (접근할 수 있는 물리적 메모리 주소의 최소값)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;limit register
+    &lt;ul&gt;
+      &lt;li&gt;물리적 메모리 주소의 한계영역을 지정하기 위해 프로그램의 최대 크기를 저장한다.&lt;/li&gt;
+      &lt;li&gt;논리적 주소의 범위 (프로그램의 최대 크기)
+        &lt;ul&gt;
+          &lt;li&gt;예를 들어 P1의 시작 주소가 14000이고 프로그램의 크기가 3000일 때 P1은 14000~17000 사이만 접근할 수 있다.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-some-terminologies&quot;&gt;2. Some Terminologies&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-dynamic-loading&quot;&gt;1. Dynamic Loading&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로세스 전체를 메모리에 미리 다 올리는 것이 아니라 해당 루틴이 불려질  때 메모리에 load하는 것&lt;/li&gt;
+  &lt;li&gt;memory utilization의 향상&lt;/li&gt;
+  &lt;li&gt;가끔식 사용되는 많은 양의 코드의 경우 유용
+    &lt;ul&gt;
+      &lt;li&gt;ex) 오류 처리 루틴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;운영체제의 특별한 지원 없이 프로그램 자체에서 구현 가능(OS는 라이브러리를 통해 프로그래머를 지원함)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-overlays&quot;&gt;2. Overlays&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;메모리에 프로세스의 부분 중 실제 필요한 정보만을 올림&lt;/li&gt;
+  &lt;li&gt;프로세스의 크기가 메모리보다 클 때 유용&lt;/li&gt;
+  &lt;li&gt;운영체제의 지원없이 사용자에 의해 구현&lt;/li&gt;
+  &lt;li&gt;작은 공간의 메모리를 사용하던 초창기 시스템에서 수작업으로 프로그래머가 구현
+    &lt;ul&gt;
+      &lt;li&gt;Manual Overlay&lt;/li&gt;
+      &lt;li&gt;프로그래밍이 매우 복잡함&lt;/li&gt;
+      &lt;li&gt;Dynamic Loading과 비슷한 역할을 하지만 OS의 지원이 하나도 없다는 점에서 차이가 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-dynamic-linking&quot;&gt;3. Dynamic Linking&lt;/h3&gt;
+
+&lt;p&gt;Linking을 실행 시간(execution time)까지 미루는 기법&lt;/p&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Static Linking&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라이브러리가 프로그램의 실행 파일 코드에 포함됨&lt;/li&gt;
+  &lt;li&gt;실행 파일의 크기가 커짐&lt;/li&gt;
+  &lt;li&gt;동일한 라이브러리를 각각의 프로세스가 메모리에 올리므로 메모리 낭비
+    &lt;ul&gt;
+      &lt;li&gt;ex) printf를 호출하는 n개의 프로세스가 있으면 동일한 라이브러리여도 각각 printf 함수의 라이브러리를 메모리에 올리게 됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Dynamic linking&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라이브러리가 실행시 연결(link)됨&lt;/li&gt;
+  &lt;li&gt;라이브러리 호출 부분에 라이브러리 루틴의 위치를 찾기 위한 stub이라는 작은 코드를 둠&lt;/li&gt;
+  &lt;li&gt;라이브러리가 이미 메모리에 있으면 그 루틴의 주소로 가고 없으면 디스크에서 읽어옴&lt;/li&gt;
+  &lt;li&gt;운영체제의 도움이 필요함&lt;/li&gt;
+  &lt;li&gt;Dynamic linking을 지원하는 라이브러리를 shared library 라고 함
+    &lt;ul&gt;
+      &lt;li&gt;window → DLL&lt;/li&gt;
+      &lt;li&gt;linux → shared object&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;4-swapping&quot;&gt;4. Swapping&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로세스를 일시적으로 메모리에서 backing store로 쫓아내는 것&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Backing store(=swap area)?&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;디스크
+          &lt;ul&gt;
+            &lt;li&gt;많은 사용자의 프로세스 이미지를 담을 만큼 충분히 빠르고 큰 저장 공간&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Swap in / Swap out&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적으로 중기 스케줄러(swapper)에 의해 swap out 시킬 프로세스 선정&lt;/li&gt;
+  &lt;li&gt;priority-based CPU scheduling algorithm
+    &lt;ul&gt;
+      &lt;li&gt;CPU 우선순위가 낮은 프로세스를 swapped out 시킴&lt;/li&gt;
+      &lt;li&gt;CPU 우선순위가 높은 프로세스를 메모리에 올려놓음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Complie time 혹은 load time binding에서는 다른 메모리 공간이 비어있더라도 원래 메모리 위치로 swap in 해야 함&lt;/li&gt;
+  &lt;li&gt;Execution time binding에서는 추후 빈 메모리 영역 아무 곳에나 올릴 수 있음&lt;/li&gt;
+  &lt;li&gt;swap time은 대부분 transfer time(swap되는 양에 비례하는 시간)임&lt;/li&gt;
+  &lt;li&gt;원칙적으로 프로세스 전체가 메모리에서 쫓겨나는 것을 Swap out 이라고 하지만 프로세스 일부분이 쫓겨나는 것도 swap out 이라고 부르기도 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-물리적-메모리-관리&quot;&gt;3. 물리적 메모리 관리&lt;/h2&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;메모리는 일반적으로 두 영역으로 나눠어서 사용 됨&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OS 상주 영역(커널)
+    &lt;ul&gt;
+      &lt;li&gt;interrupt vector와 함께 낮은 주소 영역 사용&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;사용자 프로세스 영역&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;사용자 프로세스 영역의 할당 방법&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Contiguous allocation(연속할당)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;각각의 프로세스가 메모리의 연속적인 공간에 적재되도록 하는 것
+        &lt;ul&gt;
+          &lt;li&gt;Fixed partition allocation&lt;/li&gt;
+          &lt;li&gt;Variable partition allocation&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Noncontiguous allocation(불연속할당)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;현대 시스템의 사용 방법&lt;/li&gt;
+      &lt;li&gt;하나의 프로세스가 메모리의 여러 영역에 분산되어 올라갈 수 있음
+        &lt;ul&gt;
+          &lt;li&gt;Paging&lt;/li&gt;
+          &lt;li&gt;Segmentation&lt;/li&gt;
+          &lt;li&gt;Paged Segmentation&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;외부조각과 내부조각&lt;/strong&gt; &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;External fragmentation(외부 조각)
+    &lt;ul&gt;
+      &lt;li&gt;프로그램 크기보다 분할의 크기가 작은 경우&lt;/li&gt;
+      &lt;li&gt;아무 프로그램에도 배정되지 않은 빈 곳인데도 프로그램이 올라갈 수 없는 작은 분할&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Internal Fragmentation(내부 조각)
+    &lt;ul&gt;
+      &lt;li&gt;프로그램 크기보다 분할의 크기가 큰 경우&lt;/li&gt;
+      &lt;li&gt;하나의 분할 내부에서 발생하는 사용되지 않는 메모리 조각&lt;/li&gt;
+      &lt;li&gt;분할에 배정된 프로그램보다 분할의 크기가 더 커서 생기는 사용되지 않는 메모리 공간&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-contiguous-allocation연속할당&quot;&gt;4. Contiguous allocation(연속할당)&lt;/h2&gt;
+
+&lt;h3 id=&quot;41-fixed-partition고정분할&quot;&gt;4.1 &lt;strong&gt;Fixed partition(고정분할)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;물리적 메모리를 몇 개의 영구적 분할(partition)으로 나눔&lt;/li&gt;
+  &lt;li&gt;분할의 크기가 모두 동일한 방식과  서로 다른 방식이 존재&lt;/li&gt;
+  &lt;li&gt;분할당 하나의 프로그램 적재&lt;/li&gt;
+  &lt;li&gt;융통성이 없음
+    &lt;ul&gt;
+      &lt;li&gt;동시에 메모리에 load되는 프로그램의 수가 고정됨&lt;/li&gt;
+      &lt;li&gt;최대 수행 가능 프로그램 크기 제한&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;internal fragmentation(=내부조각) 과  external fragmentation(=외부조각) 발생&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;42-variable-partition가변분할&quot;&gt;4.2 &lt;strong&gt;Variable partition(가변분할)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램의 크기를 고려해서 할당&lt;/li&gt;
+  &lt;li&gt;분할의 크기, 개수가 동적으로 변함&lt;/li&gt;
+  &lt;li&gt;기술적 관리 기법 필요&lt;/li&gt;
+  &lt;li&gt;external fragmentation(=외부조각) 발생&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;1️⃣  &lt;strong&gt;Hole&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가용 메모리 공간&lt;/li&gt;
+  &lt;li&gt;다양한 크기의 hole들이 메모리 여러 곳에 흩어져 있음&lt;/li&gt;
+  &lt;li&gt;프로세스가 도착하면 수용가능한 hole을 할당&lt;/li&gt;
+  &lt;li&gt;운영체제는 다음의 정보를 유지
+    &lt;ul&gt;
+      &lt;li&gt;a) 할당 공간 b) 가용 공간(hole)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2️⃣  &lt;strong&gt;Dynamic Storage-Allocation Problem&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가변 분할 방식에서 size n인 요청을 만족하는 가능 적절한 hole을 찾는 문제&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;First-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Size가 n 이상인 것 중 최초로 찾아지는 hole에 할당&lt;/li&gt;
+      &lt;li&gt;셋 중 오버헤드가 가장 적음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Best-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Size가 n 이상인 가장 작은 hole을 찾아서 할당&lt;/li&gt;
+      &lt;li&gt;Hole들의 리스트가 크기순으로 정렬되지 않은 경우 모든 hole의 리스트를 탐색해야함&lt;/li&gt;
+      &lt;li&gt;많은 수의 아주 작은 hole들이 생성됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Worst-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;가장 큰 hole에 할당&lt;/li&gt;
+      &lt;li&gt;역시 모든 리스트를 탐색해야 함&lt;/li&gt;
+      &lt;li&gt;상대적으로 아주 큰 hole들이 생성됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;🌟 First-fit과 Best-fit이 Worst-fit보다 속도와 공간 이용률 측면에서 횩하적인 것으로 알려짐 (실험적 결과)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;3️⃣  &lt;strong&gt;Compaction&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;external fragmentation 문제를 해결하는 한 가지 방법&lt;/li&gt;
+  &lt;li&gt;사용 중인 메모리 영역을 한군데로 몰고 hole들을 다른 한 곳으로 몰아 큰 block을 만드는 것&lt;/li&gt;
+  &lt;li&gt;전체 프로그램 바인딩과 관련되어 있기 때문에 비용이 많이 듬&lt;/li&gt;
+  &lt;li&gt;최소한의 메모리 이동으로 compaction하는 방법 (매우 복잡한 문제)&lt;/li&gt;
+  &lt;li&gt;Compcation은 프로세스의 주소가 실행 시간에 동적으로 재배치 가능한 경우에만 수행될 수 있다.
+    &lt;ul&gt;
+      &lt;li&gt;Runtime binding이 지원되어야 사용 가능함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 불연속할당</title><link href="http://localhost:4000/os/2022/04/15/os-study-10.html" rel="alternate" type="text/html" title="[운영체제 스터디] 불연속할당" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-10</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-10.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
 
 &lt;h1 id=&quot;️memory-management-2&quot;&gt;🗳️ Memory Management 2&lt;/h1&gt;
 
@@ -949,348 +1615,7 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="불연속할당" /><category term="페이징" /><category term="세그멘테이션" /><category term="Invalid Bit / Protection Bit" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소</title><link href="http://localhost:4000/os/2022/04/15/os-study-09.html" rel="alternate" type="text/html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-09</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-09.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h1 id=&quot;️memory-management-1&quot;&gt;🗳️ Memory Management 1&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-논리적-주소와-물리적-주소&quot;&gt;1. 논리적 주소와 물리적 주소&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  논리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스마다 독립적으로 가지는 주소 공간&lt;/li&gt;
-  &lt;li&gt;각 프로세스마다 0번지부터 시작&lt;/li&gt;
-  &lt;li&gt;CPU가 보는 주소는 &lt;strong&gt;logical address&lt;/strong&gt;이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  물리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;실제 메모리에 올라가는 위치&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;12-주소-바인딩address-binding&quot;&gt;1.2 주소 바인딩(Address Binding)&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스의 물리적 메모리 주소를 결정하는 것&lt;/p&gt;
-
-  &lt;p&gt;Symbolic Address → Logical Address → Physical Address&lt;/p&gt;
-
-  &lt;p&gt;🌟 &lt;strong&gt;Symbolic Address?&lt;/strong&gt; 프로그래머가 사용하는 심볼릭한 주소&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;사용자 프로그램&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;logical address만을 다룬다&lt;/li&gt;
-  &lt;li&gt;실제 physical address를 볼 수 없으며 알 필요가 없다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Compile time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;물리적 메모리 주소(physical address)가 컴파일 시 알려짐&lt;/li&gt;
-  &lt;li&gt;시작 위치 변경시 재컴파일&lt;/li&gt;
-  &lt;li&gt;컴파일러는 절대 코드(absolute code) 생성&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;❗ &lt;strong&gt;논리적 메모리 주소가 물리적 메모리의 주소가 되므로 여유있는 메모리 공간이 있어도 고정적인 메모리 주소를 갖기 때문에 비효율적&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Load time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램 실행 시 물리적 주소가 결정되는 방식&lt;/li&gt;
-  &lt;li&gt;컴파일러가 재배치 가능한 코드를 생성한 경우 발생 가능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Run time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램 실행 도중 물리적 메모리 주소가 변경될 수 있는 방식&lt;/li&gt;
-  &lt;li&gt;CPU가 주소를 참조할 때마다 binding을 점검해야 함 (address mapping table)&lt;/li&gt;
-  &lt;li&gt;하드웨어적인 지원이 필요함
-    &lt;ul&gt;
-      &lt;li&gt;(base and limit registers, &lt;strong&gt;MMU&lt;/strong&gt;)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;현대에서 주로 사용되는 방식&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Memory-Management Unit (MMU)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;MMU
-    &lt;ul&gt;
-      &lt;li&gt;logical address를 physical address로 매핑해 주는 Hardware device&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;MMU scheme
-    &lt;ul&gt;
-      &lt;li&gt;사용자 프로세스가 CPU에서 수행되며 생성해내는 모든 주소값에 대해 base register (=relocation register)의 값을 더한다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;💡 &lt;strong&gt;운영체제 및 사용자 프로세스 간의 메모리 보호를 위해 사용하는 레지스터&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;relocation register
-    &lt;ul&gt;
-      &lt;li&gt;프로세스의 물리적 메모리 시작위치를 저장한다 (접근할 수 있는 물리적 메모리 주소의 최소값)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;limit register
-    &lt;ul&gt;
-      &lt;li&gt;물리적 메모리 주소의 한계영역을 지정하기 위해 프로그램의 최대 크기를 저장한다.&lt;/li&gt;
-      &lt;li&gt;논리적 주소의 범위 (프로그램의 최대 크기)
-        &lt;ul&gt;
-          &lt;li&gt;예를 들어 P1의 시작 주소가 14000이고 프로그램의 크기가 3000일 때 P1은 14000~17000 사이만 접근할 수 있다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-some-terminologies&quot;&gt;2. Some Terminologies&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-dynamic-loading&quot;&gt;1. Dynamic Loading&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 전체를 메모리에 미리 다 올리는 것이 아니라 해당 루틴이 불려질  때 메모리에 load하는 것&lt;/li&gt;
-  &lt;li&gt;memory utilization의 향상&lt;/li&gt;
-  &lt;li&gt;가끔식 사용되는 많은 양의 코드의 경우 유용
-    &lt;ul&gt;
-      &lt;li&gt;ex) 오류 처리 루틴&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;운영체제의 특별한 지원 없이 프로그램 자체에서 구현 가능(OS는 라이브러리를 통해 프로그래머를 지원함)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-overlays&quot;&gt;2. Overlays&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;메모리에 프로세스의 부분 중 실제 필요한 정보만을 올림&lt;/li&gt;
-  &lt;li&gt;프로세스의 크기가 메모리보다 클 때 유용&lt;/li&gt;
-  &lt;li&gt;운영체제의 지원없이 사용자에 의해 구현&lt;/li&gt;
-  &lt;li&gt;작은 공간의 메모리를 사용하던 초창기 시스템에서 수작업으로 프로그래머가 구현
-    &lt;ul&gt;
-      &lt;li&gt;Manual Overlay&lt;/li&gt;
-      &lt;li&gt;프로그래밍이 매우 복잡함&lt;/li&gt;
-      &lt;li&gt;Dynamic Loading과 비슷한 역할을 하지만 OS의 지원이 하나도 없다는 점에서 차이가 있음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;3-dynamic-linking&quot;&gt;3. Dynamic Linking&lt;/h3&gt;
-
-&lt;p&gt;Linking을 실행 시간(execution time)까지 미루는 기법&lt;/p&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Static Linking&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;라이브러리가 프로그램의 실행 파일 코드에 포함됨&lt;/li&gt;
-  &lt;li&gt;실행 파일의 크기가 커짐&lt;/li&gt;
-  &lt;li&gt;동일한 라이브러리를 각각의 프로세스가 메모리에 올리므로 메모리 낭비
-    &lt;ul&gt;
-      &lt;li&gt;ex) printf를 호출하는 n개의 프로세스가 있으면 동일한 라이브러리여도 각각 printf 함수의 라이브러리를 메모리에 올리게 됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Dynamic linking&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;라이브러리가 실행시 연결(link)됨&lt;/li&gt;
-  &lt;li&gt;라이브러리 호출 부분에 라이브러리 루틴의 위치를 찾기 위한 stub이라는 작은 코드를 둠&lt;/li&gt;
-  &lt;li&gt;라이브러리가 이미 메모리에 있으면 그 루틴의 주소로 가고 없으면 디스크에서 읽어옴&lt;/li&gt;
-  &lt;li&gt;운영체제의 도움이 필요함&lt;/li&gt;
-  &lt;li&gt;Dynamic linking을 지원하는 라이브러리를 shared library 라고 함
-    &lt;ul&gt;
-      &lt;li&gt;window → DLL&lt;/li&gt;
-      &lt;li&gt;linux → shared object&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;4-swapping&quot;&gt;4. Swapping&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스를 일시적으로 메모리에서 backing store로 쫓아내는 것&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Backing store(=swap area)?&lt;/strong&gt;
-      &lt;ul&gt;
-        &lt;li&gt;디스크
-          &lt;ul&gt;
-            &lt;li&gt;많은 사용자의 프로세스 이미지를 담을 만큼 충분히 빠르고 큰 저장 공간&lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Swap in / Swap out&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적으로 중기 스케줄러(swapper)에 의해 swap out 시킬 프로세스 선정&lt;/li&gt;
-  &lt;li&gt;priority-based CPU scheduling algorithm
-    &lt;ul&gt;
-      &lt;li&gt;CPU 우선순위가 낮은 프로세스를 swapped out 시킴&lt;/li&gt;
-      &lt;li&gt;CPU 우선순위가 높은 프로세스를 메모리에 올려놓음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Complie time 혹은 load time binding에서는 다른 메모리 공간이 비어있더라도 원래 메모리 위치로 swap in 해야 함&lt;/li&gt;
-  &lt;li&gt;Execution time binding에서는 추후 빈 메모리 영역 아무 곳에나 올릴 수 있음&lt;/li&gt;
-  &lt;li&gt;swap time은 대부분 transfer time(swap되는 양에 비례하는 시간)임&lt;/li&gt;
-  &lt;li&gt;원칙적으로 프로세스 전체가 메모리에서 쫓겨나는 것을 Swap out 이라고 하지만 프로세스 일부분이 쫓겨나는 것도 swap out 이라고 부르기도 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-물리적-메모리-관리&quot;&gt;3. 물리적 메모리 관리&lt;/h2&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;메모리는 일반적으로 두 영역으로 나눠어서 사용 됨&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OS 상주 영역(커널)
-    &lt;ul&gt;
-      &lt;li&gt;interrupt vector와 함께 낮은 주소 영역 사용&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;사용자 프로세스 영역&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;사용자 프로세스 영역의 할당 방법&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Contiguous allocation(연속할당)&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;각각의 프로세스가 메모리의 연속적인 공간에 적재되도록 하는 것
-        &lt;ul&gt;
-          &lt;li&gt;Fixed partition allocation&lt;/li&gt;
-          &lt;li&gt;Variable partition allocation&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Noncontiguous allocation(불연속할당)&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;현대 시스템의 사용 방법&lt;/li&gt;
-      &lt;li&gt;하나의 프로세스가 메모리의 여러 영역에 분산되어 올라갈 수 있음
-        &lt;ul&gt;
-          &lt;li&gt;Paging&lt;/li&gt;
-          &lt;li&gt;Segmentation&lt;/li&gt;
-          &lt;li&gt;Paged Segmentation&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;외부조각과 내부조각&lt;/strong&gt; &lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;External fragmentation(외부 조각)
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 크기보다 분할의 크기가 작은 경우&lt;/li&gt;
-      &lt;li&gt;아무 프로그램에도 배정되지 않은 빈 곳인데도 프로그램이 올라갈 수 없는 작은 분할&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Internal Fragmentation(내부 조각)
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 크기보다 분할의 크기가 큰 경우&lt;/li&gt;
-      &lt;li&gt;하나의 분할 내부에서 발생하는 사용되지 않는 메모리 조각&lt;/li&gt;
-      &lt;li&gt;분할에 배정된 프로그램보다 분할의 크기가 더 커서 생기는 사용되지 않는 메모리 공간&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;4-contiguous-allocation연속할당&quot;&gt;4. Contiguous allocation(연속할당)&lt;/h2&gt;
-
-&lt;h3 id=&quot;41-fixed-partition고정분할&quot;&gt;4.1 &lt;strong&gt;Fixed partition(고정분할)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;물리적 메모리를 몇 개의 영구적 분할(partition)으로 나눔&lt;/li&gt;
-  &lt;li&gt;분할의 크기가 모두 동일한 방식과  서로 다른 방식이 존재&lt;/li&gt;
-  &lt;li&gt;분할당 하나의 프로그램 적재&lt;/li&gt;
-  &lt;li&gt;융통성이 없음
-    &lt;ul&gt;
-      &lt;li&gt;동시에 메모리에 load되는 프로그램의 수가 고정됨&lt;/li&gt;
-      &lt;li&gt;최대 수행 가능 프로그램 크기 제한&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;internal fragmentation(=내부조각) 과  external fragmentation(=외부조각) 발생&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;42-variable-partition가변분할&quot;&gt;4.2 &lt;strong&gt;Variable partition(가변분할)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램의 크기를 고려해서 할당&lt;/li&gt;
-  &lt;li&gt;분할의 크기, 개수가 동적으로 변함&lt;/li&gt;
-  &lt;li&gt;기술적 관리 기법 필요&lt;/li&gt;
-  &lt;li&gt;external fragmentation(=외부조각) 발생&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;1️⃣  &lt;strong&gt;Hole&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;가용 메모리 공간&lt;/li&gt;
-  &lt;li&gt;다양한 크기의 hole들이 메모리 여러 곳에 흩어져 있음&lt;/li&gt;
-  &lt;li&gt;프로세스가 도착하면 수용가능한 hole을 할당&lt;/li&gt;
-  &lt;li&gt;운영체제는 다음의 정보를 유지
-    &lt;ul&gt;
-      &lt;li&gt;a) 할당 공간 b) 가용 공간(hole)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;2️⃣  &lt;strong&gt;Dynamic Storage-Allocation Problem&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;가변 분할 방식에서 size n인 요청을 만족하는 가능 적절한 hole을 찾는 문제&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;First-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Size가 n 이상인 것 중 최초로 찾아지는 hole에 할당&lt;/li&gt;
-      &lt;li&gt;셋 중 오버헤드가 가장 적음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Best-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Size가 n 이상인 가장 작은 hole을 찾아서 할당&lt;/li&gt;
-      &lt;li&gt;Hole들의 리스트가 크기순으로 정렬되지 않은 경우 모든 hole의 리스트를 탐색해야함&lt;/li&gt;
-      &lt;li&gt;많은 수의 아주 작은 hole들이 생성됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Worst-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;가장 큰 hole에 할당&lt;/li&gt;
-      &lt;li&gt;역시 모든 리스트를 탐색해야 함&lt;/li&gt;
-      &lt;li&gt;상대적으로 아주 큰 hole들이 생성됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟 First-fit과 Best-fit이 Worst-fit보다 속도와 공간 이용률 측면에서 횩하적인 것으로 알려짐 (실험적 결과)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;3️⃣  &lt;strong&gt;Compaction&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;external fragmentation 문제를 해결하는 한 가지 방법&lt;/li&gt;
-  &lt;li&gt;사용 중인 메모리 영역을 한군데로 몰고 hole들을 다른 한 곳으로 몰아 큰 block을 만드는 것&lt;/li&gt;
-  &lt;li&gt;전체 프로그램 바인딩과 관련되어 있기 때문에 비용이 많이 듬&lt;/li&gt;
-  &lt;li&gt;최소한의 메모리 이동으로 compaction하는 방법 (매우 복잡한 문제)&lt;/li&gt;
-  &lt;li&gt;Compcation은 프로세스의 주소가 실행 시간에 동적으로 재배치 가능한 경우에만 수행될 수 있다.
-    &lt;ul&gt;
-      &lt;li&gt;Runtime binding이 지원되어야 사용 가능함&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-14T00:00:00+09:00</published><updated>2022-04-14T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/14/network-study-01</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">&lt;h1 id=&quot;-chapter_01-웹-브라우저가-메세지를-만든다&quot;&gt;📗 Chapter_01 웹 브라우저가 메세지를 만든다&lt;/h1&gt;
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="불연속할당" /><category term="페이징" /><category term="세그멘테이션" /><category term="Invalid Bit / Protection Bit" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-14T00:00:00+09:00</published><updated>2022-04-14T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/14/network-study-01</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">&lt;h1 id=&quot;-chapter_01-웹-브라우저가-메세지를-만든다&quot;&gt;📗 Chapter_01 웹 브라우저가 메세지를 만든다&lt;/h1&gt;
 &lt;h2 id=&quot;1-http-리퀘스트-메세지를-작성한다&quot;&gt;&lt;strong&gt;1. HTTP 리퀘스트 메세지를 작성한다&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;1️⃣-url&quot;&gt;&lt;strong&gt;1️⃣  URL&lt;/strong&gt;&lt;/h3&gt;
@@ -3241,235 +3566,4 @@
 
   &lt;p&gt;라운드로빈 스케줄링의 할당시간을 너무 길게 설정하면 이는 FCFS와 같은 결과를 나타나게 되고, 너무 짧게 설정할 경우엔 CPU 프로세스가 빈번하게 변경되어 문맥교환 오버헤드가 발생하게 된다. 따라서 일반적으로 할당시간은 수십 밀리초 정도의 규모로 설정하게 된다.&lt;/p&gt;
 
-&lt;/blockquote&gt;</content><author><name></name></author><category term="CPU 스케줄링" /><category term="Round Robin" /><category term="SJF 스케줄링" /><category term="FCFS" /><category term="우선순위 스케줄링" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 프로세스 생성과 프로세스의 협력</title><link href="http://localhost:4000/os/2022/03/22/os-study-04.html" rel="alternate" type="text/html" title="[운영체제 스터디] 프로세스 생성과 프로세스의 협력" /><published>2022-03-22T00:00:00+09:00</published><updated>2022-03-22T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/03/22/os-study-04</id><content type="html" xml:base="http://localhost:4000/os/2022/03/22/os-study-04.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h2 id=&quot;1-프로세스와-관련한-시스템-콜&quot;&gt;1. 프로세스와 관련한 시스템 콜&lt;/h2&gt;
-
-&lt;p&gt;✔️ fork()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;create a child (copy)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ exec()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;overlay new image&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ wait()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;sleep until child is done&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ exit()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;frees all the resources, notify parent&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-프로세스-생성-process-creation&quot;&gt;2. 프로세스 생성 (Process Creation)&lt;/h2&gt;
-
-&lt;p&gt;‼️  &lt;strong&gt;&lt;em&gt;Copy-on-wirte(COW)&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자원의 내용이 변경될 때 메모리 영역을 복제하고 변경되지 않을 경우에는 부모 프로세스의 자원을 공유한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  부모프로세스(Parent process)가 자식 프로세스(chlidren process) 생성&lt;/p&gt;
-
-&lt;p&gt;✔️ 프로세스의 트리(계층 구조) 형성&lt;/p&gt;
-
-&lt;p&gt;✔️ 프로세스는 자원을 필요로 함&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;운영체제로부터 받는다&lt;/li&gt;
-  &lt;li&gt;부모와 공유한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ 자원의 공유&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;부모와 자식이 모든 자원을 공유하는 모델&lt;/li&gt;
-  &lt;li&gt;일부를 공유하는 모델
-    &lt;ul&gt;
-      &lt;li&gt;보통은 공유하는 모델보다 공유하지않는 모델이 대부분이다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;전혀 공유하지 않는 모델
-    &lt;ul&gt;
-      &lt;li&gt;부모와 자식 프로세스가 자원을 공유하지 않을 경우엔 자원을 두고 부모와 자식이 경쟁하게 된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ 수행(Execution)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;부모와 자식이 공존하며 수행되는 모델
-    &lt;ul&gt;
-      &lt;li&gt;부모와 자식이 공존하며 수행되는 모델은 자식과 부모가 CPU를 획득하기 위해 경쟁하는 관계가 된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;자식이 종료(terminate)될 때까지 부모가 기다리는(wait)모델
-    &lt;ul&gt;
-      &lt;li&gt;자식 프로세스가 종료될 때까지 부모는 봉쇄상태에 머물러 있다가 자식프로세스가 종료된 이후에 CPU를 얻을 수 있는 권한이 생긴다.&lt;/li&gt;
-      &lt;li&gt;일반적인 봉쇄상태와 다르게 자원을 기다리며 줄 서 있는 것이 아니다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ 주소 공간 (Address space)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자식은 부모의 공간을 복사함 (binary and OS data)&lt;/li&gt;
-  &lt;li&gt;자식은 그 공간에 새로운 프로그램을 올림&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ 유닉스의 예&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;fork()
-    &lt;ul&gt;
-      &lt;li&gt;fork() 시스템 콜이 새로운 프로세스를 생성&lt;/li&gt;
-      &lt;li&gt;부모를 그대로 복사 (OS data execpt PID + binary)
-        &lt;ul&gt;
-          &lt;li&gt;주소공간은 따로 가지고 있지만 주소공간의 내용은 동일한 내용을 갖게 된다 (문맥이 동일하다)&lt;/li&gt;
-          &lt;li&gt;문맥이 동일하기 때문에 부모 프로세스의 프로그램 카운터 지점부터 수행하게 된다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;주소 공간 할당&lt;/li&gt;
-      &lt;li&gt;부모 프로세스와 다른 작업을 수행할 수 있지만, 이는 조건문에 의한 분기일 뿐 사실상 부모 프로세스와 동일한 코드의 내용을 갖는다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;exec()
-    &lt;ul&gt;
-      &lt;li&gt;exec() 시스템 콜을 통해 새로운 프로그램으로 주소 공간을 덮어씌울 수 있다.&lt;/li&gt;
-      &lt;li&gt;부모 프로세스와 문맥이 달라지므로 부모프로세스의 실행시점부터 수행하지 않고 처음부터 실행하게 된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-프로세스-종료-process-termination&quot;&gt;3. 프로세스 종료 (Process Termination)&lt;/h2&gt;
-
-&lt;p&gt;✔️ exit()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 마지막 명령을 수행한 후 운영체제에게 이를 알려준다(exit)&lt;/li&gt;
-  &lt;li&gt;자식이 부모에게 output data를 보냄 (via wait)&lt;/li&gt;
-  &lt;li&gt;프로세스의 각종 자원들이 운영체제에게 반납됨&lt;/li&gt;
-  &lt;li&gt;명시적으로 exit()를 호출하지 않았더라도 컴파일러가 main 함수가 리턴되는 위치에 exit()를 넣어줌&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ abort()&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자식이 할당 자원의 한계치를 넘어섬&lt;/li&gt;
-  &lt;li&gt;자식에게 할당된 태스크가 더 이상 필요하지 않음&lt;/li&gt;
-  &lt;li&gt;키보드로 kill, break를 친 경우&lt;/li&gt;
-  &lt;li&gt;부모가 종료(exit)하는 경우
-    &lt;ul&gt;
-      &lt;li&gt;운영체제는 부모 프로세스가 종료하는 경우 자식이 더 이상 수행되도록 두지 않는다.&lt;/li&gt;
-      &lt;li&gt;단계적인 종료&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;4-자식-프로세스-생성&quot;&gt;4. 자식 프로세스 생성&lt;/h2&gt;
-
-&lt;p&gt;✔️ 부모 프로세스가 자식 프로세스를 생성할 때의 플로우&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;부모 프로세스가 자식 프로세스 생성을 위해 fork() 시스템 콜을 발생시킨다.&lt;/li&gt;
-  &lt;li&gt;fork() 시스템 콜이 발생하면 CPU의 제어권이 커널로 넘어간다.&lt;/li&gt;
-  &lt;li&gt;커널은 fork()를 호출한 프로세스를 복제하여 자식 프로세스를 생성한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;부모 프로세스를 복제하여 생성된 자식 프로세스는 현실세계의 부모 자식과는 달리 자신을 똑닮은 자식이 아닌, 자신의 외모와 기억이 전부 동일한 복제인간을 생성하는 것과 같다.&lt;/p&gt;
-
-  &lt;p&gt;복제된 대상은 ‘복제되었다’는 기억을 가지는 것이 아니라 부모와 마찬가지로 방금 전에 자기 자신을 ‘복제했다’는 기억을 가지게 된다. 자식 프로세스가 복제된 프로세스라는 사실을 알 수 있는 단서는 fork() 함수의 결과값이 원본 프로세스는 양수를 가지고 복제본은 0을 갖는다는 차이점이 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;5-프로세스간의-협력&quot;&gt;5. 프로세스간의 협력&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스는 각자 자신만의 독립적인 공간을 가지고 수행되며 프로세스가 다른 프로세스의 주소공간을 참조하는 것은 허용되지 않는다. 따라서 원칙적으로 하나의 프로세스는 다른 프로세스의 수행에 영향을 미칠 수 없다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;🤔 &lt;strong&gt;&lt;em&gt;독립적인 프로세스가 서로 협력하면 프로세스 작업의 효율성이 증가할 것 같은데..?&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;원칙적으론 프로세스는 다른 프로세스의 수행에 영향을 미칠 수 없지만, 프로세스가 협력했을 때 작업 효율이 증가할 수 있기 때문에 운영체제는 여러가지 매커니즘을 제공한다. 대표적인 매커니즘으론 IPC가 있다.&lt;/p&gt;
-
-&lt;p&gt;✔️  프로세스 간 협력 메커니즘 (IPC: Interprocess Communication)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;하나의 컴퓨터안에서 실행 중인 서로 다른 프로세스 간에 발생하는 통신&lt;/li&gt;
-  &lt;li&gt;프로세스간의 통신과 동기화를 이루기 위한 메커니즘&lt;/li&gt;
-  &lt;li&gt;메시지 전달 방식과 공유 메모리 방식이 있음.
-    &lt;ul&gt;
-      &lt;li&gt;두 방식의 차이는 프로세스 사이에 공유 데이터를 사용하는가, 그렇지 않는가에 있다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메시지를 전달하는 방법
-    &lt;ul&gt;
-      &lt;li&gt;Massage passing
-        &lt;ul&gt;
-          &lt;li&gt;커널을 통해 메시지 전달&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;주소공간을 공유하는 방법
-    &lt;ul&gt;
-      &lt;li&gt;Shared memory
-        &lt;ul&gt;
-          &lt;li&gt;서로 다른 프로세스 간에도 일부 주소 공간을 공유하게 하는 shared momory 메커니즘이 있음&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;🤔 Thread
-        &lt;ul&gt;
-          &lt;li&gt;thread는 사실상 하나의 프로세스이므로 프로세스 간 협렵으로 보기는 어렵지만 동일한 process를 구성하는 thread들 간에는 주소 공간을 공유하므로 협력이 가능&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;️ipc의-메세지-전달-방식-massage-passing&quot;&gt;‼️ IPC의 메세지 전달 방식 (Massage passing)&lt;/h3&gt;
-
-&lt;p&gt;✔️ Message system&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 사이에 공유 변수(shared variable)를 일체 사용하지 않고 통신하는 시스템&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Direct Communication&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;통신하려는 프로세스의 이름을 명시적으로 표시&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;583&quot; alt=&quot;스크린샷 2022-03-20 오후 8 03 43&quot; src=&quot;https://user-images.githubusercontent.com/56028408/159159351-86081a47-49b8-424c-9490-3dd586acbc92.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ Indirect Communication&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;mailbox (또는 port)를 통해 메세지를 간접 전달&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;583&quot; alt=&quot;스크린샷 2022-03-20 오후 8 04 12&quot; src=&quot;https://user-images.githubusercontent.com/56028408/159159348-1860f708-522d-487f-ab62-543c36d90581.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;💡 &lt;strong&gt;Massage passing&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;공유데이터를 사용하지 않는 프로세스들이 메시지를 주고받으며 통신하는 방식을 사용한다. 이때 두 프로세스의 주소공간이 다르므로 메시지를 직접 전달할 수 없기 때문에 커널이 그 역할을 대신한다.&lt;/p&gt;
-
-  &lt;p&gt;메시지 통신을 하는 시스템은 커널에 의해 send와 receive라는 두 가지 연산을 제공받게 된다. 이 두 연산을 통해 프로세스는 전달할 메세지를 운영체제에게 시스템 콜 방식으로 요청해 전달할 수 있다.&lt;/p&gt;
-
-  &lt;p&gt;통신하기를 원하는 두 프로세스는 커뮤니케이션 링크를 생성한 후 send()와 receive()를 이용해서 메시지를 주고받게 된다.&lt;/p&gt;
-
-&lt;/blockquote&gt;</content><author><name></name></author><category term="프로세스 생성" /><category term="부모 프로세스" /><category term="자식 프로세스" /><category term="Operating System" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name></name></author><category term="CPU 스케줄링" /><category term="Round Robin" /><category term="SJF 스케줄링" /><category term="FCFS" /><category term="우선순위 스케줄링" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
