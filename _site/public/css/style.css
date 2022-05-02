@@ -177,7 +177,7 @@ table {
 	border-left: 3px solid #369;
 	margin : 20px 10px;
   }
-  
+
 table th {
 	width: 147px;
 	padding: 10px;
@@ -270,15 +270,15 @@ article h5,
 article h6 {
 	font-family: "Roboto", "Nanum Gothic";
 	color: #333;
-  	margin-bottom: 6px;
+	margin-bottom: 6px;
 }
 
 article h1,
 article h2 {
 	font-family: "Roboto", "Nanum Gothic";
 	color: #333;
-  	margin-bottom: 6px;
-	border-left: 0.3em solid gray;
+	margin-bottom: 6px;
+	border-left: 0.4em solid gray;
 	padding: 0.3em;
 }
 
