@@ -1,4 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-04-29T12:54:53+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다</title><link href="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다" /><published>2022-04-29T00:00:00+09:00</published><updated>2022-04-29T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/29/network-study-02</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html">&lt;h1 id=&quot;-chapter_02-tcpip의-데이터를-전기-신호로-만들어-보낸다&quot;&gt;📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-02T09:49:47+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">DNS 란?</title><link href="http://localhost:4000/web/2022/05/01/dns.html" rel="alternate" type="text/html" title="DNS 란?" /><published>2022-05-01T00:00:00+09:00</published><updated>2022-05-01T00:00:00+09:00</updated><id>http://localhost:4000/web/2022/05/01/%08dns</id><content type="html" xml:base="http://localhost:4000/web/2022/05/01/dns.html">&lt;h2 id=&quot;브라우저에-wwwnavercom-입력하면&quot;&gt;브라우저에 “www.naver.com” 입력하면?&lt;/h2&gt;
+
+&lt;p&gt;DNS가 무엇인지 알아보기 전에 먼저 브라우저에 “www.naver.com” 을 입력했을 때 벌어지는 일들의 일부만 간략하게 알아보자.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;브라우저 애플리케이션이 “도메인명”을 조회하는 DNS 리졸버 호출&lt;/li&gt;
+  &lt;li&gt;DNS 리졸버가 DNS 서버에 보내는 조회 메시지를 생성&lt;/li&gt;
+  &lt;li&gt;프로토콜 스택이 DNS 서버에 DNS 리졸버가 생성한 메시지를 송신&lt;/li&gt;
+  &lt;li&gt;DNS 리졸버가 응답 결과를 수신&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;🤔 브라우저 애플리케이션이 “도메인명”을 조회한다고 했는데, 여기서 “도메인명” 이란 무엇을 말하는 걸까?&lt;/strong&gt; 
+“www.naver.com”를 예시로 들었을 때 도메인명이란 www, naver, com 모두 해당된다. 보통 우리는 특정 웹사이트에 접속할 때 IP 주소가 아닌 도메인명을 입력해서 접속한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;dns-란&quot;&gt;DNS 란?&lt;/h2&gt;
+
+&lt;p&gt;사용자는 특정 웹사이트의 도메인명이 아닌 실제 IP를 알 필요가 없다. 하지만 다른 서버와 통신할 때는 도메인명이 아닌 IP 주소를 입력해야한다.
+앞서 설명한 것처럼 브라우저는 도메인명으로 해당 서버의 IP 주소를 조회한다. 그렇다면 DNS란 무엇일까?&lt;/p&gt;
+
+&lt;p&gt;DNS는 도메인명에 해당하는 IP와 기타 정보를 저장해둔 서버이다. 보통 아래와 같은 정보가 저장되어 있다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;이름&lt;/th&gt;
+      &lt;th&gt;클래스&lt;/th&gt;
+      &lt;th&gt;타입&lt;/th&gt;
+      &lt;th&gt;클라이언트에 회답하는 항목&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;www.example.com&lt;/td&gt;
+      &lt;td&gt;IN&lt;/td&gt;
+      &lt;td&gt;A&lt;/td&gt;
+      &lt;td&gt;192.168.2.5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;example.com&lt;/td&gt;
+      &lt;td&gt;IN&lt;/td&gt;
+      &lt;td&gt;MX&lt;/td&gt;
+      &lt;td&gt;192.168.2.6&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;✔️ 등록정보의 구성&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;이름
+    &lt;ul&gt;
+      &lt;li&gt;이름은 앞서 말한 도메인명에 해당된다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;클래스
+    &lt;ul&gt;
+      &lt;li&gt;클래스는 네트워크의 종류를 나타낸다. IN은 인터넷을 뜻한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;타입
+    &lt;ul&gt;
+      &lt;li&gt;해당 도메인명에 어떤 타입의 정보가 지원되는지를 뜻한다. 예를 들면 MX는 메일의 배송 목적지, A는 도메인명에 IP 주소가 지원된다는 뜻&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;클라리언트에 회답하는 항목
+    &lt;ul&gt;
+      &lt;li&gt;이 항목은 도메인명에 해당하는 IP 주소를 의미한다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;자 그러면 DNS에 등록되어 있는 정보도 알아보았다. 대충 살펴보면 도메인명으로 해당하는 IP를 매칭 해둔 서버인 것 같다.
+그런데? 대체 왜 필요한 것일까?&lt;/p&gt;
+
+&lt;h2 id=&quot;dns를-사용하는-이유&quot;&gt;DNS를 사용하는 이유&lt;/h2&gt;
+
+&lt;p&gt;간단하게 전화번호부를 예로 들어보자. 평소에 우리는 지인들의 전화번호를 전부 외우지 못한다.
+하지만 우리는 현대인이기 때문에 전화번호를 외우지 못하는 것이 아무런 문제가 되지 않는다. 전화번호를 전화번호부에 이름으로 저장해두면 되기 때문이다. 
+DNS도 비슷한 맥락이다. 우리가 자주 접근하는 웹 사이트 전부를 IP 주소만을 사용해서 접근할 수 있다고 생각하면 너무 끔찍하다. 북마크 기능이 있지만 접근하는 사이트마다 북마크를 해놓을수도 없는 노릇이다. DNS 서버는 우리가 도메인명으로 웹 사이트에 접근할 수 있도록 해주는 아주 고마운 서버이다. 그런데 DNS 서버없이 그냥 도메인명으로 통신하면 안될까? 라는 의문도 들 수 있다. 
+하지만 IP 주소는 32bit 만으로 이뤄져있는 반면에 도메인명은 수십 바이트부터 255 바이트까지 존재하기 때문에 라우터의 부하가 발생하여 통신이 지연될 수 있다.&lt;/p&gt;</content><author><name></name></author><category term="DNS" /><summary type="html">브라우저에 “www.naver.com” 입력하면?</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다</title><link href="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다" /><published>2022-04-29T00:00:00+09:00</published><updated>2022-04-29T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/29/network-study-02</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/29/network-study-02.html">&lt;h1 id=&quot;-chapter_02-tcpip의-데이터를-전기-신호로-만들어-보낸다&quot;&gt;📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다&lt;/h1&gt;
 &lt;h3 id=&quot;2장의-요점-짚고-넘어가기-&quot;&gt;🌟 2장의 요점 짚고 넘어가기 🌟&lt;/h3&gt;
 
 &lt;blockquote&gt;
@@ -867,348 +945,7 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="가상 메모리" /><category term="요구 페이징" /><category term="page fault" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소</title><link href="http://localhost:4000/os/2022/04/15/os-study-09.html" rel="alternate" type="text/html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-09</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-09.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h1 id=&quot;️memory-management-1&quot;&gt;🗳️ Memory Management 1&lt;/h1&gt;
-
-&lt;h2 id=&quot;1-논리적-주소와-물리적-주소&quot;&gt;1. 논리적 주소와 물리적 주소&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  논리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스마다 독립적으로 가지는 주소 공간&lt;/li&gt;
-  &lt;li&gt;각 프로세스마다 0번지부터 시작&lt;/li&gt;
-  &lt;li&gt;CPU가 보는 주소는 &lt;strong&gt;logical address&lt;/strong&gt;이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  물리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;실제 메모리에 올라가는 위치&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;12-주소-바인딩address-binding&quot;&gt;1.2 주소 바인딩(Address Binding)&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스의 물리적 메모리 주소를 결정하는 것&lt;/p&gt;
-
-  &lt;p&gt;Symbolic Address → Logical Address → Physical Address&lt;/p&gt;
-
-  &lt;p&gt;🌟 &lt;strong&gt;Symbolic Address?&lt;/strong&gt; 프로그래머가 사용하는 심볼릭한 주소&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;사용자 프로그램&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;logical address만을 다룬다&lt;/li&gt;
-  &lt;li&gt;실제 physical address를 볼 수 없으며 알 필요가 없다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Compile time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;물리적 메모리 주소(physical address)가 컴파일 시 알려짐&lt;/li&gt;
-  &lt;li&gt;시작 위치 변경시 재컴파일&lt;/li&gt;
-  &lt;li&gt;컴파일러는 절대 코드(absolute code) 생성&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;❗ &lt;strong&gt;논리적 메모리 주소가 물리적 메모리의 주소가 되므로 여유있는 메모리 공간이 있어도 고정적인 메모리 주소를 갖기 때문에 비효율적&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Load time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램 실행 시 물리적 주소가 결정되는 방식&lt;/li&gt;
-  &lt;li&gt;컴파일러가 재배치 가능한 코드를 생성한 경우 발생 가능&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Run time binding&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램 실행 도중 물리적 메모리 주소가 변경될 수 있는 방식&lt;/li&gt;
-  &lt;li&gt;CPU가 주소를 참조할 때마다 binding을 점검해야 함 (address mapping table)&lt;/li&gt;
-  &lt;li&gt;하드웨어적인 지원이 필요함
-    &lt;ul&gt;
-      &lt;li&gt;(base and limit registers, &lt;strong&gt;MMU&lt;/strong&gt;)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;현대에서 주로 사용되는 방식&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Memory-Management Unit (MMU)?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;MMU
-    &lt;ul&gt;
-      &lt;li&gt;logical address를 physical address로 매핑해 주는 Hardware device&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;MMU scheme
-    &lt;ul&gt;
-      &lt;li&gt;사용자 프로세스가 CPU에서 수행되며 생성해내는 모든 주소값에 대해 base register (=relocation register)의 값을 더한다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;💡 &lt;strong&gt;운영체제 및 사용자 프로세스 간의 메모리 보호를 위해 사용하는 레지스터&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;relocation register
-    &lt;ul&gt;
-      &lt;li&gt;프로세스의 물리적 메모리 시작위치를 저장한다 (접근할 수 있는 물리적 메모리 주소의 최소값)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;limit register
-    &lt;ul&gt;
-      &lt;li&gt;물리적 메모리 주소의 한계영역을 지정하기 위해 프로그램의 최대 크기를 저장한다.&lt;/li&gt;
-      &lt;li&gt;논리적 주소의 범위 (프로그램의 최대 크기)
-        &lt;ul&gt;
-          &lt;li&gt;예를 들어 P1의 시작 주소가 14000이고 프로그램의 크기가 3000일 때 P1은 14000~17000 사이만 접근할 수 있다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-some-terminologies&quot;&gt;2. Some Terminologies&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-dynamic-loading&quot;&gt;1. Dynamic Loading&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 전체를 메모리에 미리 다 올리는 것이 아니라 해당 루틴이 불려질  때 메모리에 load하는 것&lt;/li&gt;
-  &lt;li&gt;memory utilization의 향상&lt;/li&gt;
-  &lt;li&gt;가끔식 사용되는 많은 양의 코드의 경우 유용
-    &lt;ul&gt;
-      &lt;li&gt;ex) 오류 처리 루틴&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;운영체제의 특별한 지원 없이 프로그램 자체에서 구현 가능(OS는 라이브러리를 통해 프로그래머를 지원함)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;2-overlays&quot;&gt;2. Overlays&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;메모리에 프로세스의 부분 중 실제 필요한 정보만을 올림&lt;/li&gt;
-  &lt;li&gt;프로세스의 크기가 메모리보다 클 때 유용&lt;/li&gt;
-  &lt;li&gt;운영체제의 지원없이 사용자에 의해 구현&lt;/li&gt;
-  &lt;li&gt;작은 공간의 메모리를 사용하던 초창기 시스템에서 수작업으로 프로그래머가 구현
-    &lt;ul&gt;
-      &lt;li&gt;Manual Overlay&lt;/li&gt;
-      &lt;li&gt;프로그래밍이 매우 복잡함&lt;/li&gt;
-      &lt;li&gt;Dynamic Loading과 비슷한 역할을 하지만 OS의 지원이 하나도 없다는 점에서 차이가 있음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;3-dynamic-linking&quot;&gt;3. Dynamic Linking&lt;/h3&gt;
-
-&lt;p&gt;Linking을 실행 시간(execution time)까지 미루는 기법&lt;/p&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Static Linking&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;라이브러리가 프로그램의 실행 파일 코드에 포함됨&lt;/li&gt;
-  &lt;li&gt;실행 파일의 크기가 커짐&lt;/li&gt;
-  &lt;li&gt;동일한 라이브러리를 각각의 프로세스가 메모리에 올리므로 메모리 낭비
-    &lt;ul&gt;
-      &lt;li&gt;ex) printf를 호출하는 n개의 프로세스가 있으면 동일한 라이브러리여도 각각 printf 함수의 라이브러리를 메모리에 올리게 됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Dynamic linking&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;라이브러리가 실행시 연결(link)됨&lt;/li&gt;
-  &lt;li&gt;라이브러리 호출 부분에 라이브러리 루틴의 위치를 찾기 위한 stub이라는 작은 코드를 둠&lt;/li&gt;
-  &lt;li&gt;라이브러리가 이미 메모리에 있으면 그 루틴의 주소로 가고 없으면 디스크에서 읽어옴&lt;/li&gt;
-  &lt;li&gt;운영체제의 도움이 필요함&lt;/li&gt;
-  &lt;li&gt;Dynamic linking을 지원하는 라이브러리를 shared library 라고 함
-    &lt;ul&gt;
-      &lt;li&gt;window → DLL&lt;/li&gt;
-      &lt;li&gt;linux → shared object&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;4-swapping&quot;&gt;4. Swapping&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스를 일시적으로 메모리에서 backing store로 쫓아내는 것&lt;/p&gt;
-
-  &lt;ul&gt;
-    &lt;li&gt;&lt;strong&gt;Backing store(=swap area)?&lt;/strong&gt;
-      &lt;ul&gt;
-        &lt;li&gt;디스크
-          &lt;ul&gt;
-            &lt;li&gt;많은 사용자의 프로세스 이미지를 담을 만큼 충분히 빠르고 큰 저장 공간&lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/li&gt;
-  &lt;/ul&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Swap in / Swap out&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일반적으로 중기 스케줄러(swapper)에 의해 swap out 시킬 프로세스 선정&lt;/li&gt;
-  &lt;li&gt;priority-based CPU scheduling algorithm
-    &lt;ul&gt;
-      &lt;li&gt;CPU 우선순위가 낮은 프로세스를 swapped out 시킴&lt;/li&gt;
-      &lt;li&gt;CPU 우선순위가 높은 프로세스를 메모리에 올려놓음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Complie time 혹은 load time binding에서는 다른 메모리 공간이 비어있더라도 원래 메모리 위치로 swap in 해야 함&lt;/li&gt;
-  &lt;li&gt;Execution time binding에서는 추후 빈 메모리 영역 아무 곳에나 올릴 수 있음&lt;/li&gt;
-  &lt;li&gt;swap time은 대부분 transfer time(swap되는 양에 비례하는 시간)임&lt;/li&gt;
-  &lt;li&gt;원칙적으로 프로세스 전체가 메모리에서 쫓겨나는 것을 Swap out 이라고 하지만 프로세스 일부분이 쫓겨나는 것도 swap out 이라고 부르기도 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-물리적-메모리-관리&quot;&gt;3. 물리적 메모리 관리&lt;/h2&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;메모리는 일반적으로 두 영역으로 나눠어서 사용 됨&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OS 상주 영역(커널)
-    &lt;ul&gt;
-      &lt;li&gt;interrupt vector와 함께 낮은 주소 영역 사용&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;사용자 프로세스 영역&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;사용자 프로세스 영역의 할당 방법&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Contiguous allocation(연속할당)&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;각각의 프로세스가 메모리의 연속적인 공간에 적재되도록 하는 것
-        &lt;ul&gt;
-          &lt;li&gt;Fixed partition allocation&lt;/li&gt;
-          &lt;li&gt;Variable partition allocation&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Noncontiguous allocation(불연속할당)&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;현대 시스템의 사용 방법&lt;/li&gt;
-      &lt;li&gt;하나의 프로세스가 메모리의 여러 영역에 분산되어 올라갈 수 있음
-        &lt;ul&gt;
-          &lt;li&gt;Paging&lt;/li&gt;
-          &lt;li&gt;Segmentation&lt;/li&gt;
-          &lt;li&gt;Paged Segmentation&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;외부조각과 내부조각&lt;/strong&gt; &lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;External fragmentation(외부 조각)
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 크기보다 분할의 크기가 작은 경우&lt;/li&gt;
-      &lt;li&gt;아무 프로그램에도 배정되지 않은 빈 곳인데도 프로그램이 올라갈 수 없는 작은 분할&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Internal Fragmentation(내부 조각)
-    &lt;ul&gt;
-      &lt;li&gt;프로그램 크기보다 분할의 크기가 큰 경우&lt;/li&gt;
-      &lt;li&gt;하나의 분할 내부에서 발생하는 사용되지 않는 메모리 조각&lt;/li&gt;
-      &lt;li&gt;분할에 배정된 프로그램보다 분할의 크기가 더 커서 생기는 사용되지 않는 메모리 공간&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;4-contiguous-allocation연속할당&quot;&gt;4. Contiguous allocation(연속할당)&lt;/h2&gt;
-
-&lt;h3 id=&quot;41-fixed-partition고정분할&quot;&gt;4.1 &lt;strong&gt;Fixed partition(고정분할)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;물리적 메모리를 몇 개의 영구적 분할(partition)으로 나눔&lt;/li&gt;
-  &lt;li&gt;분할의 크기가 모두 동일한 방식과  서로 다른 방식이 존재&lt;/li&gt;
-  &lt;li&gt;분할당 하나의 프로그램 적재&lt;/li&gt;
-  &lt;li&gt;융통성이 없음
-    &lt;ul&gt;
-      &lt;li&gt;동시에 메모리에 load되는 프로그램의 수가 고정됨&lt;/li&gt;
-      &lt;li&gt;최대 수행 가능 프로그램 크기 제한&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;internal fragmentation(=내부조각) 과  external fragmentation(=외부조각) 발생&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;42-variable-partition가변분할&quot;&gt;4.2 &lt;strong&gt;Variable partition(가변분할)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로그램의 크기를 고려해서 할당&lt;/li&gt;
-  &lt;li&gt;분할의 크기, 개수가 동적으로 변함&lt;/li&gt;
-  &lt;li&gt;기술적 관리 기법 필요&lt;/li&gt;
-  &lt;li&gt;external fragmentation(=외부조각) 발생&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;1️⃣  &lt;strong&gt;Hole&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;가용 메모리 공간&lt;/li&gt;
-  &lt;li&gt;다양한 크기의 hole들이 메모리 여러 곳에 흩어져 있음&lt;/li&gt;
-  &lt;li&gt;프로세스가 도착하면 수용가능한 hole을 할당&lt;/li&gt;
-  &lt;li&gt;운영체제는 다음의 정보를 유지
-    &lt;ul&gt;
-      &lt;li&gt;a) 할당 공간 b) 가용 공간(hole)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;2️⃣  &lt;strong&gt;Dynamic Storage-Allocation Problem&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;가변 분할 방식에서 size n인 요청을 만족하는 가능 적절한 hole을 찾는 문제&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;First-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Size가 n 이상인 것 중 최초로 찾아지는 hole에 할당&lt;/li&gt;
-      &lt;li&gt;셋 중 오버헤드가 가장 적음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Best-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Size가 n 이상인 가장 작은 hole을 찾아서 할당&lt;/li&gt;
-      &lt;li&gt;Hole들의 리스트가 크기순으로 정렬되지 않은 경우 모든 hole의 리스트를 탐색해야함&lt;/li&gt;
-      &lt;li&gt;많은 수의 아주 작은 hole들이 생성됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Worst-fit&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;가장 큰 hole에 할당&lt;/li&gt;
-      &lt;li&gt;역시 모든 리스트를 탐색해야 함&lt;/li&gt;
-      &lt;li&gt;상대적으로 아주 큰 hole들이 생성됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟 First-fit과 Best-fit이 Worst-fit보다 속도와 공간 이용률 측면에서 횩하적인 것으로 알려짐 (실험적 결과)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;3️⃣  &lt;strong&gt;Compaction&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;external fragmentation 문제를 해결하는 한 가지 방법&lt;/li&gt;
-  &lt;li&gt;사용 중인 메모리 영역을 한군데로 몰고 hole들을 다른 한 곳으로 몰아 큰 block을 만드는 것&lt;/li&gt;
-  &lt;li&gt;전체 프로그램 바인딩과 관련되어 있기 때문에 비용이 많이 듬&lt;/li&gt;
-  &lt;li&gt;최소한의 메모리 이동으로 compaction하는 방법 (매우 복잡한 문제)&lt;/li&gt;
-  &lt;li&gt;Compcation은 프로세스의 주소가 실행 시간에 동적으로 재배치 가능한 경우에만 수행될 수 있다.
-    &lt;ul&gt;
-      &lt;li&gt;Runtime binding이 지원되어야 사용 가능함&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 불연속할당</title><link href="http://localhost:4000/os/2022/04/15/os-study-10.html" rel="alternate" type="text/html" title="[운영체제 스터디] 불연속할당" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-10</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-10.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="가상 메모리" /><category term="요구 페이징" /><category term="page fault" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 불연속할당</title><link href="http://localhost:4000/os/2022/04/15/os-study-10.html" rel="alternate" type="text/html" title="[운영체제 스터디] 불연속할당" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-10</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-10.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
 
 &lt;h1 id=&quot;️memory-management-2&quot;&gt;🗳️ Memory Management 2&lt;/h1&gt;
 
@@ -1615,7 +1352,348 @@
 
 &lt;hr /&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="불연속할당" /><category term="페이징" /><category term="세그멘테이션" /><category term="Invalid Bit / Protection Bit" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-14T00:00:00+09:00</published><updated>2022-04-14T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/14/network-study-01</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">&lt;h1 id=&quot;-chapter_01-웹-브라우저가-메세지를-만든다&quot;&gt;📗 Chapter_01 웹 브라우저가 메세지를 만든다&lt;/h1&gt;
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="불연속할당" /><category term="페이징" /><category term="세그멘테이션" /><category term="Invalid Bit / Protection Bit" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소</title><link href="http://localhost:4000/os/2022/04/15/os-study-09.html" rel="alternate" type="text/html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소" /><published>2022-04-15T00:00:00+09:00</published><updated>2022-04-15T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/15/os-study-09</id><content type="html" xml:base="http://localhost:4000/os/2022/04/15/os-study-09.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
+
+&lt;h1 id=&quot;️memory-management-1&quot;&gt;🗳️ Memory Management 1&lt;/h1&gt;
+
+&lt;h2 id=&quot;1-논리적-주소와-물리적-주소&quot;&gt;1. 논리적 주소와 물리적 주소&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  논리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로세스마다 독립적으로 가지는 주소 공간&lt;/li&gt;
+  &lt;li&gt;각 프로세스마다 0번지부터 시작&lt;/li&gt;
+  &lt;li&gt;CPU가 보는 주소는 &lt;strong&gt;logical address&lt;/strong&gt;이다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  물리적 주소란(Logical address)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;실제 메모리에 올라가는 위치&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;12-주소-바인딩address-binding&quot;&gt;1.2 주소 바인딩(Address Binding)&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로세스의 물리적 메모리 주소를 결정하는 것&lt;/p&gt;
+
+  &lt;p&gt;Symbolic Address → Logical Address → Physical Address&lt;/p&gt;
+
+  &lt;p&gt;🌟 &lt;strong&gt;Symbolic Address?&lt;/strong&gt; 프로그래머가 사용하는 심볼릭한 주소&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;사용자 프로그램&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;logical address만을 다룬다&lt;/li&gt;
+  &lt;li&gt;실제 physical address를 볼 수 없으며 알 필요가 없다&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Compile time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;물리적 메모리 주소(physical address)가 컴파일 시 알려짐&lt;/li&gt;
+  &lt;li&gt;시작 위치 변경시 재컴파일&lt;/li&gt;
+  &lt;li&gt;컴파일러는 절대 코드(absolute code) 생성&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;❗ &lt;strong&gt;논리적 메모리 주소가 물리적 메모리의 주소가 되므로 여유있는 메모리 공간이 있어도 고정적인 메모리 주소를 갖기 때문에 비효율적&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;✔️  &lt;strong&gt;Load time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램 실행 시 물리적 주소가 결정되는 방식&lt;/li&gt;
+  &lt;li&gt;컴파일러가 재배치 가능한 코드를 생성한 경우 발생 가능&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️  &lt;strong&gt;Run time binding&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램 실행 도중 물리적 메모리 주소가 변경될 수 있는 방식&lt;/li&gt;
+  &lt;li&gt;CPU가 주소를 참조할 때마다 binding을 점검해야 함 (address mapping table)&lt;/li&gt;
+  &lt;li&gt;하드웨어적인 지원이 필요함
+    &lt;ul&gt;
+      &lt;li&gt;(base and limit registers, &lt;strong&gt;MMU&lt;/strong&gt;)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;현대에서 주로 사용되는 방식&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Memory-Management Unit (MMU)?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;MMU
+    &lt;ul&gt;
+      &lt;li&gt;logical address를 physical address로 매핑해 주는 Hardware device&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;MMU scheme
+    &lt;ul&gt;
+      &lt;li&gt;사용자 프로세스가 CPU에서 수행되며 생성해내는 모든 주소값에 대해 base register (=relocation register)의 값을 더한다&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;💡 &lt;strong&gt;운영체제 및 사용자 프로세스 간의 메모리 보호를 위해 사용하는 레지스터&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;relocation register
+    &lt;ul&gt;
+      &lt;li&gt;프로세스의 물리적 메모리 시작위치를 저장한다 (접근할 수 있는 물리적 메모리 주소의 최소값)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;limit register
+    &lt;ul&gt;
+      &lt;li&gt;물리적 메모리 주소의 한계영역을 지정하기 위해 프로그램의 최대 크기를 저장한다.&lt;/li&gt;
+      &lt;li&gt;논리적 주소의 범위 (프로그램의 최대 크기)
+        &lt;ul&gt;
+          &lt;li&gt;예를 들어 P1의 시작 주소가 14000이고 프로그램의 크기가 3000일 때 P1은 14000~17000 사이만 접근할 수 있다.&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-some-terminologies&quot;&gt;2. Some Terminologies&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-dynamic-loading&quot;&gt;1. Dynamic Loading&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로세스 전체를 메모리에 미리 다 올리는 것이 아니라 해당 루틴이 불려질  때 메모리에 load하는 것&lt;/li&gt;
+  &lt;li&gt;memory utilization의 향상&lt;/li&gt;
+  &lt;li&gt;가끔식 사용되는 많은 양의 코드의 경우 유용
+    &lt;ul&gt;
+      &lt;li&gt;ex) 오류 처리 루틴&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;운영체제의 특별한 지원 없이 프로그램 자체에서 구현 가능(OS는 라이브러리를 통해 프로그래머를 지원함)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-overlays&quot;&gt;2. Overlays&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;메모리에 프로세스의 부분 중 실제 필요한 정보만을 올림&lt;/li&gt;
+  &lt;li&gt;프로세스의 크기가 메모리보다 클 때 유용&lt;/li&gt;
+  &lt;li&gt;운영체제의 지원없이 사용자에 의해 구현&lt;/li&gt;
+  &lt;li&gt;작은 공간의 메모리를 사용하던 초창기 시스템에서 수작업으로 프로그래머가 구현
+    &lt;ul&gt;
+      &lt;li&gt;Manual Overlay&lt;/li&gt;
+      &lt;li&gt;프로그래밍이 매우 복잡함&lt;/li&gt;
+      &lt;li&gt;Dynamic Loading과 비슷한 역할을 하지만 OS의 지원이 하나도 없다는 점에서 차이가 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;3-dynamic-linking&quot;&gt;3. Dynamic Linking&lt;/h3&gt;
+
+&lt;p&gt;Linking을 실행 시간(execution time)까지 미루는 기법&lt;/p&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Static Linking&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라이브러리가 프로그램의 실행 파일 코드에 포함됨&lt;/li&gt;
+  &lt;li&gt;실행 파일의 크기가 커짐&lt;/li&gt;
+  &lt;li&gt;동일한 라이브러리를 각각의 프로세스가 메모리에 올리므로 메모리 낭비
+    &lt;ul&gt;
+      &lt;li&gt;ex) printf를 호출하는 n개의 프로세스가 있으면 동일한 라이브러리여도 각각 printf 함수의 라이브러리를 메모리에 올리게 됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Dynamic linking&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;라이브러리가 실행시 연결(link)됨&lt;/li&gt;
+  &lt;li&gt;라이브러리 호출 부분에 라이브러리 루틴의 위치를 찾기 위한 stub이라는 작은 코드를 둠&lt;/li&gt;
+  &lt;li&gt;라이브러리가 이미 메모리에 있으면 그 루틴의 주소로 가고 없으면 디스크에서 읽어옴&lt;/li&gt;
+  &lt;li&gt;운영체제의 도움이 필요함&lt;/li&gt;
+  &lt;li&gt;Dynamic linking을 지원하는 라이브러리를 shared library 라고 함
+    &lt;ul&gt;
+      &lt;li&gt;window → DLL&lt;/li&gt;
+      &lt;li&gt;linux → shared object&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;4-swapping&quot;&gt;4. Swapping&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;프로세스를 일시적으로 메모리에서 backing store로 쫓아내는 것&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;&lt;strong&gt;Backing store(=swap area)?&lt;/strong&gt;
+      &lt;ul&gt;
+        &lt;li&gt;디스크
+          &lt;ul&gt;
+            &lt;li&gt;많은 사용자의 프로세스 이미지를 담을 만큼 충분히 빠르고 큰 저장 공간&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;Swap in / Swap out&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;일반적으로 중기 스케줄러(swapper)에 의해 swap out 시킬 프로세스 선정&lt;/li&gt;
+  &lt;li&gt;priority-based CPU scheduling algorithm
+    &lt;ul&gt;
+      &lt;li&gt;CPU 우선순위가 낮은 프로세스를 swapped out 시킴&lt;/li&gt;
+      &lt;li&gt;CPU 우선순위가 높은 프로세스를 메모리에 올려놓음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Complie time 혹은 load time binding에서는 다른 메모리 공간이 비어있더라도 원래 메모리 위치로 swap in 해야 함&lt;/li&gt;
+  &lt;li&gt;Execution time binding에서는 추후 빈 메모리 영역 아무 곳에나 올릴 수 있음&lt;/li&gt;
+  &lt;li&gt;swap time은 대부분 transfer time(swap되는 양에 비례하는 시간)임&lt;/li&gt;
+  &lt;li&gt;원칙적으로 프로세스 전체가 메모리에서 쫓겨나는 것을 Swap out 이라고 하지만 프로세스 일부분이 쫓겨나는 것도 swap out 이라고 부르기도 한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-물리적-메모리-관리&quot;&gt;3. 물리적 메모리 관리&lt;/h2&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;메모리는 일반적으로 두 영역으로 나눠어서 사용 됨&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;OS 상주 영역(커널)
+    &lt;ul&gt;
+      &lt;li&gt;interrupt vector와 함께 낮은 주소 영역 사용&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;사용자 프로세스 영역&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;사용자 프로세스 영역의 할당 방법&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Contiguous allocation(연속할당)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;각각의 프로세스가 메모리의 연속적인 공간에 적재되도록 하는 것
+        &lt;ul&gt;
+          &lt;li&gt;Fixed partition allocation&lt;/li&gt;
+          &lt;li&gt;Variable partition allocation&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Noncontiguous allocation(불연속할당)&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;현대 시스템의 사용 방법&lt;/li&gt;
+      &lt;li&gt;하나의 프로세스가 메모리의 여러 영역에 분산되어 올라갈 수 있음
+        &lt;ul&gt;
+          &lt;li&gt;Paging&lt;/li&gt;
+          &lt;li&gt;Segmentation&lt;/li&gt;
+          &lt;li&gt;Paged Segmentation&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;외부조각과 내부조각&lt;/strong&gt; &lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;External fragmentation(외부 조각)
+    &lt;ul&gt;
+      &lt;li&gt;프로그램 크기보다 분할의 크기가 작은 경우&lt;/li&gt;
+      &lt;li&gt;아무 프로그램에도 배정되지 않은 빈 곳인데도 프로그램이 올라갈 수 없는 작은 분할&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Internal Fragmentation(내부 조각)
+    &lt;ul&gt;
+      &lt;li&gt;프로그램 크기보다 분할의 크기가 큰 경우&lt;/li&gt;
+      &lt;li&gt;하나의 분할 내부에서 발생하는 사용되지 않는 메모리 조각&lt;/li&gt;
+      &lt;li&gt;분할에 배정된 프로그램보다 분할의 크기가 더 커서 생기는 사용되지 않는 메모리 공간&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;4-contiguous-allocation연속할당&quot;&gt;4. Contiguous allocation(연속할당)&lt;/h2&gt;
+
+&lt;h3 id=&quot;41-fixed-partition고정분할&quot;&gt;4.1 &lt;strong&gt;Fixed partition(고정분할)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;물리적 메모리를 몇 개의 영구적 분할(partition)으로 나눔&lt;/li&gt;
+  &lt;li&gt;분할의 크기가 모두 동일한 방식과  서로 다른 방식이 존재&lt;/li&gt;
+  &lt;li&gt;분할당 하나의 프로그램 적재&lt;/li&gt;
+  &lt;li&gt;융통성이 없음
+    &lt;ul&gt;
+      &lt;li&gt;동시에 메모리에 load되는 프로그램의 수가 고정됨&lt;/li&gt;
+      &lt;li&gt;최대 수행 가능 프로그램 크기 제한&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;internal fragmentation(=내부조각) 과  external fragmentation(=외부조각) 발생&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;42-variable-partition가변분할&quot;&gt;4.2 &lt;strong&gt;Variable partition(가변분할)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;프로그램의 크기를 고려해서 할당&lt;/li&gt;
+  &lt;li&gt;분할의 크기, 개수가 동적으로 변함&lt;/li&gt;
+  &lt;li&gt;기술적 관리 기법 필요&lt;/li&gt;
+  &lt;li&gt;external fragmentation(=외부조각) 발생&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;1️⃣  &lt;strong&gt;Hole&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가용 메모리 공간&lt;/li&gt;
+  &lt;li&gt;다양한 크기의 hole들이 메모리 여러 곳에 흩어져 있음&lt;/li&gt;
+  &lt;li&gt;프로세스가 도착하면 수용가능한 hole을 할당&lt;/li&gt;
+  &lt;li&gt;운영체제는 다음의 정보를 유지
+    &lt;ul&gt;
+      &lt;li&gt;a) 할당 공간 b) 가용 공간(hole)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2️⃣  &lt;strong&gt;Dynamic Storage-Allocation Problem&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;가변 분할 방식에서 size n인 요청을 만족하는 가능 적절한 hole을 찾는 문제&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;First-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Size가 n 이상인 것 중 최초로 찾아지는 hole에 할당&lt;/li&gt;
+      &lt;li&gt;셋 중 오버헤드가 가장 적음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Best-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Size가 n 이상인 가장 작은 hole을 찾아서 할당&lt;/li&gt;
+      &lt;li&gt;Hole들의 리스트가 크기순으로 정렬되지 않은 경우 모든 hole의 리스트를 탐색해야함&lt;/li&gt;
+      &lt;li&gt;많은 수의 아주 작은 hole들이 생성됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Worst-fit&lt;/strong&gt;
+    &lt;ul&gt;
+      &lt;li&gt;가장 큰 hole에 할당&lt;/li&gt;
+      &lt;li&gt;역시 모든 리스트를 탐색해야 함&lt;/li&gt;
+      &lt;li&gt;상대적으로 아주 큰 hole들이 생성됨&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;🌟 First-fit과 Best-fit이 Worst-fit보다 속도와 공간 이용률 측면에서 횩하적인 것으로 알려짐 (실험적 결과)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;3️⃣  &lt;strong&gt;Compaction&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;external fragmentation 문제를 해결하는 한 가지 방법&lt;/li&gt;
+  &lt;li&gt;사용 중인 메모리 영역을 한군데로 몰고 hole들을 다른 한 곳으로 몰아 큰 block을 만드는 것&lt;/li&gt;
+  &lt;li&gt;전체 프로그램 바인딩과 관련되어 있기 때문에 비용이 많이 듬&lt;/li&gt;
+  &lt;li&gt;최소한의 메모리 이동으로 compaction하는 방법 (매우 복잡한 문제)&lt;/li&gt;
+  &lt;li&gt;Compcation은 프로세스의 주소가 실행 시간에 동적으로 재배치 가능한 경우에만 수행될 수 있다.
+    &lt;ul&gt;
+      &lt;li&gt;Runtime binding이 지원되어야 사용 가능함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-14T00:00:00+09:00</published><updated>2022-04-14T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/14/network-study-01</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">&lt;h1 id=&quot;-chapter_01-웹-브라우저가-메세지를-만든다&quot;&gt;📗 Chapter_01 웹 브라우저가 메세지를 만든다&lt;/h1&gt;
 &lt;h2 id=&quot;1-http-리퀘스트-메세지를-작성한다&quot;&gt;&lt;strong&gt;1. HTTP 리퀘스트 메세지를 작성한다&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;h3 id=&quot;1️⃣-url&quot;&gt;&lt;strong&gt;1️⃣  URL&lt;/strong&gt;&lt;/h3&gt;
@@ -3373,197 +3451,4 @@
       &lt;li&gt;방법 2) 커널 배우에 있는 각 공유 데이터에 접근할 때마다 그 데이터에 대한 lock / unlock을 하는 방법&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="멀티 피드백 큐" /><category term="멀티레벨 큐" /><category term="프로세스 동기화" /><category term="Operating System" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 프로세스의 특성과 CPU 스케줄링</title><link href="http://localhost:4000/os/2022/03/22/os-study-04-02.html" rel="alternate" type="text/html" title="[운영체제 스터디] 프로세스의 특성과 CPU 스케줄링" /><published>2022-03-22T00:00:00+09:00</published><updated>2022-03-22T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/03/22/os-study-04-02</id><content type="html" xml:base="http://localhost:4000/os/2022/03/22/os-study-04-02.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h2 id=&quot;1cpu-and-io-bursts-in-program-execution&quot;&gt;1. CPU and I/O Bursts In Program Execution&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;어떤 프로그램이든 프로그램을 실행한다는 것은 CPU Burst와 I/O Burst를 반복하게 되는 것이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;❓CPU Burst&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU에서 instruction을 수행하는 것&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;❓ I/O Burst&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;I/O를 instruction을 수행하는 작업&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;프로세스의-특성-분류&quot;&gt;💡 프로세스의 특성 분류&lt;/h3&gt;
-
-&lt;p&gt;✔️ I/O-bound process&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 Job&lt;/li&gt;
-  &lt;li&gt;(many short CPU bursts)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️CPU-bound process&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;계산 위주의 job&lt;/li&gt;
-  &lt;li&gt;(few very long CPU bursts)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;cpu-burst-time의-분포&quot;&gt;💡 CPU-burst Time의 분포&lt;/h3&gt;
-
-&lt;p&gt;&lt;img width=&quot;713&quot; alt=&quot;image&quot; src=&quot;https://user-images.githubusercontent.com/56028408/159224088-360d62a2-4066-4a8b-99cc-4935e80941d8.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ 여러 종류의 job(=process)이 섞여 있기 때문에 CPU 스케줄링이 필요하다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Interactive job에게 적절한 reponse 제공 요망&lt;/li&gt;
-  &lt;li&gt;CPU와 I/O 장치 등 시스템 자원을 골고루 효율적으로 사용해야 함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-cpu-scheduler--dispatcher&quot;&gt;2. CPU Scheduler &amp;amp; Dispatcher&lt;/h2&gt;
-
-&lt;p&gt;✔️ CPU Scheduler&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ready 상태의 프로세스 중에서 이번에 CPU를 줄 프로세스를 고른다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Dispatcher&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU의 제어권을 CPU scheduler에 의해 선택된 프로세스에게 넘긴다&lt;/li&gt;
-  &lt;li&gt;이 과정을 context switch(문맥 교환)라고 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ CPU 스케줄링이 필요한 경우&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Running → Blocked (예: I/O 요청하는 시스템 콜)&lt;/li&gt;
-  &lt;li&gt;Running → Ready (예: 할당시간만료로 timer interrupt)&lt;/li&gt;
-  &lt;li&gt;Blocked → Ready (예: I/O 완료후 interrupt)&lt;/li&gt;
-  &lt;li&gt;Terminate&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;I/O를 발생시켜 Blocked 되는 경우나 Terminate에서의 스케줄링은 강제로 빼앗지 않고 자진반납(nonpreemptive)한다. 다른 상태는 모두 강제로 빼앗기는(preemptive) 경우이다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;❓&lt;strong&gt;nonpreemptive = 비선점형 방식&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU를 획득한 프로세스가 스스로 CPU를 반납하기 전까지는 CPU를 빼앗기지 않음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;❓preemptive = 선점형 방식&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 CPU를 계속 사용하길 원한다고 하더라도 강제로 빼앗길 수 있음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-dispatcher&quot;&gt;3. Dispatcher&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;CPU 스케줄러가 어떤 프로레스에게 CPU를 할당해야 할지 결정하고나면 선택된 프로세스에게 실제로 CPU를 이양하는 작업이 필요하다.&lt;/p&gt;
-
-  &lt;p&gt;이와 같이 새롭게 선택된 프로세스가 CPU를 할당받고 작업을 수행할 수 있도록 환경설정 하는 운영체제의 코드를 디스패처라고 부른다.&lt;/p&gt;
-
-  &lt;p&gt;디스패처는 현재 수행 중이던 프로세스의 문맥(context)을 그 프로세스의 PCB에 저장하고, 새롭게 선택된 프로세스의 문맥을 PCB로부터 복원한 후 그 프로세스에게 CPU를 넘기는 작업을 수행한다.&lt;/p&gt;
-
-  &lt;p&gt;디스패처가 하나의 프로세스를 정지시키고 다른 프로세스에게 CPU를 전달하기까지 걸리는 시간을 디스패치 지연시간(dispatch Latency)이라고 하며, 디스패치 지연시간의 대부분은 문맥교환 오버헤드에 해당된다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;4-스케줄링-알고리즘&quot;&gt;4. 스케줄링 알고리즘&lt;/h2&gt;
-
-&lt;h3 id=&quot;1-선입선출-스케줄링fcfs&quot;&gt;&lt;strong&gt;1. 선입선출 스케줄링(FCFS)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;선입선출(First-Come First-Served: FCFS) 스케줄링은 프로세스가 준비큐에 도착한 시간 순서대로 CPU를 할당하는 방식을 말한다.  이 방식에서는 CPU를 먼저 요청한 프로세스에게 CPU를 할당하고, 해당 프로세스가 자발적으로 CPU를 반납할 때까지 빼앗기지 않는다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;1.1 선입선출 스케줄링의 단점&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;도착한 순서대로 CPU 작업을 처리하기 때문에 CPU Burst가 짧은 작업이어도 도착시간이 늦어지게 되면, CPU Burst가 높은 작업이 끝날 때까지 기다려야 하므로 사용량에 비해 대기시간이 길어진다는 단점이 있다. 이를 콘보이 현상 이라고 하며, 이는 FCFS 스케줄링의 대표적인 단점에 해당된다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;2-최단작업-우선-스케줄링-sjf&quot;&gt;&lt;strong&gt;2. 최단작업 우선 스케줄링 (SJF)&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;최단작업 우선(Shortest-job First: SFJ) 스케줄링 알고리즘은 CPU 버스트가 가장 짧은 프로세스에게 CPU를 제일 먼저 할당하는 방식이다. 이와 같은 할당 방식을 통해 CPU 버스트가 짧은 프로세스가 CPU를 먼저 사용하고 준비 큐를 빠져나가게 되면 프로세스들이 준비 큐에서 기다리는 전체적인 시간이 줄어들게 된다. SJF 스케줄링 알고리즘은 평균 대기시간을 가장 짧게 하는 최적 알고리즘으로 알려져 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;2.1 선점방식&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;진행중인 작업의 남은 CPU 버스트보다 짧은 작업이 도착하면 더 짧은 작업에게 CPU를 할당하는 방식 이러한 방식을 SRTF(Shortest Remaining Time First)라고도 부른다.&lt;/li&gt;
-  &lt;li&gt;프로세스들이 준비 큐에 도착하는 시간이 불규칙한 경우 선점형방식이 프로세스들의 평균 대기시간을 최소화 하는 최적의 알고리즘이 된다.&lt;/li&gt;
-  &lt;li&gt;일반적인 시분할 환경에서는 중간중간에 새로운 프로세스가 도착하는 경우가 발생하므로 선점형 방식이 평균 대기시간을 가장 많이 줄일 수 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;2.2 비선점방식&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;먼저 도착한 작업의 CPU 수행이 끝나서 스스로 CPU를 내어놓을 때까지 스케줄링을 하지 않는다.&lt;/li&gt;
-  &lt;li&gt;일련의 프로세스들이 준비큐에 한번에 도착하고 그 후에는 따로 도착하지 않는 환경에선 선점형방식과 같은 대기시간 결과를 나타내기도 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;2.1 SFJ 스케줄링의 단점&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU 버스트가 짧은 프로세스가 계속 도착할 경우 CPU 버스트가 긴 프로세스는 영원히 CPU를 할당받지 못할 수 있다. 이를 기아 현상(starvation)이라고 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;3-우선순위-스케줄링&quot;&gt;&lt;strong&gt;3. 우선순위 스케줄링&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;우선순위 스케줄링(priority scheduling)이란 준비 큐에서 기다리는 프로세스들 중 우선순위가 가장 높은 프로세스에게 제일 먼저 CPU를 할당하는 방식을 말한다. 이때 우선순위는 우선순위값(priority number)을 통해 표시하며 우선순위값이 작을수록 높은 우선순위를 가지는 것으로 가정한다.&lt;/p&gt;
-
-  &lt;p&gt;우선순위 스케줄러도 비선점형방식과 선점형방식이 있는데 이는 SJF 알고리즘의 비선점형,선점형과 동일한 방식에서 CPU 버스트 시간 기준이 아닌, 우선순위 기준으로 변경된 것이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;3.1 우선순위를 정하는 방법&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;CPU 버스트 시간으로 우선순위 선정
-    &lt;ul&gt;
-      &lt;li&gt;이러한 경우 SJF 알고리즘과 동일한 의미를 가지게 됨&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;시스템과 관련된 동일한 작업을 수행하는 프로세스의 우선순위를 높게 부여하는 것&lt;/li&gt;
-  &lt;li&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;3.2 우선순위 스케줄링 단점&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;우선순위 스케줄러 방식에서도 기아현상이 발생할 수 있다. 우선순위가 높은 프로세스가 계속 도착하는 상황에서 우선순위가 낮은 프로세스는 CPU를 얻지못한 채 계속 기다려야 할 수 있기 때문이다. 이러한 단점을 해결하기 위해 노화(aging) 기법이 존재한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;3.3 노화기법 (aging)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;노화 기법이란 기다리는 시간이 길어지면 우선순위를 조금씩 높여, 언젠가는 가장 높은 우선순위가 되어 CPU를 할당받을 수 있게 해주는 방법이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;hr /&gt;
-
-&lt;h3 id=&quot;4-라운드로빈-스케줄링&quot;&gt;&lt;strong&gt;4. 라운드로빈 스케줄링&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;라운드로빈 스케줄링은 시분할 시스템 성질을 가장 잘 활용한 새로운 의미의 스케줄링 방식이라 할 수 있다. 라운드로빈 스케줄링에서는 각 프로세스가 CPU를 연속적으로 사용할 수 있는 시간이 특정 시간으로 제한된다.&lt;/p&gt;
-
-  &lt;p&gt;제한된 시간이 경과하면 해당 프로세스로부터 CPU를 회수해 준비 큐에 줄 서 있는 다른 프로세스에게 CPU를 할당한다.&lt;/p&gt;
-
-  &lt;p&gt;라운드로빈 스케줄링의 할당시간을 너무 길게 설정하면 이는 FCFS와 같은 결과를 나타나게 되고, 너무 짧게 설정할 경우엔 CPU 프로세스가 빈번하게 변경되어 문맥교환 오버헤드가 발생하게 된다. 따라서 일반적으로 할당시간은 수십 밀리초 정도의 규모로 설정하게 된다.&lt;/p&gt;
-
-&lt;/blockquote&gt;</content><author><name></name></author><category term="CPU 스케줄링" /><category term="Round Robin" /><category term="SJF 스케줄링" /><category term="FCFS" /><category term="우선순위 스케줄링" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="멀티 피드백 큐" /><category term="멀티레벨 큐" /><category term="프로세스 동기화" /><category term="Operating System" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>

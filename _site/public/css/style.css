@@ -169,6 +169,33 @@ a.nav-item:hover { color: #777; }
 	color: #333;
 }
 
+table {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	border-top: 1px solid #ccc;
+	border-left: 3px solid #369;
+	margin : 20px 10px;
+  }
+  
+table th {
+	width: 147px;
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #153d73;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+table td {
+	width: 349px;
+	padding: 10px;
+	vertical-align: top;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
 #contact-list li .fa,
 article .share .btn {
 	-o-transition:color .2s ease-out, background 1s ease-in;
@@ -243,7 +270,16 @@ article h5,
 article h6 {
 	font-family: "Roboto", "Nanum Gothic";
 	color: #333;
-  	margin-bottom: 0;
+  	margin-bottom: 6px;
+}
+
+article h1,
+article h2 {
+	font-family: "Roboto", "Nanum Gothic";
+	color: #333;
+  	margin-bottom: 6px;
+	border-left: 0.3em solid gray;
+	padding: 0.3em;
 }
 
 article.home h1 a,
