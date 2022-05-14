@@ -1,4 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-02T09:52:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">DNS 란?</title><link href="http://localhost:4000/web/2022/05/01/dns.html" rel="alternate" type="text/html" title="DNS 란?" /><published>2022-05-01T00:00:00+09:00</published><updated>2022-05-01T00:00:00+09:00</updated><id>http://localhost:4000/web/2022/05/01/%08dns</id><content type="html" xml:base="http://localhost:4000/web/2022/05/01/dns.html">&lt;h2 id=&quot;브라우저에-wwwnavercom-입력하면&quot;&gt;브라우저에 “www.naver.com” 입력하면?&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-14T21:16:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[글또 7기] 나의 다짐</title><link href="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html" rel="alternate" type="text/html" title="[글또 7기] 나의 다짐" /><published>2022-05-14T00:00:00+09:00</published><updated>2022-05-14T00:00:00+09:00</updated><id>http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90</id><content type="html" xml:base="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">&lt;h2 id=&quot;들어가며&quot;&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;읽기 좋은 글을 꾸준하게 작성하고 싶어서 &lt;a href=&quot;https://www.notion.so/zzsza/ac5b18a482fb4df497d4e8257ad4d516&quot;&gt;글또&lt;/a&gt;라는 개발자 커뮤니티에서 활동하게 되었다. 
+꾸준하게 글을 작성하는 것이 목표인데….  5월 초에 포스팅한 이후로 인제야 글을 작성한다. 느슨해지지 않기 위해 활동하면서 이루고 싶은 목표들을 정하기로 결심 !&lt;/p&gt;
+
+&lt;h2 id=&quot;참여한-이유&quot;&gt;참여한 이유&lt;/h2&gt;
+&lt;h3 id=&quot;1-가독성-높은-글&quot;&gt;1. 가독성 높은 글&lt;/h3&gt;
+&lt;p&gt;많은 글을 작성해보진 않았지만, 지금까지 포스팅했던 내용을 다시 읽어보면 가독성이 매우 떨어진다. 그리고 불친절한 설명 때문에 다른 사람이 내가 작성한 글을 읽었을 때 큰 혼란이 올 것 같았다. 이런 문제점을 어떻게 고쳐야 하나 고민하고 있을 때 운 좋게 발견한 것이 글또이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-게으름-탈출&quot;&gt;2. 게으름 탈출&lt;/h3&gt;
+&lt;p&gt;강의를 듣거나 책을 읽는 것은 꾸준하게 하는 것이 어렵지 않은데 이상하게 글을 작성하려고 하면 게을러진다. 마음먹고 자리에 앉아도 포스팅하고 싶었던 내용을 정리하는 것이 그렇게 어렵다. 그래도 강제적으로 할 수밖에 없는 환경에 내던져지면 잘 적응하는 편이여서 글또는 나에게 딱 맞았다.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-학습한-내용-머릿속에-각인하기&quot;&gt;3. 학습한 내용 머릿속에 각인하기&lt;/h3&gt;
+&lt;p&gt;가끔 학습한 내용을 전부 이해하지 못하고 그냥 지나칠 때 내용을 전부 잊어먹는 경우가 있다. 이럴 때 배운 내용을 다시 곱씹으면서 글로 작성하면 머릿속에 더 깊이 각인되는 효과가 있는 것 같다. 글또에서는 주로 공부한 내용을 포스팅할 것이기 때문에 글솜씨와 함께 나의 개발력도 상승하길 바라고 있다.&lt;/p&gt;
+
+&lt;h2 id=&quot;목표&quot;&gt;목표&lt;/h2&gt;
+&lt;h3 id=&quot;1-작성하고-싶은-글&quot;&gt;1. 작성하고 싶은 글&lt;/h3&gt;
+&lt;p&gt;원래 글또를 신청했을 당시에는 참여했던 스터디 중 가장 만족도가 높았던 JSCODE 운영체제 스터디의 후기를 작성할 생각이었는데 마음이 변했다. 지금은 아래와 관련된 내용의 게시물을 포스팅할 생각이다. 전부 작성할 수 있을진 모르겠지만 일단 도전 !&lt;/p&gt;
+
+&lt;p&gt;👊 &lt;strong&gt;작성하고 싶은 글 카테고리&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;읽었던 개발관련 도서 내용 정리&lt;/li&gt;
+  &lt;li&gt;인상깊은 트러블슈팅 경험&lt;/li&gt;
+  &lt;li&gt;Java의 모든 것 ?&lt;/li&gt;
+  &lt;li&gt;Spring 뿌수기&lt;/li&gt;
+  &lt;li&gt;컴퓨터 사이언스&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-내성적인-인간-탈출&quot;&gt;2. 내성적인 인간 탈출&lt;/h3&gt;
+&lt;p&gt;매우 내성적인 성격이라 먼저 나서지도 못하고 말수도 적지만, 글또에서는 좋은 것들은 공유하고 많은 사람과 교류하면서 서로 좋은 영향을 나누고 싶다. 적극적인 사람으로 변할 수 있길 🙏🏻&lt;/p&gt;
+
+&lt;h2 id=&quot;마치며&quot;&gt;마치며&lt;/h2&gt;
+&lt;p&gt;6개월 동안 초라한 블로그를 화려하게 바꿀 수 있길 ! 이번에는 마감일에 가깝게 글을 작성하였는데 다음번에는 미루지 않고 부지런하게 작성해야겠다. 앞으로도 계속 마감일에 가깝게 글을 작성하면 글 쓰는 게으름을 많이 고치지 못할 것 같다. 그리고 나의 피드백이 많은 사람에게 도움이 되면 좋겠다 !! 글또 화이팅 !&lt;/p&gt;</content><author><name></name></author><category term="글또 7기" /><summary type="html">들어가며 읽기 좋은 글을 꾸준하게 작성하고 싶어서 글또라는 개발자 커뮤니티에서 활동하게 되었다. 꾸준하게 글을 작성하는 것이 목표인데…. 5월 초에 포스팅한 이후로 인제야 글을 작성한다. 느슨해지지 않기 위해 활동하면서 이루고 싶은 목표들을 정하기로 결심 !</summary></entry><entry><title type="html">DNS 란?</title><link href="http://localhost:4000/web/2022/05/01/dns.html" rel="alternate" type="text/html" title="DNS 란?" /><published>2022-05-01T00:00:00+09:00</published><updated>2022-05-04T00:00:00+09:00</updated><id>http://localhost:4000/web/2022/05/01/%08dns</id><content type="html" xml:base="http://localhost:4000/web/2022/05/01/dns.html">&lt;h2 id=&quot;브라우저에-wwwnavercom-입력하면&quot;&gt;브라우저에 “www.naver.com” 입력하면?&lt;/h2&gt;
 
 &lt;p&gt;DNS가 무엇인지 알아보기 전에 먼저 브라우저에 “www.naver.com” 을 입력했을 때 벌어지는 일들의 일부만 간략하게 알아보자.&lt;/p&gt;
 
@@ -14,10 +46,8 @@
 
 &lt;h2 id=&quot;dns-란&quot;&gt;DNS 란?&lt;/h2&gt;
 
-&lt;p&gt;사용자는 특정 웹사이트의 도메인명이 아닌 실제 IP를 알 필요가 없다. 하지만 다른 서버와 통신할 때는 도메인명이 아닌 IP 주소를 입력해야한다.
-앞서 설명한 것처럼 브라우저는 도메인명으로 해당 서버의 IP 주소를 조회한다. 그렇다면 DNS란 무엇일까?&lt;/p&gt;
-
-&lt;p&gt;DNS는 도메인명에 해당하는 IP와 기타 정보를 저장해둔 서버이다. 보통 아래와 같은 정보가 저장되어 있다.&lt;/p&gt;
+&lt;p&gt;사용자는 특정 웹사이트의 도메인명이 아닌 실제 IP를 알 필요가 없다. 하지만 OS 내부에서 다른 서버에 패킷을 송신할 때는 도메인명이 아닌 IP 주소가 필요하다.
+앞서 설명한 것처럼 브라우저 애플리케이션은 도메인명으로 해당 서버의 IP 주소를 조회한다. 그렇다면 DNS란 무엇일까? DNS는 도메인명에 해당하는 IP와 기타 정보를 저장해둔 서버이다. 보통 아래와 같은 정보가 저장되어 있다.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -61,7 +91,7 @@
       &lt;li&gt;해당 도메인명에 어떤 타입의 정보가 지원되는지를 뜻한다. 예를 들면 MX는 메일의 배송 목적지, A는 도메인명에 IP 주소가 지원된다는 뜻&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;클라리언트에 회답하는 항목
+  &lt;li&gt;클라이언트에 회답하는 항목
     &lt;ul&gt;
       &lt;li&gt;이 항목은 도메인명에 해당하는 IP 주소를 의미한다.&lt;/li&gt;
     &lt;/ul&gt;
@@ -3236,219 +3266,4 @@ DNS도 비슷한 맥락이다. 우리가 자주 접근하는 웹 사이트 전�
 
 &lt;p&gt;&lt;a href=&quot;https://mangkyu.tistory.com/104&quot;&gt;https://mangkyu.tistory.com/104&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="교착상태" /><category term="프로세스 동기화" /><category term="세마포어" /><category term="뮤텍스" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화</title><link href="http://localhost:4000/os/2022/03/23/os-study-05.html" rel="alternate" type="text/html" title="[운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화" /><published>2022-03-23T00:00:00+09:00</published><updated>2022-03-23T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/03/23/os-study-05</id><content type="html" xml:base="http://localhost:4000/os/2022/03/23/os-study-05.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h2 id=&quot;1-multilevel-queue-singlecore-cpu-기준&quot;&gt;1. Multilevel Queue (SingleCore Cpu 기준)&lt;/h2&gt;
-
-&lt;p&gt;✔️ Multilevel Feedback Queue보다 프로세스 차별적인 방식&lt;/p&gt;
-
-&lt;p&gt;✔️ Ready queue를 여러 개로 분할&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;foreground (interactive)&lt;/li&gt;
-  &lt;li&gt;background (batch - no human interaction)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  각 큐는 독립적인 스케줄링 알고리즘을 가짐&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;foreground - RR (라운드 로빈)
-    &lt;ul&gt;
-      &lt;li&gt;사용자와 대화하는 프로세스이기 때문에 응답시간이 짧은 것이 중요하다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;background - FCFS (선입선출)
-    &lt;ul&gt;
-      &lt;li&gt;사용자와 대화없이 CPU만 사용하는 batch형 작업이기 때문에 응답시간이 빠를 필요가 없다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  큐에 대한 스케줄링이 필요&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Fixed priority scheduling
-    &lt;ul&gt;
-      &lt;li&gt;serve all from foreground then from background&lt;/li&gt;
-      &lt;li&gt;Possibility of starvation
-        &lt;ul&gt;
-          &lt;li&gt;우선순위가 높은 작업이 종료되지 않으면 우선순위가 낮은 프로세스는 영원히 실행되지 못하는 문제가 발생할 수 있다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Time slice
-    &lt;ul&gt;
-      &lt;li&gt;각 큐에  CPU time을 적절한 비율로 할당&lt;/li&gt;
-      &lt;li&gt;starvation을 막기위해 전체 CPU 사용시간을 우선순위가 높은 foreground 작업에 80% 할당하고 우선순위가 낮은 background 작업에 20%를 할당하게 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-multilevel-feedback-queue-singlecore-cpu-기준&quot;&gt;2. Multilevel Feedback Queue (SingleCore Cpu 기준)&lt;/h2&gt;
-
-&lt;p&gt;✔️  프로세스가 다른 큐로 이동할 수 있음&lt;/p&gt;
-
-&lt;p&gt;✔️  에이징(aging)을 이와 같은 방식으로 구현할 수 있음&lt;/p&gt;
-
-&lt;p&gt;✔️ Multilevel-feedback-queue scheduler를 이루고 있는 요소들&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Queue의 수&lt;/li&gt;
-  &lt;li&gt;각 큐의 scheduling algorithm&lt;/li&gt;
-  &lt;li&gt;Process를 상위 큐로 보내는 기준&lt;/li&gt;
-  &lt;li&gt;Process를 하위 큐로 내쫓는 기준&lt;/li&gt;
-  &lt;li&gt;프로세스가 CPU 서비스를 받으려 할 때 들어갈 큐를 결정하는 기준&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  처음 실행되는 작업은 우선순위를 가장 높게 받음&lt;/p&gt;
-
-&lt;h3 id=&quot;21-multilevel-feedback-queue-예시&quot;&gt;2.1 Multilevel Feedback Queue 예시&lt;/h3&gt;
-
-&lt;p&gt;✔️ Three queues:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Q0 - time quantum 8 milliseconds&lt;/li&gt;
-  &lt;li&gt;Q1 -  time quantun 16 milliseconds&lt;/li&gt;
-  &lt;li&gt;Q2 - FCFS (선입선출)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Schduling&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;새로운 작업이 Q0으로 들어간다.&lt;/li&gt;
-  &lt;li&gt;CPU를 잡아서 할당 시간 8milliseconds 동안 수행된다&lt;/li&gt;
-  &lt;li&gt;Q0에서 할당받은 시간내에 작업을 다 끝내지 못했으면 Q1로 내려간다.&lt;/li&gt;
-  &lt;li&gt;Q1에 줄서서 기다렸다가 CPU를 할당받고 16ms 동안 수행된다.&lt;/li&gt;
-  &lt;li&gt;Q1에서 할당받은 시간내에 작업을 끝내지 못한 경우 Q2로 쫓겨난다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;3-멀티코어-cpu의-경우-고려해야할-점&quot;&gt;3. 멀티코어 CPU의 경우 고려해야할 점&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;CPU가 여러 개인 경우 스케줄링은 더욱 복잡해진다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Homogeneous processor인 경우&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Queue에 한줄로 세워서 각 프로세서가 알아서 꺼내가게 할 수 있다.&lt;/li&gt;
-  &lt;li&gt;반드시 특정 프로세스에세 수행되어야 하는 프로세스가 있는 경우에는 문제가 복잡해진다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Load sharing&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;일부 프로세서에 job이 몰리지 않도록 부하를 적절히 공유하는 메커니즘이 필요하다&lt;/li&gt;
-  &lt;li&gt;별개의 큐를 두는 방법 vs 공동 큐를 사용하는 방법&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Symmetric Multiprocessing (SMP)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;각 프로세서가 각자 알아서 스케줄링 결정&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Asymmetric multiprocessing&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;비대칭형 다중 처리기
-    &lt;ul&gt;
-      &lt;li&gt;하나의 프로세서가 시스템 데이터의 접근과 공유를 책임지고 나머지 프로세서는 거기에 따라 움직이는 방식&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;대칭형 다중 처리기
-    &lt;ul&gt;
-      &lt;li&gt;CPU가 각자 알아서 스케줄링하는 방식&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;4-real-time-scheduling&quot;&gt;4. Real-Time Scheduling&lt;/h2&gt;
-
-&lt;p&gt;✔️ Hard real-time systems&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Hard real-time task는 정해진 시간 안에 반드시 끝내도록 스케줄링해야 함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Soft real-time computing&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Soft real-time task는 일반 프로세스에 비해 높은 priority를 갖도록 해야 함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ EDF (Earlist Deadline scheduling)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;실시간 환경에서는 먼저 온 요청보다 데드라인이 다가온 요청을 먼저 처리하는 스케줄링&lt;/li&gt;
-  &lt;li&gt;연성 실시간 시스템처럼 일반 작업과 VOD 작업 등이 혼합된 환경에서는 데드라인이 존재하는 프로세스에게 일반 프로세스보다 높은 우선 순위를 할당한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;5-thread-scheduling&quot;&gt;5. Thread Scheduling&lt;/h2&gt;
-
-&lt;p&gt;✔️ Local Scheduling&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;User level thread의 경우 사용자 수준의 thread library에 의해 어떤 thread를 스케줄링할지 결정
-    &lt;ul&gt;
-      &lt;li&gt;이 경우에 운영체제는 해당 thread의 존재를 알지 못한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Global Sheduling&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Kernel level thread의 경우 일반 프로세스와 마찬 가지로 커널의 단기 스케줄러가 어떤 thread를 스케줄할지 결정&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;6-process-synchronization&quot;&gt;6. Process Synchronization&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;멀티 프로세서 시스템의 경우 메모리 주소공간을 공유하는 CPU 프로세스가 여럿 있는 경우 Race Condition의 가능성이 있다. 아래 내용들은 Race Condition 발생 원인과 이를 해결하기 위한 프로세스 동기화 방법이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Race Condition?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;여러 프로세스들이 동시에 공유데이터에 접근하여 경쟁하는 상태이다.&lt;/p&gt;
-
-  &lt;p&gt;여러 프로세스가 동시에 공유데이터에 접근하게되면 데이터의 불일치 문제를 발생시킬 수 있다.&lt;/p&gt;
-
-  &lt;p&gt;일관성 유지를 위해서는 협력 프로세스간의 실행 순서를 정해주는 메커니즘이 필요하다&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;OS에서 Race Condition은 언제 발생하는가?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Kernel에서 수행 중 인터럽트 발생 시&lt;/li&gt;
-  &lt;li&gt;Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우&lt;/li&gt;
-  &lt;li&gt;N 개의 프로세스가 공유 데이터를 동시에 사용하기를 원하는 경우&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;‼️  &lt;strong&gt;한 프로세스가 공유 데이터를 사용하고 있을 때 다른 프로세스가 접근하면 안되는 이유&lt;/strong&gt; ‼️&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;각 프로세스의 &lt;strong&gt;code segment&lt;/strong&gt;에는 공유 데이터를 접근하는 코드인 &lt;strong&gt;ciritical section&lt;/strong&gt;이 존재한다.&lt;/li&gt;
-  &lt;li&gt;이 경우에 하나의 프로세스가 &lt;strong&gt;critical section&lt;/strong&gt;에 있을 때 다른 모든 프로세스는 &lt;strong&gt;critical section&lt;/strong&gt;에 들어갈 수 없어야 한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Race Condition은 어떻게 방지하는가?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Process가 system call을 하여 kernel mode로 수행 중인데 context switch가 일어나는 경우
-    &lt;ul&gt;
-      &lt;li&gt;커널 모드에서 수행 중일 때는 CPU를 선점하지 않고 커널모드에서 사용자 모드로 돌아갈 때 CPU를 선점하는 방식&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Multiprocessor에서 shared memory 내의 kernel data
-    &lt;ul&gt;
-      &lt;li&gt;방법 1) 한번에 하나의 CPU만이 커널에 들어갈 수 있게 하는 방법&lt;/li&gt;
-      &lt;li&gt;방법 2) 커널 배우에 있는 각 공유 데이터에 접근할 때마다 그 데이터에 대한 lock / unlock을 하는 방법&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="멀티 피드백 큐" /><category term="멀티레벨 큐" /><category term="프로세스 동기화" /><category term="Operating System" /><category term="반효경" /><category term="운영체제와 정보기술의 원리" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="교착상태" /><category term="프로세스 동기화" /><category term="세마포어" /><category term="뮤텍스" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
