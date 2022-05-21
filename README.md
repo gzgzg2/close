@@ -6,7 +6,7 @@ permalink: /about/
 
 ## *About Me.*
 
----
+
 
 ### *Contact.*
 
