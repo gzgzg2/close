@@ -3,7 +3,8 @@ layout: post
 title: "[Java] Getter Setter 필요없을까?"
 categories:
 - Java
-  tags:
+
+tags:
 - Java
 - Getter, Setter
 - OOP
