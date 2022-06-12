@@ -94,7 +94,7 @@ ObjectMapper에서 JSON을 자바 객체로 역직렬화 할 때 getter, setter 
 
 <br>
 
-**@JsonProperty**
+**📌 @JsonProperty**
 ```json
 {
   "dollars" : 100
@@ -111,7 +111,7 @@ class Cash {
 
 <br>
 
-**ObjectMapper 설정 변경**
+**📌 ObjectMapper 설정 변경**
 ```java
 ObjectMapper objectMapper = new ObjectMapper();
 objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
