@@ -32,11 +32,9 @@ static으로 선언한 객체를 여러 스레드에서 사용할 경우에 적�
 ## Java Monitor
 > **📌 모니터는 synchronized를 사용했을 때 이용된다.** 
 
-Java의 모든 객체는 Monitor를 보유하고 있다. 객체는 heap 영역에 존재하므로 모든 스레드에서 공유가 가능하기 때문에 Monitor는 객체에 한번에 하나의 스레드만 접근할 수 있도록 막는다.    
-그리고 객체는 모니터가 할당되지 않은 상태이면 호출된 스레드에게 모니터를 할당한다. 소유권을 갖게된 스레드는 모니터에 진입하게 된다. 모니터에 하나의 스레드가 진입하게 되면 다른 스레드는  
+Java의 모든 객체는 Monitor를 보유하고 있다. 객체는 heap 영역에 존재하므로 모든 스레드에서 공유가 가능하기 때문에 Monitor는 객체에 한번에 하나의 스레드만 접근할 수 있도록 막는다. 
+그리고 객체는 모니터가 할당되지 않은 상태이면 호출된 스레드에게 모니터를 할당한다. 소유권을 갖게된 스레드는 모니터에 진입하게 된다. 모니터에 하나의 스레드가 진입하게 되면 다른 스레드는
 모니터를 사용할 수 있을 때까지 대기하게 된다. 즉 오직 모니터를 소유한 스레드만이 임계구역에서 작업을 할 수 있는 것이다.
-
-# synchronized 예시
 
 ## 1. 공유객체에 접근할 때 synchronized를 사용하지 않았을 경우
 
@@ -116,9 +114,9 @@ public class App {
 ### 결과
 ![스크린샷 2022-06-26 오후 11 39 14](https://user-images.githubusercontent.com/56028408/175819627-034845b1-3155-40a4-b08a-c1c79bd09982.png)
 
-synchronized 메서드를 추가하면 donamte() 메서드에 하나의 스레드만이 접근할 수 있게되므로 여러번 실행하여도 최대값은 10,000이 출력될 것이다. 하지만 이 예시는 간단한 예시이기 때문에
-동기화가 필요한 메서드에 무조건 synchronized를 사용하는 방법은 옳지 않다. 메서드 내부에서 동기화가 필요하지 않은
-라인도 동기화가 적용되어 성능에 큰 영향을 끼칠 수 있기 때문이다. 이번 게시물에서 소개하진 않지만 인스턴스 메서드안에 동기화 블록을 적용하는 방법도 존재한다.
+synchronized 메서드를 추가하면 donamte() 메서드에 하나의 스레드만이 접근할 수 있게되므로 여러번 실행하여도 최대값은 10,000이 출력될 것이다.
+하지만 이 예시는 간단한 예시이기 때문에 동기화가 필요한 메서드에 무조건 synchronized를 사용하는 방법은 옳지 않다.
+메서드 내부에서 동기화가 필요하지 않은 라인도 동기화가 적용되어 성능에 큰 영향을 끼칠 수 있기 때문이다. 이번 게시물에서 소개하진 않았지만 인스턴스 메서드안에 동기화 블록을 적용하는 방법도 존재한다.
 
 ## 결론
 synchronized를 사용해야할 경우는 존재할 수 있다. 그렇지만 synchronized의 동작 방식을 모르는 상태로 사용하게 되면  
@@ -127,13 +125,13 @@ synchronized를 사용해야할 경우는 존재할 수 있다. 그렇지만 syn
 
 # Reference
 ### Monitor 
-- https://gzgzg2.github.io/os/2022/04/02/os-study-07.html#4-monitor
-- https://en.wikipedia.org/wiki/Monitor_(synchronization)
-- https://ssup2.github.io/programming/Java_Monitor_synchronized/
+- [https://gzgzg2.github.io/os/2022/04/02/os-study-07.html#4-monitor](https://gzgzg2.github.io/os/2022/04/02/os-study-07.html#4-monitor)
+- [https://en.wikipedia.org/wiki/Monitor_(synchronization)](https://en.wikipedia.org/wiki/Monitor_(synchronization))
+- [https://ssup2.github.io/programming/Java_Monitor_synchronized/](https://ssup2.github.io/programming/Java_Monitor_synchronized/)
 
 ### Java Monitor
-- https://ssup2.github.io/programming/Java_Monitor_synchronized/
-- https://www.artima.com/insidejvm/ed2/threadsynch.html
+- [https://ssup2.github.io/programming/Java_Monitor_synchronized/](https://ssup2.github.io/programming/Java_Monitor_synchronized/)
+- [https://www.artima.com/insidejvm/ed2/threadsynch.html](https://www.artima.com/insidejvm/ed2/threadsynch.html)
 
 ### Java synchronized
 - 자바 성능 튜닝 이야기 :: story.8 synchronized는 제대로 알고 써야한다. 

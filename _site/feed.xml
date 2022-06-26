@@ -1,4 +1,656 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-05-14T21:18:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[글또 7기] 나의 다짐</title><link href="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html" rel="alternate" type="text/html" title="[글또 7기] 나의 다짐" /><published>2022-05-14T00:00:00+09:00</published><updated>2022-05-14T00:00:00+09:00</updated><id>http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90</id><content type="html" xml:base="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">&lt;h2 id=&quot;들어가며&quot;&gt;들어가며&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-06-27T00:00:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">나비랑 나리 주인님의 블로그</title><subtitle>잠자는 시간이 제일 좋아</subtitle><entry><title type="html">[Java] synchronized</title><link href="http://localhost:4000/java/2022/06/26/java-syncronized.html" rel="alternate" type="text/html" title="[Java] synchronized" /><published>2022-06-26T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/java/2022/06/26/java-syncronized</id><content type="html" xml:base="http://localhost:4000/java/2022/06/26/java-syncronized.html">&lt;h1 id=&quot;java-synchronized&quot;&gt;Java synchronized&lt;/h1&gt;
+&lt;p&gt;Java의 synchronized는 Thread간의 동기화 매커니즘이다. synchronized는 하나의 객체를 여러 스레드에서 동시에 사용하거나
+static으로 선언한 객체를 여러 스레드에서 사용할 경우에 적용한다. 주의할 점은 synchronized는 객체 단위로 동작하기 때문에
+한 객체에서 synchronized를 사용하는 여러개의 메서드가 있다면 해당 키워드가 적용된 메서드는 동시에 실행되지 않는다.
+또한 내부에서 동기화를 위해 &lt;a href=&quot;https://en.wikipedia.org/wiki/Monitor_(synchronization)&quot;&gt;&lt;strong&gt;Monitor&lt;/strong&gt;&lt;/a&gt;를 사용하고 있으므로 성능저하 문제가 발생할 수 있다.&lt;/p&gt;
+
+&lt;h2 id=&quot;monitor&quot;&gt;Monitor&lt;/h2&gt;
+&lt;p&gt;모니터란 동시에 수행중인 프로세스나 스레드 사이에서 동기화를 적용하기 위한 &lt;strong&gt;high-level synchronization construct&lt;/strong&gt; 이다.
+모니터는 하나의 &lt;strong&gt;lock&lt;/strong&gt;과 여러개의 &lt;strong&gt;condition variable&lt;/strong&gt;로 이루어져있다. 모니터 내에서는 한번에 하나의 프로세스나 스레드만이 활동이 가능하므로
+프로세스나 스레드가 모니터를 사용하다가 봉쇄상태로 변경되어도 다른 프로세스가 모니터에 접근하지 못한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;java-monitor&quot;&gt;Java Monitor&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;📌 모니터는 synchronized를 사용했을 때 이용된다.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Java의 모든 객체는 Monitor를 보유하고 있다. 객체는 heap 영역에 존재하므로 모든 스레드에서 공유가 가능하기 때문에 Monitor는 객체에 한번에 하나의 스레드만 접근할 수 있도록 막는다. 
+그리고 객체는 모니터가 할당되지 않은 상태이면 호출된 스레드에게 모니터를 할당한다. 소유권을 갖게된 스레드는 모니터에 진입하게 된다. 모니터에 하나의 스레드가 진입하게 되면 다른 스레드는
+모니터를 사용할 수 있을 때까지 대기하게 된다. 즉 오직 모니터를 소유한 스레드만이 임계구역에서 작업을 할 수 있는 것이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;1-공유객체에-접근할-때-synchronized를-사용하지-않았을-경우&quot;&gt;1. 공유객체에 접근할 때 synchronized를 사용하지 않았을 경우&lt;/h2&gt;
+
+&lt;h3 id=&quot;기부금을-처리하는-단체&quot;&gt;기부금을 처리하는 단체&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contribution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;donate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getTotal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;단순하게 기부금 필드와 기부금을 축적하는 메서드만 보유하고 있는 클래스이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;기부자&quot;&gt;기부자&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contributor&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Thread&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contribution&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Contributor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;Contribution&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;contribution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;run&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;donate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%s total=%d\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getTotal&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;1인당 1원씩 1000번 기부하고 기부가 완료되면 쌓인 기부금을 출력하는 클래스이다.&lt;/p&gt;
+
+&lt;h3 id=&quot;실행-소스코드&quot;&gt;실행 소스코드&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;App&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Contributor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contributors&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contributor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
+        &lt;span class=&quot;nc&quot;&gt;Contribution&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;contributors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Contributor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contribution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Contributor&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;contributors&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loop&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;하나의 단체에 10명의 기부자가 1000원씩 기부하는 App 클래스이다.&lt;br /&gt;
+소스코드로 예상할 수 있는 결과의 최대값은 10,000 일 것이다. 결과를 확인해보자.&lt;/p&gt;
+
+&lt;h3 id=&quot;결과&quot;&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/175819107-4f2f559c-e58e-4491-877b-eb90d68d0ff2.png&quot; alt=&quot;스크린샷 2022-06-26 오후 11 27 55&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;결과는 우리가 예상한 값과 다르다. 물론 여러번 실행하면 10,000 이라는 값이 출력되기도 한다. 그렇지만 대부분 10,000이라는 값은 출력되지 않을 것이다.&lt;br /&gt;
+이러한 문제가 발생하는 이유는 여러개의 contributors 객체에서 하나의 contribution 객체의 donate() 메서드에 접근하기 때문이다. &lt;br /&gt;
+앞서 말했듯이 객체는 heap 영역에 생성되므로 모든 스레드가 접근할 수 있다. 모든 스레드가 동시에 공유영역에 접근할 수 있다는 것은 스레드 동기화 문제가 발생할 수 있다는 것과 같다.&lt;/p&gt;
+
+&lt;h2 id=&quot;2-문제-해결-방법&quot;&gt;2. 문제 해결 방법&lt;/h2&gt;
+&lt;h3 id=&quot;synchronized&quot;&gt;synchronized&lt;/h3&gt;
+&lt;p&gt;위와 같은 경우 문제 해결방법은 간단하다. &lt;strong&gt;donate()&lt;/strong&gt; 메서드에 synchronized 를 사용하면 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;synchronized&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;donate&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;amount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;결과-1&quot;&gt;결과&lt;/h3&gt;
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/175819627-034845b1-3155-40a4-b08a-c1c79bd09982.png&quot; alt=&quot;스크린샷 2022-06-26 오후 11 39 14&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;synchronized 메서드를 추가하면 donamte() 메서드에 하나의 스레드만이 접근할 수 있게되므로 여러번 실행하여도 최대값은 10,000이 출력될 것이다.
+하지만 이 예시는 간단한 예시이기 때문에 동기화가 필요한 메서드에 무조건 synchronized를 사용하는 방법은 옳지 않다.
+메서드 내부에서 동기화가 필요하지 않은 라인도 동기화가 적용되어 성능에 큰 영향을 끼칠 수 있기 때문이다. 이번 게시물에서 소개하진 않았지만 인스턴스 메서드안에 동기화 블록을 적용하는 방법도 존재한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;결론&quot;&gt;결론&lt;/h2&gt;
+&lt;p&gt;synchronized를 사용해야할 경우는 존재할 수 있다. 그렇지만 synchronized의 동작 방식을 모르는 상태로 사용하게 되면&lt;br /&gt;
+큰 성능이슈를 겪을 수 있다. 뿐만 아니라 클래스 변수는 인스턴스 메서드의 synchronized가 적용되지 않기 때문에 주의해서 사용해야 한다.&lt;/p&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+&lt;h3 id=&quot;monitor-1&quot;&gt;Monitor&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://gzgzg2.github.io/os/2022/04/02/os-study-07.html#4-monitor&quot;&gt;https://gzgzg2.github.io/os/2022/04/02/os-study-07.html#4-monitor&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Monitor_(synchronization)&quot;&gt;https://en.wikipedia.org/wiki/Monitor_(synchronization)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ssup2.github.io/programming/Java_Monitor_synchronized/&quot;&gt;https://ssup2.github.io/programming/Java_Monitor_synchronized/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;java-monitor-1&quot;&gt;Java Monitor&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://ssup2.github.io/programming/Java_Monitor_synchronized/&quot;&gt;https://ssup2.github.io/programming/Java_Monitor_synchronized/&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.artima.com/insidejvm/ed2/threadsynch.html&quot;&gt;https://www.artima.com/insidejvm/ed2/threadsynch.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;java-synchronized-1&quot;&gt;Java synchronized&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;자바 성능 튜닝 이야기 :: story.8 synchronized는 제대로 알고 써야한다.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="Java" /><category term="monitor" /><category term="synchronized" /><category term="Thread" /><summary type="html">Java synchronized Java의 synchronized는 Thread간의 동기화 매커니즘이다. synchronized는 하나의 객체를 여러 스레드에서 동시에 사용하거나 static으로 선언한 객체를 여러 스레드에서 사용할 경우에 적용한다. 주의할 점은 synchronized는 객체 단위로 동작하기 때문에 한 객체에서 synchronized를 사용하는 여러개의 메서드가 있다면 해당 키워드가 적용된 메서드는 동시에 실행되지 않는다. 또한 내부에서 동기화를 위해 Monitor를 사용하고 있으므로 성능저하 문제가 발생할 수 있다.</summary></entry><entry><title type="html">[Java] Getter Setter 필요없을까?</title><link href="http://localhost:4000/java/2022/06/12/no-getter-setter.html" rel="alternate" type="text/html" title="[Java] Getter Setter 필요없을까?" /><published>2022-06-12T00:00:00+09:00</published><updated>2022-06-26T00:00:00+09:00</updated><id>http://localhost:4000/java/2022/06/12/no-getter-setter</id><content type="html" xml:base="http://localhost:4000/java/2022/06/12/no-getter-setter.html">&lt;h2 id=&quot;들어가며&quot;&gt;들어가며&lt;/h2&gt;
+&lt;p&gt;이전에 무지성으로 남발하여 주로 사용하였던 Getter Setter가 객체지향 세계에선 아주 지양해야할 패턴이라는 것을 알게 되었다.&lt;br /&gt;
+Getter Setter가 존재하는 이상 그 클래스는 능도적인 객체가 아닌 자료구조에 불과하다고 한다. 그런데 가끔 특정한 라이브러리에서 Getter Setter 를 필요로 하는 것을 느꼈다.&lt;br /&gt;
+물론 옵션을 설정할 수 있지만 주의해야 하는 것은 마찬가지이다. 그래서 이번에는 Getter Setter 에서 벗어나고 싶은데, 완전히 자유로워지기 힘든 이유를 정리하고자 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;getter-setter-지양해야-하는-이유&quot;&gt;Getter, Setter 지양해야 하는 이유&lt;/h2&gt;
+&lt;p&gt;자바 개발자라면 객제지향 프로그래밍의 4대 원칙을 한번쯤 들어봤을 것이다. 간단하게 소개하자면 아래와 같다.&lt;/p&gt;
+
+&lt;h3 id=&quot;oop-4대-원칙&quot;&gt;&lt;strong&gt;OOP 4대 원칙&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;1. 추상화(Abstraction)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;구체적인 것을 &lt;strong&gt;분해&lt;/strong&gt; 하여 &lt;strong&gt;재조립&lt;/strong&gt; 하는 것&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 상속(Inheritance)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;상위 클래스&lt;/strong&gt; 의 특성을 &lt;strong&gt;하위 클래스&lt;/strong&gt; 가 물려받는 것&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;3. 캡슐화, 정보은닉 (Encapsulation)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;역할에 관련있는 객체의 속성과 실제 행위를 묶어 실제 구현 내용을 외부에 노출하지 않는 것&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 다형성(Polymorphism)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;같은 형태를 가지고 있지만 다른 행위를 할 수 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;1-캡슐화&quot;&gt;1. 캡슐화&lt;/h3&gt;
+&lt;p&gt;Getter와 Setter의 경우 캡슐화를 위반한다. 객체가 무엇을 캡슐화 하고 있는지와 객체 내부의 복잡성은 오직 객체만이 알고 있어야 한다.&lt;br /&gt;
+그런데 Getter와 Setter는 외부에 객체의 데이터를 노출하게 만든다. 물론 필드에 직접 접근하는 것이 아닌 메서드를 이용하여 접근하는 것이지만 &lt;br /&gt;
+우리는 Getter가 데이터에 직접 접근하여 해당 필드의 데이터만을 반환할 것이라고 믿고있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;객체지향 세계에선 객체에게 특정한 행위를 요청했을 때, 외부에서는 객체가 어떠한 재료들로 무엇을 만드는지 알아선 안되고 알 필요도 없다.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-객체를-자료구조로-전락시킨다&quot;&gt;2. 객체를 자료구조로 전락시킨다&lt;/h3&gt;
+&lt;p&gt;객체지향 세계에서의 객체는 살아있고 능동적이다. 그런데 Getter/Setter가 남발된 객체는 생명이 없다. 그저 데이터를 외부에 노출하는 단순 자료구조일 뿐이다.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;//안 좋은 예시&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Cash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; 
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getDollars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// 좋은 예시&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Cash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dollars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;value&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;차이는 메서드 이름밖에 없다고 생각할 수 있다. 그렇지만 메서드 이름에서 가져오는 뉘앙스는 완전히 다르다.&lt;br /&gt;
+앞에서 설명했듯 객체는 살아있고 능동적이다. 그런데 getDollars()는 객체에게 달러를 찾아 반환하라고 &lt;strong&gt;명령&lt;/strong&gt; 한다.&lt;br /&gt;
+반면 dollars()의 경우 객체에게 얼마나 많은 달러가 필요한지 묻는다. 객체를 생명체로서 존중하고 있는 것이다.&lt;br /&gt;
+또한 dollars()는 객체가 요청을 듣고 반환할 때 외부에선 객체가 어떠한 재료와 행위로 값을 반환하는지 유추하기 힘들다.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-불변객체가-될-수-없다&quot;&gt;3. 불변객체가 될 수 없다&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Setter&lt;/strong&gt;를 사용하면 누구나 객체의 값을 쉽게 수정할 수 있다. 이는 Setter가 존재하는 클래스는 불변객체가 될 수 없다는 의미이다.&lt;br /&gt;
+불변객체는 생성과 동시에 값을 초기화 하므로 개발자가 이후에 객체의 상태값을 변경할 수 없다. 값이 변하지 않으면 &lt;strong&gt;“식별자 가변성”&lt;/strong&gt;  문제와 &lt;strong&gt;“부수효과”&lt;/strong&gt; &lt;strong&gt;“시간적 결합”&lt;/strong&gt; 문제에서 자유롭다. 뿐만 아니라 불변객체는 &lt;strong&gt;“실패 원자성”&lt;/strong&gt; 의 장점이 있다. 그런데 &lt;strong&gt;Setter&lt;/strong&gt;를 사용하게 되면 이러한 장점을 전부 누리기 어려워진다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+객체의 값을 쉽게 수정할 수 있게 된다면 개발자의 실수로 의도하지 않았던 결과를 초래할 수 있다. 문제를 해결하기 위해 실수로 발생한 부수효과(side effect)를 제거하려면 값을 수정하는 코드를 전부 찾아서 디버깅 해야하기 때문에 많은 시간이 소요된다.&lt;/p&gt;
+
+&lt;h2 id=&quot;getter-setter-없어도-아무런-문제가-없을까&quot;&gt;Getter, Setter 없어도 아무런 문제가 없을까?&lt;/h2&gt;
+&lt;p&gt;앞에서 설명한 내용들을 보면 java beans pattern 은 정말 안티패턴 처럼 느껴진다. 나만 그럴수도,,?&lt;/p&gt;
+
+&lt;p&gt;여튼 그래서 실제로 업무를 진행하면서 Setter 뿐만 아니라 Getter도 생성하지 않고 개발했던 적이 있었다.  자주 사용하던 방법이 아니여서 익숙하진 않았지만 크게 불편함은 없었다. 그런데 .. 예상하지도 못했던 부분에서 문제가 발생하였다. ObjectMapper로 Json을 역직렬화 할 때 멤버변수를 찾지 못하여 실패하는 이슈가 발생한 것이었다.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-objectmapper&quot;&gt;1. ObjectMapper&lt;/h3&gt;
+&lt;p&gt;ObjectMapper에서 JSON을 자바 객체로 역직렬화 할 때 getter, setter 메서드 이름의 “get”과 “set”을 제거하여 객체의 멤버변수를 찾는다. getter, setter 없이 다른 방법으로도 필드명을 알아낼 수 있지만 따로 옵션을 설정하거나 어노테이션을 지정해줘야 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;📌 @JsonProperty&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;dollars&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Cash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@JsonProperty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;dollars&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Integer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dollars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;📌 ObjectMapper 설정 변경&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nc&quot;&gt;ObjectMapper&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;objectMapper&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ObjectMapper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;objectMapper&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setVisibility&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nc&quot;&gt;PropertyAccessor&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;FIELD&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;JsonAutoDetect&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Visibility&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;ANY&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;결론&quot;&gt;결론&lt;/h3&gt;
+&lt;p&gt;Getter/Setter는 특별한 이유가 아니라면 지양하는 것이 맞다고 생각하지만, 자주 사용되는 라이브러리에서 ObjectMapper와 같이 Getter/Setter를 필요로 할 수 있기 때문에 주의하는 것이 좋을 것 같다.&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;
+&lt;br /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+&lt;p&gt;&lt;a href=&quot;https://jenkov.com/tutorials/java-json/jackson-objectmapper.html#how-jackson-objectmapper-matches-json-fields-to-java-fields&quot;&gt;https://jenkov.com/tutorials/java-json/jackson-objectmapper.html#how-jackson-objectmapper-matches-json-fields-to-java-fields&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://bactoria.github.io/2019/08/16/ObjectMapper%EB%8A%94-Property%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B0%BE%EC%9D%84%EA%B9%8C/&quot;&gt;https://bactoria.github.io/2019/08/16/ObjectMapper%EB%8A%94-Property%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B0%BE%EC%9D%84%EA%B9%8C/&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="Java" /><category term="Getter, Setter" /><category term="OOP" /><summary type="html">들어가며 이전에 무지성으로 남발하여 주로 사용하였던 Getter Setter가 객체지향 세계에선 아주 지양해야할 패턴이라는 것을 알게 되었다. Getter Setter가 존재하는 이상 그 클래스는 능도적인 객체가 아닌 자료구조에 불과하다고 한다. 그런데 가끔 특정한 라이브러리에서 Getter Setter 를 필요로 하는 것을 느꼈다. 물론 옵션을 설정할 수 있지만 주의해야 하는 것은 마찬가지이다. 그래서 이번에는 Getter Setter 에서 벗어나고 싶은데, 완전히 자유로워지기 힘든 이유를 정리하고자 한다.</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_04 엑세스 회선을 통해 인터넷의 내부로 !</title><link href="http://localhost:4000/networkstudy/2022/06/08/network-study-04.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_04 엑세스 회선을 통해 인터넷의 내부로 !" /><published>2022-06-08T00:00:00+09:00</published><updated>2022-06-08T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/06/08/network-study-04</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/06/08/network-study-04.html">&lt;h2 id=&quot;adsl-기술을-이용한-엑세스-회선의-구조와-동작&quot;&gt;ADSL 기술을 이용한 엑세스 회선의 구조와 동작&lt;/h2&gt;
+
+&lt;h3 id=&quot;️-인터넷의-기본은-가정이나-회사의-lan과-같다&quot;&gt;&lt;strong&gt;✔️  인터넷의 기본은 가정이나 회사의 LAN과 같다&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;인터넷은 거대하고 복잡한 시스템이지만 패킷을 중재하는 부분은 가정, 회사의 LAN과 동일하다.&lt;/li&gt;
+  &lt;li&gt;라우터의 기본적인 구조나 동작도 전혀 다르지 않다&lt;/li&gt;
+  &lt;li&gt;가정이나 회사의 네트워크 규모가 커진 것이 인터넷&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;️가정회사의-네트워크와-인터넷의-차이점&quot;&gt;&lt;strong&gt;✔️ 가정, 회사의 네트워크와 인터넷의 차이점&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;인터넷은 중계 장치의 거리가 매우 멀다.&lt;/li&gt;
+  &lt;li&gt;대한민국과 미국을 연결하려면 태평양을 넘어야하기 때문에 이더넷 케이블로 연결은 어렵다.&lt;/li&gt;
+  &lt;li&gt;라우터의 등록정보가 수시로 바뀌기 때문에 경로 등록을 자동화 해야한다.
+    &lt;ul&gt;
+      &lt;li&gt;통신 장애가 발생하거나 인터넷에 새로 접속하는 회사가 있을 때마다 변경하는 것은 무리가 있음&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;요약하자면 거리의 차이와 경로 정보의 등록 방법 차이가 인터넷과 회사, 가정 LAN과의 차이&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;️사용자-인터넷을-연결하는-액세스-회선&quot;&gt;✔️ 사용자 인터넷을 연결하는 액세스 회선&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;인터넷 접속용 라우터는 액세스 회선의 규칙에 따라 패킷 송신 동작을 실행한다. (이더넷의 규칙과 다른 부분)&lt;/li&gt;
+  &lt;li&gt;일반 가정에선 ADSL, FTTH, CATV, ISDN 등을 액세스 회선으로 사용한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;💡 액세스 회선은 인터넷과 가정, 회사의 LAN을 연결하는 통신회선이다. 
+💡 액세스 회선은 통신 회선의 사용법을 나타내므로 통신 회선의 원리나 구조를 나타내는 것이 아니다. 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;️adsl-모델에서의-패킷-신호화-과정&quot;&gt;✔️ADSL 모델에서의 패킷 신호화 과정&lt;/h3&gt;
+
+&lt;p&gt;[&lt;strong&gt;ADSL 기술을 사용한 액세스 회선의 구성도]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/166886670-ba59b0f3-34a8-4980-9dfb-a1c4571b0ea3.png&quot; alt=&quot;스크린샷 2022-05-04 오전 9 44 48&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 그림의 오른쪽에서 왼쪽으로 패킷이 흘러간다. 즉 사용자의 라우터에서 송신된 패킷은 ADSL 모뎀이나 전화의 케이블을 통해 전화국에 도착하며 도착한 패킷은 ADSL 사업자의 네트워크를 경유하여 프로바이더 (ISP: Internet Service Provider)에 도착하는데, 이때 패킷은 도착하는 동안 여러 형태로 모습을 바꾼다.&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;💡 ADLS(Asymmetric Digital Subscriber)모델이란 전주에 부설된 전화용 금속제 케이블을 이용하여
+  고속으로 통신하는 기술의 일종으로 사용자로부터 인터넷으로 향하는 상향(업로드)과 인터넷에서 사용자로 향하는 
+  하향(다운로드)의 통신 속도가 서로 다른 것을 가리킵니다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;[액세서 회선을 통한 패킷의 전송 과정]&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/166886653-c4bdfeaa-6bda-43e8-945f-9dc54eb1ced5.png&quot; alt=&quot;스크린샷 2022-05-04 오전 9 55 29&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;(1~4) 위 그림의 4번까지는 이더넷의 라우터와 큰 차이가 없음
+(5) 인터넷 접속용 라우터와 **ADSL** 모뎀이 이더넷으로 연결되어 있으면 이더넷의 규칙에 따라 패킷을 송수신
+(5) 이더넷의 헤더가 액세스 회선 사업자에따라 변형된다.
+(5) MAC헤더 PPoE헤더 PPP헤더라는 3개의 헤더가 추가로 붙고 이더넷의 규칙따라 신호를 변환하여 송신한다
+(6) 인터넷 접속용 라우터가 송신한 패킷을 ADSL 모뎀이 받아서 작게 분할하여 **셀**에 저장한다.
+(7) 분할된 셀은 ATM 이라는 통신 기술에 사용된다.
+(8) 셀에 저장된 패킷을 신호로 변환한다. 변환할 때는 직교 진폭 변조(QAM)라는 방식을 사용한다.
+(9) 전화 케이블을 통해 전화국에 도착한 신호가 배선반과 스플리터를 통과하여 **DSLAM** 에 도착한다.
+(10) DSLAM이 신호의 파형을 읽어 진폭과 위상을 조사하고 이것이 어느 비트에 대응하는지 판단하여 디지털 신호로 복원하여 전송한다.
+(11) ATM 인터페이스가 셸을 수신한다.
+(12) ATM 인터페이스가 셸을 원래의 패킷 형태로 되돌린다. (ATM 인터페이스를 셸을 원래 패킷으로 되돌리는 기능이 있음)
+(13) BAS에 건내주기 위한 용도로 사용된 MAC 헤더와 PPoE헤더를 제거하고 PPP 헤더 이후 부분을 추출한다.
+(14) 터널링에 필요한 헤더를 붙여서 출구를 향해 중계한다.
+(15) 패킷이 터널링 출구에 있는 터널링용 라우터에 도착한다.
+(16) 터널링용 헤더를 분리하고 IP 헤더 이후 부분의 패킷을 추출한다.
+(17) 인터넷 내부에 중계한다.
+
+💡 ADSL 모뎀은 패킷을 셀로 분할하고 전기 신호로 바꾸어 스플리터에 송신한다.
+💡 셀은 맨 앞부분에 5바이트의 헤더와 48바이트의 데이터가 이어지는 작은 디지털 데이터의 덩어리이다.
+💡 DSLAM이란 다수의 ADSL 모뎀의 기능을 여러개로 묶어서 하나의 케이스에 넣은 것
+💡 DSLAM은 ATM 인터페이스를 가지고 있고 패킷을 분할한 셸 형태 그대로 후방의 라우터와 주고받는다. 
+💡 BAS는 ATM 셸을 패킷으로 복원하여 인터넷 내부에 중계한다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;액세스-회선으로-이용하는-ppp와-터널링&quot;&gt;액세스 회선으로 이용하는 PPP와 터널링&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;내용을 설명하기전 다시한번 짚어보자면, ADSL이나 FTTH 등의 액세스 회선에서 인터넷을 향해 흘러온 패킷은 액세스 회선을 소유한 사업자가 운영하는 BAS에 도착한다.&lt;/p&gt;
+
+  &lt;p&gt;인터넷은 다수의 라우터를 함께 연결하여 만든 것으로 액세스 회선을 라우터에 연결하는 것이 원칙이다. 그리고 액세스 회선이 ADSL이나 FTTH로 진화한 것으로 이것에 맞게 액세스 회선을 연결하는 라우터도 진화했다. 진화한 라우터를 BAS 라고 한다. 아래 내용은 무엇이 진화했는 지 설명하는 내용이다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;️인터넷에-엑세스-하기-위한-액세스-회선의-준비동작&quot;&gt;&lt;strong&gt;✔️인터넷에 엑세스 하기 위한 액세스 회선의 준비동작&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;ADSL이나 FTTH의 액세스 회선은 최초에 사용자명과 패스워드를 입력하여 로그인을 해야함. 그러나 BAS를 케이블로 고정적으로 접속하므로 PPP처럼 본인인지 확인할 필요가 없어진다.&lt;/li&gt;
+  &lt;li&gt;ADSL이나 FTTH는 PC에 글로벌 주소를 설정하지 않으면 인터넷에 접속할 수 없다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;️bas의-기능&quot;&gt;✔️BAS의 기능&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;BAS가 ADSL, FTTH 로그인 동작의 창구가 됨 (본인확인)&lt;/li&gt;
+  &lt;li&gt;터널링이라는 개념을 사용하여 패킷을 운반하는 기능&lt;/li&gt;
+  &lt;li&gt;TCP/IP의 설정 정보를 통지 (PPP와 동일)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;터널링은 소켓과 소켓사이를 연결하는 TCP의 커넥션과 비슷하다. TCP 커넥션의 한쪽 출입구(소켓)에서
+데이터를 넣으면 데이터가 그대로의 모습으로 반대쪽 출입구에 도착하는데 터널링은 이것과 같다. 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;️터널링-기능에-의해-프로바이더에-패킷을-전달한다&quot;&gt;✔️터널링 기능에 의해 프로바이더에 패킷을 전달한다&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;사용자와 가장 가까운 전화국의 BAS와 프로바이더 라우터 사이에 있는 ADSL/FTTH 접속 서비스 사업자의 네트워크 안에 터널을 만든다. (액세스 회선이 프로바이더의 라우터까지 연결된다는 것)&lt;/li&gt;
+  &lt;li&gt;터널링 실현 방식에는 TCP의 커넥션을 이용한 터널링과 캡슐화 방식의 터널링이 존재한다.&lt;/li&gt;
+  &lt;li&gt;패킷을 그대로의 모습으로 운반할 수 있는 구조라면 원리적으로는 어떤 것에도 터널링을 이용할 수 있다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;프로바이더의-내부&quot;&gt;프로바이더의 내부&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;액세스 회선을 통과한 패킷은 프로바이더의 라우터에 도착한다. 프로바이더의 라우터는 인터넷이 입구이며 여기에서부터 패킷은 인터넷의 내부로 들어간다. 인터넷의 실체는 단일 네트워크가 아닌 다수의 프로바이더의 네트워크를 서로 접속한 것이다. 프로바이더의 내부에는 POP 라우터와 NOC 라우터가 존재한다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;프로바이더를-경유하여-흐르는-패킷&quot;&gt;프로바이더를 경유하여 흐르는 패킷&lt;/h2&gt;
+
+&lt;h3 id=&quot;️bgp&quot;&gt;&lt;strong&gt;✔️ BGP&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;프로바이더 간에는 서로 경로 정보를 교환하여 라우터에 자동 등록한다. 예를 들면 프로바이더 A가 102.47.0.0 의 경로를 알고있으면 접속 상대 (프로바이더 B)에게 102.47.0.0로 가려면 여기로 경유하세요 라고 알리는 것이다. 프로바이더 B는 A에게 받은 정보를 경로표에 등록하고 목적지가 102.47.0.0 일 때 프로바이더 A에게 패킷을 전송한다. 이러한 구조를 &lt;strong&gt;BGP&lt;/strong&gt;라고 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;️트랜지트transit-peer&quot;&gt;✔️ &lt;strong&gt;트랜지트(transit, peer)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;경로 정보 교환은 통지하는 경로 정보의 내용에 따라 두 가지 유형으로 나눌 수 있다. 하나는 인터넷의 경로를 전부 상대에게 통지하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img width=&quot;340&quot; alt=&quot;스크린샷 2022-05-05 오후 4 43 40&quot; src=&quot;https://user-images.githubusercontent.com/56028408/166886633-f21e7632-7aee-43e0-8350-50cda065e094.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;위 그림으로 예를 들자면, 프로바이더 E와 연결되어 있는 프로바이더 D가 프로바이더 E에 대한 경로를 프로바이더 B, C에게 전부 통지하는 것이다. 그러면 프로바이더 B,C도 연결되어 있는 다른 프로바이더에게 프로바이더 E의 경로를 통지하게 된다. 그 결과 프로바이더 D를 통과하여 인터넷의 모든 프로바이더에게 패킷을 보낼 수 있게되는데, 이것을 &lt;strong&gt;트랜지트(transit)&lt;/strong&gt;라고 한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;️비트랜지트-peer&quot;&gt;&lt;strong&gt;✔️비트랜지트(= peer)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;트랜지트와 또 다른 개념으로 비트랜지트 또는 피어라는 개념도 존재한다. 이것은 트랜지트와는 다르게 자신에게 직접 접속되어 있는 네트워크에 대한 경로만 상대에게 통지하는 것이다. 그러면 상대는 자신에게 직접 접속한 네트워크로 갈 패킷만 보내게 된다.&lt;/p&gt;
+
+&lt;div class=&quot;language-text highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;💡 이더넷의 내부에는 BGP라는 구조를 사용하여 프로바이더간에 경로 정보를 교환한다. 
+💡 BGP의 구조에서는 정보를 교환하는 상대를 'peer'라고 한다. 'peer'는 비트랜지터와 트랜지터를 모두 포함한다.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;️ixinternet-exchange&quot;&gt;&lt;strong&gt;✔️ IX(Internet exchange)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;프로바이더끼리 접속하는 방법은 위 그림처럼 프로바이더 D와 프로바이더 C와 같이 1 대 1 형태로 접속하는 것이 기본이다. 지금도 이 방법을 사용 중이지만 이 방법만으로는 불편하다. 프로바이더끼리 1대1로 접속하는 방법밖에 없으면 모든 프로바이더가 서로 연결되어 있어야 한다. 현재는 국내에만 해도 여러 회사가 있으므로 이것은 보통일이 아니다. 이러한 상황에서 중심이 되는 설비를 설치하고 이것을 경유하여 접속하는 방법을 선택하면 통신 회선의 수를 억제할 수 있다. 이 경우 중심 설비를 IX라고 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img width=&quot;744&quot; alt=&quot;스크린샷 2022-05-05 오후 5 21 23&quot; src=&quot;https://user-images.githubusercontent.com/56028408/166886529-a204e1df-ccb3-42b6-aa06-f8972aadc274.png&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+
+&lt;p&gt;성공과 실패를 결정하는 1%의 네트워크&lt;/p&gt;</content><author><name></name></author><category term="인터넷" /><category term="액세스 회선" /><category term="ADSL" /><category term="LAN" /><summary type="html">ADSL 기술을 이용한 엑세스 회선의 구조와 동작</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_03 케이블의 앞은 LAN 기기였다.</title><link href="http://localhost:4000/networkstudy/2022/05/29/network-study-03.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_03 케이블의 앞은 LAN 기기였다." /><published>2022-05-29T00:00:00+09:00</published><updated>2022-05-29T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/05/29/network-study-03</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/05/29/network-study-03.html">&lt;h1 id=&quot;-chapter_03-케이블의-앞은-lan-기기였다-_허브와-스위치-라우터의-탐험&quot;&gt;📗 Chapter_03 케이블의 앞은 LAN 기기였다. _허브와 스위치, 라우터의 탐험&lt;/h1&gt;
+
+&lt;h3 id=&quot;3장의-요점-짚고-넘어가기-&quot;&gt;🌟 3장의 요점 짚고 넘어가기 🌟&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;해당 챕터는 클라이언트 PC가 가정이나 회사의 LAN에 접속되고, 앞부분이 ADSL이나 광섬유(FTTH)등의 광대역 회선에 의해 인터넷에 접속된다는 최신의 대표적인 상황을 가정하여 설명한다.&lt;/p&gt;
+
+  &lt;p&gt;이 경우 LAN 어댑터가 송신한 패킷은 스위칭 허브 등을 경유하여 인터넷 접속용 라우터에 도착한다. 라우터의 앞부분은 이미 인터넷이므로여기에서부터 앞부분은 통신사가 패킷을 상대에게 운반한다. 우체통에 봉투를 넣으면 그 후에는 집배원이 편지를 상대에게 전달하는 것과 유사하다.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;1-케이블과-리피터-허브속을-신호가-흘러간다&quot;&gt;1. 케이블과 리피터 허브속을 신호가 흘러간다.&lt;/h1&gt;
+
+&lt;h3 id=&quot;하나하나의-패킷이-독립된-것으로-동작한다&quot;&gt;하나하나의 패킷이 독립된 것으로 동작한다.&lt;/h3&gt;
+
+&lt;p&gt;컴퓨터에서 송신된 패킷은 허브나 라우터라는 중계 장치에 의해 중계되어 목적지에게 운반된다. 이때 중계장치는 패킷의 데이터 정보를 확인하지 않는다. 이는 애플리케이션의 데이터나 TCP 프로토콜의 제어정보는 패킷 운반 동작에 아무런 영향을 주지 못하는 것이다. 즉 HTTP 메세지나 TCP 수신확인 서버와 클라이언트의 관계 같은 것들은 모두 무시된다고 보면 된다. 따라서 모든 패킷은 독립적인 패킷으로 판단되어 목적지에 운반된다.&lt;/p&gt;
+
+&lt;h3 id=&quot;lan-케이블은-신호를-약화시키지-않는-것이-핵심이다&quot;&gt;LAN 케이블은 신호를 약화시키지 않는 것이 핵심이다&lt;/h3&gt;
+
+&lt;p&gt;LAN 어댑터가 흘려보낸 전기신호가 케이블을 통해 허브에 도착될 때 송출한 신호 그대로 허브에 도착하지 않는다. 케이블을 통과하는 사이에 신호의 에너지가 조금씩 떨어지므로 케이블의 길이가 길어질수록 신호가 약해진다.&lt;/p&gt;
+
+&lt;p&gt;신호가 약해지는 것 뿐만 아니라 이더넷의 경우 사각형의 각진 신호가 뭉개져서 둥글게 변한다. 신호의 각진 부분은 주파수가 높을수록 전압이 급격하게 변화하게 된다. 이처럼 급격하게 변화하다가 신호가 약해져서 변화가 없어질 때 각이 뭉개진다.&lt;/p&gt;
+
+&lt;p&gt;잡음이 없을 경우에도 신호가 도착할 때는 변형돼서 도착할 때가 대부분인데 잡음의 영향까지 더해지면 매우 심각하게 변화한다. 약해진 신호가 더욱 변형되어 0과 1을 잘못 판독할 수 있는데 이것이 통신 오류의 원인이 될 수 있다.&lt;/p&gt;
+
+&lt;h3 id=&quot;리피터-허브는-연결되어-있는-전체-케이블에-신호를-송신한다&quot;&gt;리피터 허브는 연결되어 있는 전체 케이블에 신호를 송신한다.&lt;/h3&gt;
+
+&lt;p&gt;신호가 리피터 허브에 도달하면 리피터 허브는 LAN 전체에 신호를 흘린다. 이더넷의 기본 원리인 전체에 패킷의 신호를 뿌리고 수신처 MAC주소에 해당하는 기기만 패킷을 수신한다는 원리를 그대로 실현했다고 보면 된다.&lt;/p&gt;
+
+&lt;p&gt;리피터 허브의 내부는 아래 그림과 같은데 각 커넥터의 안쪽에는 LAN 어댑터 내부에 있는 PHY 회로와 역할이 같은 회로가 존재한다. 이를 LAN 어댑터 측과 같이 RJ-45 커넥터에 직접 접속하면 신호를 제대로 수신할 수 없다. 제대로 신호를 수신하려면 &lt;strong&gt;‘송신 단자’&lt;/strong&gt;의 신호를 &lt;strong&gt;‘수신 단자’&lt;/strong&gt;로 받도록 해야한다. 회로와 커넥터 사이의 신호선을 교차하는 이유는 이 때문이다.&lt;/p&gt;
+
+&lt;p&gt;리피터 허브의 끝 커넥터에는 &lt;strong&gt;MDI/MDI-X&lt;/strong&gt; 라는 전환 스위치가 존재한다. MDI는 RJ-45 커넥터와 신호 송수신 회로를 직접 결선한 것이고 MDI-X는 교차하여 결선하는 것을 나타낸다. 허브의 커넥터 부분은 보통 MDI-X 이므로 허브끼리 접속할 때는 한쪽을 MDI로 설정해야 한다. MDI로 전환하는 스위치가 없고 모든 커넥터가 MDI-X인 경우에는 크로스 케이블로 허브들에 접속한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/165674870-5c7164fe-ca2b-4209-acb3-0e01af53d00a.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️  리피터 허브&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;이더넷의 기본을 따르는 하드웨어&lt;/li&gt;
+  &lt;li&gt;리피터 허브에 도달한 신호를 LAN 전체에 전달하지만 수신처 MAC 주소에 해당하는 패킷만 수신한다.&lt;/li&gt;
+  &lt;li&gt;전체에 패킷의 신호를 뿌리고 수신처 MAC 주소에 해당하는 기기만 패킷을 수신한다는 의미
+    &lt;ul&gt;
+      &lt;li&gt;MAC 헤더의 값을 확인 함&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;리피터 허브의 내부에는 PHY(MAU) 회로와 역할이 같은 회로가 존재한다.&lt;/li&gt;
+  &lt;li&gt;리피터 허브의 끝 커넥터에서는 MDI/MDI-X와 같이 쓰여있는 전환 스위치가 존재한다.&lt;/li&gt;
+  &lt;li&gt;MDI로 전환하는 스위치가 없고 모든 커넥터가 MDI-X인 경우에는 크로스 케이블로 허브들에 접속한다.&lt;/li&gt;
+  &lt;li&gt;잡음의 영향을 받아 데이터가 변화한 것 같은 신호도 전송한다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;리피터&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;허브는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;연결된&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;케이블&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;전체에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;신호를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;2-스위칭-허브의-패킷중계-동작&quot;&gt;2. 스위칭 허브의 패킷중계 동작&lt;/h1&gt;
+
+&lt;h3 id=&quot;스위칭-허브는-주소-테이블로-중계한다&quot;&gt;스위칭 허브는 주소 테이블로 중계한다&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;“스위칭 허브”&lt;/strong&gt; 의 신호가 커넥터 부분에 도달하여 PHY 회로에서 수신되는 부분까지는 리피터 허브와 동일하다. PHY 회로에서 케이블을 흐르는 신호의 형식부터 공통의 신호 형식으로 변환한 후 신호는 MAC 회로에 들어간다. 이후 패킷을 디지털 데이터로 변환한 후 패킷의 맨 끝에 있는 FCS를 대조하여 오류의 유무를 검사하고 문제가 없으면 버퍼 메모리에 저장하고 오류가 있었던 패킷이면 폐기한다. 이 부분은 LAN 어댑터와 거의 같고 각 스위칭 허브의 커넥터 안쪽에는 LAN 어댑터와 같은 회로가 존재한다.&lt;/p&gt;
+
+&lt;p&gt;커넥터 안쪽에 있는 회로 부분을 포트라고 한다. 스위칭 허브의 각 포트는 PC의 LAN 어댑터와 거의 같지만 스위칭 허브의 포트는 MAC 주소를 검사하지 않고 모든 패킷을 수신하여 버퍼 메모리에 저장하기 때문에 스위칭 허브의 포트에는 LAN 어댑터와 달리 MAC 주소가 할당되어 있지 않다.&lt;/p&gt;
+
+&lt;p&gt;패킷을 버퍼 메모리에 저장하면 MAC 주소와 일치하는 것이 MAC 주소표에 등록되어 있는 지 조사한다.  주소표에 수신처 주소와 동일한 MAC 주소가 존재하면 주소표에쓰여있는 포트 위치에 패킷을 송신한다.&lt;/p&gt;
+
+&lt;p&gt;포트사이에 패킷을 운반할 때는 “&lt;strong&gt;스위치 회로”&lt;/strong&gt; 에 패킷의 신호를 흘린다. 예를 들어 2번 포트에서 7번 포트로 패킷을 운반하려면 신호는 2번에서 들어올 것이다. 이때 선의 가로로 나열된 스위치의 왼쪽에서 7개까지의 스위치는 가로방향으로, 8번째의 스위치는 세로방향으로 전환한다.  그러면 아래 그림과 같이 신호는 출력측의 7번으로 흘러가서 7번 포트에 패킷이 도착한다. 이처럼 신호의 교점에 있는 스위치는 각각 독립적으로 움직이므로 신호가 중복되지 않으면 복수의 신호를 흘릴 수 있다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/165674867-1b3b5560-d81f-4548-a926-1797fb1aa1b7.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;스위칭&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;허브는&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소표에서&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;조사하고&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;해당하는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;포트에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;신호를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;송신한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;스위칭 허브&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;스위치 내부에는 MAC 주소와 포트번호를 등록한 테이블이 존재한다.
+    &lt;ul&gt;
+      &lt;li&gt;여기에는 수신포트와 송신 포트도 함께 등록된다.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;스위치 내부 테이블 정보를 확인하고 패킷을 중계한다. (목적지 확인)&lt;/li&gt;
+  &lt;li&gt;스위치 허브의 포트에는 MAC 주소가 할당되어 있지 않다.&lt;/li&gt;
+  &lt;li&gt;누군가 스위칭 허브에서 신호를 송신 중이면 신호를 보내지 않고 대기한다.&lt;/li&gt;
+  &lt;li&gt;신호의 교점에 있는 스위치는 독립적이므로 신호가 중복되지 않으면 복수의 신호를 동시에 흘린다.&lt;/li&gt;
+  &lt;li&gt;패킷이 충돌하지 않도록 재밍신호를 보낸다.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;스위치 회로의 구조&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;그림과 같은 구조를 전자회로로 만든 것&lt;/li&gt;
+  &lt;li&gt;신호선은 격자 모양으로 배치되고 교점에 스위치가 존재함&lt;/li&gt;
+  &lt;li&gt;스위치는 전자적으로 개폐를 제어할 수 있음&lt;/li&gt;
+  &lt;li&gt;전자적 개폐를 통해 신호가 흐르는 대상을 제어함&lt;/li&gt;
+  &lt;li&gt;입력측은 수신측 포트에 접속되어 있고 출력측은 송신측 포트에 접속되어 있음&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;mac-주소-테이블을-등록-및-갱신한다&quot;&gt;MAC 주소 테이블을 등록 및 갱신한다.&lt;/h3&gt;
+
+&lt;p&gt;스위칭 허브는 패킷을 중계할 때 MAC 주소표의 내용을 갱신하는 동작도 실행한다. 갱신 동작에는 두 가지 종류가 있다. 첫번째는 패킷을 수신했을 때 송신처 MAC 주소를 조사하고, 수신한 입력 포트 번호와 하나의 세트로 MAC 주소표에 등록하는 것이다.&lt;/p&gt;
+
+&lt;p&gt;MAC 주소표를 등록하는 동작 말고도 등록되어 있는 내용을 지우는 또 하나의 동작이 존재한다. 이것은 기기를 이동했을 때 이동한 기기의 정보 수정없이 패킷을 전달하는 작업을 방지하기 위한 동작이다. 스위치 허브는 오래된 정보를 갱신하기 위해 일정시간 동안 사용되지 않은 정보를 지운다.&lt;/p&gt;
+
+&lt;p&gt;✔️ &lt;strong&gt;스위칭 허브의 두 가지 갱신 동작&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;송신처 MAC 주소 조사 후 수신한 입력포트와 하나의 세트로 MAC 주소표에 등록&lt;/li&gt;
+  &lt;li&gt;사용하지 않고 일장시간이 지나면 등록된 정보를 삭제하는 동작&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;예외적인-동작&quot;&gt;예외적인 동작&lt;/h2&gt;
+&lt;p&gt;스위칭 허브와 리피터 허브가 같이 접속할 때 송신 포트가 패킷을 수신한 포트와 같을 수 있다. 이때 스위칭 허브는 수신한 포트와 송신하는 포트가 같은 것을 확인하고 같은 값이라면 패킷을 폐기한다. 이뿐만 아니라 MAC 주소표에 수신처 MAC 주소와 일치하는 주소가 등록되어있지 않은 경우도 있다. 이 경우에는 어느 포트에서 송신해야 할지 판단할 수 없으므로 패킷을 수신한 포트 이외의 전체 포트에 패킷을 송신한다. 또한 수신처 MAC 주소가 브로드캐스트 주소인 경우에도 수신 포트를 제외하고 모든 포트에서 패킷을 송신한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;스위칭-허브는-복수의-중계-동작을-동시에-실행한다&quot;&gt;스위칭 허브는 복수의 중계 동작을 동시에 실행한다&lt;/h2&gt;
+
+&lt;p&gt;스위칭 허브는 수신처 MAC 주소의 기기가 존재하는 포트 이외에는 송신동작을 실행하지 않으므로 다른 포트는 빈    상태가 된다. 비어있는 포트에는 별도의 패킷을 흘릴 수 있으므로 스위칭 허브는 동시에 여러개의 패킷을 중계할 수 있다. 반면 리피터 허브는 들어온 신호를 모든 포트에 뿌리므로 동시에 두 개 이상의 신호가 들어오면 패킷이 충돌하기 때문에 복수의 신호를 동시에 흘릴 수 없다.&lt;/p&gt;
+
+&lt;h1 id=&quot;3-라우터의-패킷-중계-동작&quot;&gt;3. 라우터의 패킷 중계 동작&lt;/h1&gt;
+
+&lt;h3 id=&quot;라우터의-기본&quot;&gt;라우터의 기본&lt;/h3&gt;
+
+&lt;p&gt;라우터의 원리도 스위칭 허브와 비슷하다. 그러나 구체적인 동작은 스위칭 허브와 다른데 라우터는 스위칭 허브와 달리 IP라는 개념을 바탕으로 하기 때문이다. 라우터의 내부 구조는 중계 부분과 포트 부분이라는 두 부분으로 구성되어 있다. 라우터의 중계 부분과 포트 부분의 역할은 LAN 어댑터의 역할 분담과 같다. 즉 라우터의 중계 부분은 IP를 담당하고 포트 부분은 LAN 어댑터와 같다고 생각하면 된다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/165739277-13c76eb2-cacd-45f4-b842-86189f8fc284.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ 라우터의 원리&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;패킷은 라우터의 포트 부분에서 수신한다. (포트 부분의 하드웨어에 의뢰하여 패킷을 수신)&lt;/li&gt;
+  &lt;li&gt;패킷 수신 동작은 포트 부분에 연결된 하드웨어의 통신규칙에 따른다.&lt;/li&gt;
+  &lt;li&gt;중계 부분에서는 받은 패킷의 IP 패킷에 기록되어있는 수신처 IP 주소와 중계 대상을 등록한 표를 대조하여 중계 대상을 판단한다.&lt;/li&gt;
+  &lt;li&gt;라우터는 스위칭 허브와 달리 송신처나 수신처 둘 다 될 수 있음&lt;/li&gt;
+  &lt;li&gt;라우터의 포트에는 IP주소가 할당되어 있음 만약 포트가 이더넷인 경우 MAC도 같이 할당 됨&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ 라우터의 구성&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;중계 부분과 포트 구분으로 구성되어 있음&lt;/li&gt;
+  &lt;li&gt;IP개념을 바탕으로 설계되어 있음&lt;/li&gt;
+  &lt;li&gt;라우터의 중계 부분이 패킷의 중계 대상을 판단함&lt;/li&gt;
+  &lt;li&gt;라우터의 포트 부분은 패킷의 송수신 동작을 담당함&lt;/li&gt;
+  &lt;li&gt;라우터의 포트 부분에는 다양한 하드웨어를 장착할 수 있고 라우터는 장착한 하드웨어에 맞는 통신 기술을 지원함&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;경로표에-등록된-정보&quot;&gt;경로표에 등록된 정보&lt;/h3&gt;
+
+&lt;p&gt;라우터는 스위칭 허브와 달리 IP 헤더에 기재되어 있는 &lt;strong&gt;수신처 IP 주소로 중계 대상을 판단&lt;/strong&gt;한다. 라우터는 스위칭 허브와 취급하는 주소가 다르므로 중계 대상을 등록하는 테이블의 내용도 다르다.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;라우터는&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IP&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소로&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;중계&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;대상을&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;판단한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;라우터의 테이블은 &lt;strong&gt;라우팅 테이블&lt;/strong&gt; 또는 &lt;strong&gt;경로표&lt;/strong&gt;라고 불린다. 여기엔 아래와 같은 정보들이 등록되어 있다.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;수신처(Destination)&lt;/th&gt;
+      &lt;th&gt;넷마스크(Netmast)&lt;/th&gt;
+      &lt;th&gt;게이트웨이(Gateway)&lt;/th&gt;
+      &lt;th&gt;인터페이스(Interface)&lt;/th&gt;
+      &lt;th&gt;메트릭(Metric)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10.10.1.0&lt;/td&gt;
+      &lt;td&gt;255.255.255.0&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;e2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10.10.1.101&lt;/td&gt;
+      &lt;td&gt;255.255.255.255&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;e2&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;192.168.1.0&lt;/td&gt;
+      &lt;td&gt;255.255.255.0&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;e3&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;192.168.1.10&lt;/td&gt;
+      &lt;td&gt;255.255.255.255&lt;/td&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;e3&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;0.0.0.0&lt;/td&gt;
+      &lt;td&gt;192.0.2.1&lt;/td&gt;
+      &lt;td&gt;e1&lt;/td&gt;
+      &lt;td&gt;1&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;✔️  라우팅 테이블 속성 정보&lt;/strong&gt;&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;수신처
+      &lt;blockquote&gt;
+        &lt;ul&gt;
+          &lt;li&gt;서브넷 자체를 나타내는 주소, 라우터가 중계할 대상&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/li&gt;
+    &lt;li&gt;넷마스크
+      &lt;blockquote&gt;
+        &lt;ul&gt;
+          &lt;li&gt;넷마스크 값에 따라 네트워크의 비트 수를 판단함&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/li&gt;
+    &lt;li&gt;게이트웨이
+      &lt;blockquote&gt;
+        &lt;ul&gt;
+          &lt;li&gt;라우터가 수신처에게 패킷을 전송할 때 거쳐야 하는 곳&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/li&gt;
+    &lt;li&gt;인터페이스
+      &lt;blockquote&gt;
+        &lt;ul&gt;
+          &lt;li&gt;인터페이스 항목에 등록되어있는 인터페이스(포트)에서 게이트웨이 항목에 등록되어있는 IP 주소를 가진 라우터에게 패킷을 중계함&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/li&gt;
+    &lt;li&gt;메트릭
+      &lt;blockquote&gt;
+        &lt;ul&gt;
+          &lt;li&gt;수신처 IP에 기록되어 있는 주소가 먼지, 가까운지를 판단하는 값&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/blockquote&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;라우팅 테이블 수신처 항목에는 서브넷을 나타내는 IP 말고도  &lt;strong&gt;주소 집약&lt;/strong&gt; 이라는 개념을 사용하여 몇개의 서브넷을 한개의 서브넷으로 간주한 후 묶은 서브넷을 경로표에 등록하기도 한다. 예를 들어 A 라우터에 10.10.1.0/24, 10.10.2.0/24, 10.10.3.0/24 서브넷이 연결되어 있을 때 B 라우터는 A라우터에 연결되어 있는 서브넷에게 패킷을 건낼 때 A 라우터에 패킷을 중계해야 한다는 사실은 변하지 않으므로 3개의 서브넷을 일괄적으로 통합하여 라우팅 테이블에 등록한다. 이것을 &lt;strong&gt;주소 집약&lt;/strong&gt; 이라고 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/165739256-7e87212d-d23c-477d-b71d-0a69d1d453ba.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;라우터는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;호스트&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;무시하고&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;네트워크&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;번호&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;부분만&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;조사한다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;라우터의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;경로표에서&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;'넷마스크'&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;항목은&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;경로표의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처와&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;대조할&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;때&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;비트&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수를&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;나타낸다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;라우터의-패킷-수신-동작&quot;&gt;라우터의 패킷 수신 동작&lt;/h3&gt;
+
+&lt;p&gt;라우터 포트에는 MAC 주소와 IP가 할당되어 있으며 라우터는 자신의 주소에 해당하는 패킷만 수신하고 해당하지 않는 패킷은 폐기한다.&lt;/p&gt;
+
+&lt;h3 id=&quot;경로표를-검색하여-출력-포트를-발견한다&quot;&gt;경로표를 검색하여 출력 포트를 발견한다.&lt;/h3&gt;
+
+&lt;p&gt;MAC 헤더의 역할은 라우터에게 패킷을 건네주는 것이다. 때문에 라우터는 패킷 수신 동작이 끝나면 맨 앞의 MAC 헤더를 폐기한다. 수신동작이 끝나면 MAC 헤더 뒤에 있는 IP 헤더의 내용을 보고 패킷 중계 동작에 들어간다.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;✔️ 중계 동작&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;수신한 패킷의 IP 주소와 경로표에 등록된 수신처 항목을 대조한다.&lt;/li&gt;
+  &lt;li&gt;복수의 후보가 발견되면 네트워크 번호의 비트 수가 가장 긴 것을 찾는다.&lt;/li&gt;
+  &lt;li&gt;네트워크 번호의 비트 수가 동일한 것이 존재하면 메트릭 값으로 판단한다.&lt;/li&gt;
+  &lt;li&gt;해당하는 행이 하나도 발견되지 않을 경우 패킷을 폐기하고 ICMP 메세지로 송신처에 통지한다.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;💡&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;라우터에서&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;중계하는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;패킷의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;수신처&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소에는&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;라우터의&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;포트에&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;할당된&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAC&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;주소가&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;기록되어&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;있다&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+
+&lt;p&gt;성공과 실패를 결정하는 1%의 네트워크&lt;/p&gt;</content><author><name></name></author><category term="리피터 허브" /><category term="스위칭 허브" /><category term="라우팅" /><summary type="html">📗 Chapter_03 케이블의 앞은 LAN 기기였다. _허브와 스위치, 라우터의 탐험</summary></entry><entry><title type="html">[글또 7기] 다짐</title><link href="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html" rel="alternate" type="text/html" title="[글또 7기] 다짐" /><published>2022-05-14T00:00:00+09:00</published><updated>2022-05-14T00:00:00+09:00</updated><id>http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90</id><content type="html" xml:base="http://localhost:4000/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">&lt;h2 id=&quot;들어가며&quot;&gt;들어가며&lt;/h2&gt;
 &lt;p&gt;읽기 좋은 글을 꾸준하게 작성하고 싶어서 &lt;a href=&quot;https://www.notion.so/zzsza/ac5b18a482fb4df497d4e8257ad4d516&quot;&gt;글또&lt;/a&gt;라는 개발자 커뮤니티에서 활동하게 되었다. 
 꾸준하게 글을 작성하는 것이 목표인데….  5월 초에 포스팅한 이후로 인제야 글을 작성한다. 느슨해지지 않기 위해 활동하면서 이루고 싶은 목표들을 정하기로 결심 !&lt;/p&gt;
 
@@ -1725,1547 +2377,4 @@ DNS도 비슷한 맥락이다. 우리가 자주 접근하는 웹 사이트 전�
 
 &lt;hr /&gt;
 
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</title><link href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html" rel="alternate" type="text/html" title="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다" /><published>2022-04-14T00:00:00+09:00</published><updated>2022-04-14T00:00:00+09:00</updated><id>http://localhost:4000/networkstudy/2022/04/14/network-study-01</id><content type="html" xml:base="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">&lt;h1 id=&quot;-chapter_01-웹-브라우저가-메세지를-만든다&quot;&gt;📗 Chapter_01 웹 브라우저가 메세지를 만든다&lt;/h1&gt;
-&lt;h2 id=&quot;1-http-리퀘스트-메세지를-작성한다&quot;&gt;&lt;strong&gt;1. HTTP 리퀘스트 메세지를 작성한다&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;h3 id=&quot;1️⃣-url&quot;&gt;&lt;strong&gt;1️⃣  URL&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ HTTP URL 의 구성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;ex ) &lt;a href=&quot;http://user:passwork@www.cyber.co.kr&quot;&gt;http://user:password@www.example.co.kr&lt;/a&gt;:80/dir/file1.html&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로토콜 →  http&lt;/li&gt;
-  &lt;li&gt;사용자명 (생략 가능) → user&lt;/li&gt;
-  &lt;li&gt;패스워드 (생략 가능) → password&lt;/li&gt;
-  &lt;li&gt;웹 서버의 도메인명 → &lt;a href=&quot;http://www.example.co.kr&quot;&gt;www.example.co.kr&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;포트번호 (생략 가능) → 80&lt;/li&gt;
-  &lt;li&gt;파일의 경로명 → /dir/file1.html&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;💡 HTTP 의 경우 기본 포트는 80이고 HTTPS의 기본 포트는 443이다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;URL 은 여러 종류가 있다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;URL은 http로 구성되어있는 것 말고도 ftp: 나 mailto: 같은 다양한 프로토콜의 URL이 존재한다. 이유는, 브라우저는 웹 서버에 엑세스하는 클라이언트로만 사용하는 것이 아니라 파일을 다운로드/업로드하는 FTP의 기능이나&lt;/p&gt;
-
-&lt;p&gt;메일클라이언트의 기능도 가지고 있기 때문이다. 브라우저는 URL을 토대로 여러개의 기능 중 어느것을 사용하여 데이터에 엑세스하면 될지를 판단한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ 다양한 URL의 구성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163106926-34b4cb16-6547-41bb-b016-0b2c4e6b081a.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;이와같이 쓰는 방법은 다양하지만 모든 URL에는 하나의 공통점이 있다. URL 맨 앞에 있는 프로토콜에 따라서 액세스 하는 대상이 달라진다는 것이다.&lt;/p&gt;
-
-&lt;p&gt;예를 들어 액세스 대상이 웹 서버라면 HTTP 프로토콜을 사용하고, FTP 서버라면 FTP, 메일을 송신할 때는 mailto 프로토콜을 사용하면 된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2️⃣--브라우저의-url-해독-방식&quot;&gt;2️⃣  &lt;strong&gt;브라우저의 URL 해독 방식&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;웹 서버에 보내는 리퀘스트 메세지를 작성하기 전에 URL을 해독한다. 아래 내용은 브라우저가 웹 서버에 엑세스하는 경우를 예로들어 설명한다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;URL을 요소별로 분리하여 나열한 것은 아래와 같다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;http&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//www.example.co.kr](http://user:passwork@www.cyber.co.kr):80/dir/file1.html&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;http&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// ] + [ 웹 서버명 ] + [ / ] + [ 디렉토리명 ] +[ / ] + .... + [ 파일명 ]   &lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;http는 앞서 설명한 프로토콜이 되는 것이고 //는 나중에 이어지는 문자열이 서버의 이름임을 나타낸다.&lt;/p&gt;
-
-&lt;p&gt;웹 서버명 다음에 이어지는 것은 서버에 파일이 저장된 위치인데 이는 생략이 가능하다.&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  파일명을 생략한 경우&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;ex) &lt;a href=&quot;http://user:passwork@www.cyber.co.kr&quot;&gt;http://www.example.co.kr&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;예시 url은 파일명을 생략했을 때의 url이다. 파일명을 생략하면 서버가 어느 파일에 액세스해야 하는 지 알 수 없다.&lt;/p&gt;
-
-&lt;p&gt;그래서 이와같은 문제를 대비하여 서버에서 파일명이 생략되었을 때 액세스할 default 파일을 설정해둔다. 대부분의 서버는 index.html 이나 default.html 이라는 파일명으로 설정해둔다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  브라우저가 가장 먼저 하는 일은 URL 해독이다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3️⃣http의-기본-개념&quot;&gt;3️⃣ HTTP의 기본 개념&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Hyper-Text Transfer Protocol(HTTP)란 지정된 규약을 지켜 웹 서버와 데이터를 주고받는 서버/클라이언트 모델을 따르는 비연결성 &amp;amp; 무상태 프로토콜이다.&lt;/p&gt;
-
-  &lt;p&gt;애플리케이션 레벨의 프로토콜로 TCP/IP 위에서 작동한다. HTTP 패킷에는 여러 메타데이터와 성공 실패 정보가 담겨있으므로 서버와 클라이언트가 원활하게 대화할 수 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  비연결성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;연결을 유지하지 않는 것  특정한 옵션을 주면 일정시간동안 연결을 유지할 수는 있다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  무상태&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;서버가 클라이언트의 상태를 보존하지 않는 것 매번 요청에 모든 상태값들을 전달해줘야 함 상태를 유지해줘야 할 경우 쿠키나 세션을 사용 함&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ HTTP Reuqest 패킷 구성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209206-2d7e3008-230e-4da7-9041-453bcfa2d23d.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;HTTP 요청 패킷은 크게 요청라인, 메세지 정보, 본문으로 나눌 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;요청라인 → HTTP Method, URL, HTTP 버전&lt;/li&gt;
-  &lt;li&gt;메세지 정보 → 해당 요청에 대한 메타데이터를 담고있는 공간&lt;/li&gt;
-  &lt;li&gt;본문(body) → 해당 요청의 실제 내용. POST가 아니여도 body를 사용할 수 있지만, 주로 Body를 사용하는 메소드는 POST이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ HTTP Response 패킷 구성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209182-d49ace5d-d8c1-4e7b-aa31-976c9cdbafb5.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;HTTP 응답 패킷은 크게 상태라인, 메세지 정보, 본문으로 나눌 수 있다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;상태라인 → HTTP Method, 버전, 응답코드
-    &lt;ul&gt;
-      &lt;li&gt;응답코드는 주로 권한과 서버에러, 클라이언트에러 등으로 나눠서 성공과 실패 여부를 판단하는데에 사용된다,&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;메세지 정보 → 해당 응답에 대한 메타데이터를 담고있는 공간&lt;/li&gt;
-  &lt;li&gt;본문(body) → 요청의 Body와 일반적으로 동일하다. body 존재할 수도 있고 존재하지 않을수도 있다. 가장 많이 사용되는 Body의 데이터 타입은 JSON(JavaScript Object Notation)이다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ HTTP Method&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;HTTP 메소드를 정리한 표이다. 버전마다 지원되는 메소드가 다르다.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;메소드&lt;/th&gt;
-      &lt;th&gt;의미&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;GET&lt;/td&gt;
-      &lt;td&gt;지정한 정보를 도출할 때 사용된다. 파일의 경우 해당 파일의 내용을 되돌려보낸다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;POST&lt;/td&gt;
-      &lt;td&gt;클라이언트에서 데이터를 body에 담아 송신할 때 사용된다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;PUT&lt;/td&gt;
-      &lt;td&gt;URI로 지정한 서버의 파일을 치환한다. 파일이 없는 경우 새로 등록한다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;DELETE&lt;/td&gt;
-      &lt;td&gt;URL로 지정한 서버의 파일을 삭제한다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;PATCH&lt;/td&gt;
-      &lt;td&gt;리소스의 일부분만을 수정하는데에 쓰인다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;OPTION&lt;/td&gt;
-      &lt;td&gt;통신 옵션을 통지하거나 조사할 때 사용된다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;HEAD&lt;/td&gt;
-      &lt;td&gt;GET과 거의 같지만 데이터의 내용을 돌려보내지 않고 HTTP 메세지 헤더만을 반송한다. 속성 정보를 조사할 때 사용된다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;TRACE&lt;/td&gt;
-      &lt;td&gt;서버측에서 받은 리퀘스트 라인과 헤더를 그대로 클라이언트에 반송한다. 프록시 서버 등을 사용하는 환경에서 리퀘스트가 치환되는 상태를 조사할 떄 사용된다.&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;CONNECT&lt;/td&gt;
-      &lt;td&gt;암호화한 메세지를 프록시로 전송할 때 이용된다.&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ HTTP 간단한 통신과정 예시&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209168-f37b8432-03fc-4dbf-883e-001f24d63871.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;웹서버에 특정 리소스를 얻기 위해 URI와 헤더에 요청에 필요한 정보를 담아 서버에 전송한다.&lt;/li&gt;
-  &lt;li&gt;해당 리소스가 존재하면 응답 헤더에 필요한 정보를 담아서 보내거나 바디에 해당 요청 데이터를 전송한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;🌟 &lt;strong&gt;실제로 요청과 응답 사이에 검증절차나 여러가지 일들이 일어나지만 자세한 내용은 생략하겠다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;2-웹-서버의-ip-주소를-dns-서버에-조회한다&quot;&gt;2. 웹 서버의 IP 주소를 DNS 서버에 조회한다&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;HTTP 메세지를 만드는 것에 성공하면 이것을 OS에 의뢰하여 액세스 대상의 웹 서버에게 송신한다.&lt;/p&gt;
-
-  &lt;p&gt;브라우저는 URL을 해독하거나 HTTP 메세지를 만들 수는 있지만 메세지를 네트워크에 송출하는 기능은 없으므로 OS에 의뢰하는 것이다.&lt;/p&gt;
-
-  &lt;p&gt;이때 URL 안에 쓰여있는 서버의 도메인 명에서 IP 주소를 조사해야하는데, 이는 OS에서 송신을 의뢰할때는 도메인명이 아니라 IP 주소로 메세지를 받을 상대를 지정해야하기 때문이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  도메인명과 IP 주소를  구분하여 사용하는 이유&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;TCP/IP 네트워크는 IP 주소로 통신 상대를 지정하므로 IP주소를 모르는 상대에게 메세지를 전달할 수 없다. 이러한 이유 때문에 도메인 명과 IP 주소를 구분하는 것이다. 웹 브라우저는 Socket 라이브러리를 사용하여 도메인 명으로 IP 주소를 조회한다. 
-그렇다면 URL 안에서는 서버명이 아니라 IP 주소를 사용하는 것이 더 효율적이라는 생각이 들 수 있다. 실제로 서버명 대신에 IP 주소를 사용해도 올바르게 작동한다.그렇지만 기억하기 어렵다는 단점이 있다. 실행 효율 관점에서 바라보면 IP 주소대신 도메인명으로 사용하는 것이 좋은 방법이라고 할 수 없다. IP 주소는 32비트로 4바이트에 해당하는 개수밖에 없지만, 도메인 명은 수십 바이트 부터 최대 255 바이트 까지 존재한다. 그러면 그만큼 라우터가 부하되어 데이터를 운반하는 동작에 더 많은 시간이 걸릴 것이다. 하지만 이름을 알면 IP 주소를 알 수 있다거나 IP 주소를 사용하면 이름을 알 수있다는 원리를 이용하여 양쪽의 차이를 해소한 DNS가 라우터 부하의 문제점을 해결해준다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Socket 라이브러리의 IP 주소 조회&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;웹 브라우저는 Socket 라이브러리의 도움을 받아 DNS서버에서 도메인명의 IP 주소를 조회할 수 있다.&lt;/p&gt;
-
-&lt;p&gt;DNS 서버에서 조회한다는 것은 DNS 서버에 메세지를 보내고 반송되는 응답 메세지를 받는 것이다. 이것은 DNS 클라이언트로 동작한다고 말할 수 있다. DNS 클라이언트에 해당되는 것을 DNS 리졸버(=리졸버)라고 한다.&lt;/p&gt;
-
-&lt;p&gt;DNS 원리를 이용하여 IP 주소를 조사하는 것을 네임 리졸루션 (name resolution) 이라고 하는데 리졸루션을 수행하는 것이 리졸버이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;💡 Socket 라이브러리&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;OS를 이용하여 네트워크의 기능을 호출하기 위한 프로그램의 부품집&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;️리졸버-내부의-작동&quot;&gt;✔️ 리졸버 내부의 작동&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209513-02792b34-4c07-4427-9ed5-0f0a68b403ce.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;리졸버를 이용하여 DNS 서버를 조회한다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;리졸버의 프로그램명(gethostbyname)과 웹 서버의 이름을 쓰기만 하면 리졸버를 호출할 수 있다. &lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;브라우저 애플리케이션이 Socket 라이브러리의 리졸버를 호출한다. 이때 gethostbyname에 웹서버 이름을 전달한다.&lt;/li&gt;
-  &lt;li&gt;리졸버가 DNS 서버에 조회 메세지를 보낸다. 메세지 송신 동작은 OS 내부의 프로토콜 스택을 호출하여 수행한다.&lt;/li&gt;
-  &lt;li&gt;DNS 서버에서 돌아온 응답 메세지를 수신한다.&lt;/li&gt;
-  &lt;li&gt;응답 메세지에서 IP 주소를 추출하고 메모리 영역에 저장한 뒤 애플리케이션으로 돌아간다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;🌟  DNS 서버에 메세지를 송신할 때도 DNS 서버의 IP 주소가 필요한데, 이는 컴퓨터의 TCP/IP 설정 항목의 하나로 컴퓨터에 미리 설정되어 있다. &lt;/p&gt;
-
-&lt;h2 id=&quot;3-전-세계의-dns-서버가-연대한다&quot;&gt;3. 전 세계의 DNS 서버가 연대한다&lt;/h2&gt;
-
-&lt;h3 id=&quot;1️⃣-dns-서버의-기본동작&quot;&gt;1️⃣ &lt;strong&gt;DNS 서버의 기본동작&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;DNS 서버의 기본 동작은 클라이언트에서 조회 메세지를 받고 조회의 내용에 응답하는 형태로 정보를 회답하는 일이다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  조회 메세지 구성&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이름
-    &lt;ul&gt;
-      &lt;li&gt;서버의 메일 배송 목적지와 같은 이름, 도메인 명&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;클래스
-    &lt;ul&gt;
-      &lt;li&gt;네트워크 종류를 검토하기위해 사용되는 것 현재는 인터넷 외의 네트워크는 소멸되었기 때문에 항상 인터넷을 나타내는 IN 값이 전달된다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;타입
-    &lt;ul&gt;
-      &lt;li&gt;이름에 어떤 타입의 정보가 지원되는지를 나타낸다. 타입이 A이면 이름에 IP 주소가 지원되는 것을 나타내고 MX이면 이름에 메일 배송 목적지가 지원된다는 것을 나타낸다. 타입에 따라 클라리언트에 회답하는 정보의 내용이 달라진다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;이름이 &lt;a href=&quot;http://www.example.com&quot;&gt;www.example.com&lt;/a&gt; 인 서버의 IP 주소를 조사할 때 클라이언트는 다음과 같은 메세지를 보낸다.&lt;/p&gt;
-
-&lt;p&gt;해당 메세지를 수신했을 때 DNS가 어떠한 동작을 하는지 알아보자&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;[요청 메세지 예시 ]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이름 = www.example.com&lt;/li&gt;
-  &lt;li&gt;클래스 = IN&lt;/li&gt;
-  &lt;li&gt;타입 = A&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;[DNS 서버 내부 등록 정보 예시]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;이름&lt;/th&gt;
-      &lt;th&gt;클래스&lt;/th&gt;
-      &lt;th&gt;타입&lt;/th&gt;
-      &lt;th&gt;클라이언트에 회답하는 항목&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;www.example.com&lt;/td&gt;
-      &lt;td&gt;IN&lt;/td&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;192.168.2.5&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;example.com&lt;/td&gt;
-      &lt;td&gt;IN&lt;/td&gt;
-      &lt;td&gt;MX&lt;/td&gt;
-      &lt;td&gt;192.168.2.6&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;[DNS 서버의 동작]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;DNS가 메세지를 수신하면 DNS 서버는 이름, 클래스, 타입의 값이 일치하는 데이터를 찾는다.&lt;/li&gt;
-  &lt;li&gt;일치하는 데이터가 있으면 요청 값에 맞는 데이터를 클라이언트에게 전송한다. (예제를 기준으로 하면 192.168.2.5)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt; &lt;strong&gt;💡  DNS 서버는 서버에 등록된 도메인명과 IP 주소의 대응표를 조사하여 IP 주소를 회답한다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2️⃣-도메인의-계층&quot;&gt;2️⃣  도메인의 계층&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;인터넷에선 막대한 수의 서버가 존재하기 때문에 모든 도메인 명을 하나의 DNS 서버에 등록하는 것은 불가능하다.&lt;/p&gt;
-
-  &lt;p&gt;이러한 문제점은 정보를 분산시켜 다수의 DNS 서버에 등록하는 방식으로 해결할 수 있다. 다수의 DNS 서버는 계층적으로 구성되어있는데, 이는 조회 메세지를 수신한 DNS 서버에 해당 정보가 등록되어 있지 않아도 계층적으로 연대하고 있는 다른 DNS 서버에서 찾을 수 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;DNS 서버에 등록된 모든 정보는 모든 도메인명이라는 계층적 구조를 가진 이름이 붙여져 있다. DNS에서 취급하는 이름은 &lt;a href=&quot;http://www.example.com&quot;&gt;www.example.com&lt;/a&gt; 처럼 점으로 구분되어 있는데, 점으로 게층을 구분한다. 오른쪽에 위치한 것이 상위 계층이다. 계층구조와 같은 형태로 DNS 서버가 배치되며,  각 계층은 각자의 DNS 서버에 저장된다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;[계층 구조 예시]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;URL → &lt;a href=&quot;http://www.example.com&quot;&gt;www.example.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;오른쪽에 위치한 것이 상위 계층이다.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;com
-    &lt;ul&gt;
-      &lt;li&gt;example
-        &lt;ul&gt;
-          &lt;li&gt;www&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️  담당 DNS 서버를 찾아 IP 주소를 가져온다&lt;/strong&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;인터넷에는 DNS 서버가 수만 대가 있으므로 닥치는 대로 이를 뒤지면서 해당 도메인의 IP를 찾을 수는 없다.&lt;/p&gt;
-
-  &lt;p&gt;그래서 다음과 같은 방법으로 이를 해결한다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;예시&quot;&gt;&lt;strong&gt;[예시]&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;p&gt;URL → &lt;a href=&quot;http://www.example.com&quot;&gt;www.example.com&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;예시 URL 기준으로 최상위 도메인은 com이다. 하지만 실제로 URL은 com이나 kr 위에 루트 도메인이 존재한다. 루트 도메인은 com이나 kr같은 도메인 명이 존재하지 않기 때문에 보통 도메인을 쓸 때는 이것을 생략한다. 명시적으로   &lt;a href=&quot;http://www.example.com&quot;&gt;www.example.com&lt;/a&gt;. 처럼 URL 끝에 마침표를 찍기도 하지만 보통은 그렇게 사용하지 않는다.&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;하위의 도메인을 담당하는 DNS 서버의 IP 주소를 상위의 DNS 서버에 등록한다. &lt;/li&gt;
-  &lt;li&gt;상위의 DNS 서버를 또 그 상위의 DNS 서버에 등록한다.&lt;/li&gt;
-  &lt;li&gt;상위의 DNS 서버가 존재하면 이를 반복한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;💡 &lt;strong&gt;이러한 방식은 상위 DNS 서버에서 하위의 DNS 서버의 IP 주소를 알 수 있다. (루트 도메인을 모든 DNS 서버에 등록하면 루트 도메인의 모든 하위 DNS 서버를 조회할 수 있음)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;h4 id=&quot;ip-조회&quot;&gt;&lt;strong&gt;[IP 조회]&lt;/strong&gt;&lt;/h4&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209731-4d525bc3-91f4-4d27-8a0e-e297b3456a1a.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;가장 가까운 DNS 서버에게 해당 도메인 명의 IP를 요청한다.&lt;/li&gt;
-  &lt;li&gt;IP가 등록되어있지 않을 경우 루트 도메인 서버에게 해당 IP를 요청한다.&lt;/li&gt;
-  &lt;li&gt;루트 도메인에도 해당 IP가 등록되지 않았을 경우 하향식으로 접근하여 IP를 찾을 때까지 하위 도메인 서버에 해당 IP 정보를 요청한다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;💡  &lt;strong&gt;앞서 설명한 내용은 기본이 되는 동작을 설명한 것으로 현실의 인터넷과 모든 동작이 일치하진 않는다. 현실의 인터넷은 한 대의 DNS 서버에 복수의 DNS 서버를 등록할 수 있으므로 한 도메인에 한대씩 DNS 서버가 존재한다고 단정할 수 없다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;3️⃣dns-서버는-캐시-기능으로-빠르게-회답할-수-있다&quot;&gt;3️⃣  DNS 서버는 캐시 기능으로 빠르게 회답할 수 있다.&lt;/h3&gt;
-
-&lt;p&gt;DNS 서버는 한번 조사한 도메인 명을 캐싱할 수 있다. 요청받은 도메인 명이 캐싱되어 있으면 캐싱되어 있는 정보를 전달한다. 정보가 없을 경우에도 캐싱하기 때문에 정보가 존재하지 않는 다는 것도 빠르게 회답할 수 있다. 하지만 캐시된 정보가 변경될 수도 있으므로 캐시안에 저장된 정보를 올바르다고 단언할 수는 없다.&lt;/p&gt;
-
-&lt;h2 id=&quot;4-프로토콜-스택에-메시지-송신을-의뢰한다&quot;&gt;4. &lt;strong&gt;프로토콜 스택에 메시지 송신을 의뢰한다&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;IP 주소를 조사를 마치면 액세스 대상 웹 서버에 메세지를 송신하도록 OS 내부 프로토콜 스택에 의뢰한다.&lt;/p&gt;
-
-&lt;p&gt;이 동작에서도 Socket 라이브러리를 사용하는데, 복수의 부품을 결정된 순서대로 호출해야하므로 복잡하다.&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;🌟 &lt;strong&gt;Socket 라이브러리를 이용한 데이터 송 수신 동작&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209131-ddef6b53-6743-413a-abae-c4b862dcfde6.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;서버측에서 소켓을 생성하고 클라이언트가 파이프를 연결하기를 기다린다. (소켓 생성 단계)&lt;/li&gt;
-  &lt;li&gt;클라이언트가 서버측 소켓에 파이프를 연결한다 (소켓 접속 단계)&lt;/li&gt;
-  &lt;li&gt;연결이 성공하면 데이터를 송 수신 한다 (송 수신 단계)&lt;/li&gt;
-  &lt;li&gt;송 수신 동작이 끝나면 파이프 연결을 해제한다. (연결은 클라이언트, 서버 둘 중 어느 쪽에서 분리해도 상관없다.)&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟  결정된 순서대로 Socket 라이브러리를 호출하는 애플리케이션 예시&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/163209107-a08c09a6-c0f1-4509-b64c-adae70159364.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;socket()
-    &lt;ul&gt;
-      &lt;li&gt;소켓을 생성하고 완료되면 제어권을 애플리케이션에게 넘긴다. 소켓이 생성되면 &lt;strong&gt;디스크립터&lt;/strong&gt;가 반환되는데, 이는 소켓을 식별하기 위한 식별자의 용도로 사용된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;connect()
-    &lt;ul&gt;
-      &lt;li&gt;디스크립터, 서버의 IP 주소, 포트번호 세 가지 값을 입력하여 특정 소켓에 연결을 요청한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;wirte()
-    &lt;ul&gt;
-      &lt;li&gt;송신 데이터를 메모리에 할당하고 wirte() 함수를 호출할 때 디스크립터와 송신데이터를 지정한다. 소켓에는 연결된 상대가 기록되어 있으므로 디스크립터로 소켓을 지정하면 연결된 상대가 판명된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;read()
-    &lt;ul&gt;
-      &lt;li&gt;메세지를 수신할 때 사용된다. 수신한 응답메세지는 수신 버퍼에 저장된다. 수신버퍼는 애플리케이션 내부에 마련된 메모리 영역이므로 수신 버퍼에 메세지를 저장한 시점에 애플리케이션에게 메세지를 넘겨준다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;close()
-    &lt;ul&gt;
-      &lt;li&gt;메세지 송 수신이 완료되면 연결을 종료하는 함수 만약 read 동작을 수행하고 있는 도중에 연결이 종료되면 수신한 데이터를 건네주고 연결을 종료한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟  디스크립터  =  애플리케이션이 소켓을 식별하는 용도&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟  IP와 포트번호  = 클라이언트와 서버 간에 상대의 소켓을 식별하는 용도&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟  요청에는 하나의 리소스 정보만을 표시하고 있기 때문에 여러 파일의 정보를 읽으려면 요청을 각각 보내야한다. 요청을 각각 보내면 매번 TCP Connection 을 새로 맺어야하는데, 이는 비효율적일 수 있다. 그래서 HTTP 1.1 버전부터 일정시간동안 연결을 유지할 수 있는 옵션이 추가되었다.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;br /&gt;
-&lt;br /&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://velog.io/@anhesu11/HTTP-%EA%B8%B0%EB%B3%B8-%EC%9D%B4%EB%A1%A0-%EC%A0%95%EB%A6%AC&quot;&gt;https://velog.io/@anhesu11/HTTP-기본-이론-정리&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;성공과 실패를 결정하는 1%의 네트워크&lt;/p&gt;</content><author><name></name></author><category term="HTTP" /><category term="Socket" /><category term="DNS" /><category term="TCP" /><category term="성공과 실패를 위한 네트워크 1%의 원리" /><summary type="html">📗 Chapter_01 웹 브라우저가 메세지를 만든다 1. HTTP 리퀘스트 메세지를 작성한다</summary></entry><entry><title type="html">[운영체제 스터디] 데드락과 데드락 발생조건 4가지</title><link href="http://localhost:4000/os/2022/04/04/os-study-08.html" rel="alternate" type="text/html" title="[운영체제 스터디] 데드락과 데드락 발생조건 4가지" /><published>2022-04-04T00:00:00+09:00</published><updated>2022-04-04T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/04/os-study-08</id><content type="html" xml:base="http://localhost:4000/os/2022/04/04/os-study-08.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h1 id=&quot;️deadlock&quot;&gt;⚠️ Deadlock&lt;/h1&gt;
-
-&lt;p&gt;✔️ Deadlock&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;이련의 프로세스들이 서로가 가진 자원을 기다리며 block된 상태&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Resource(자원)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;하드웨어, 소프트웨어 등을 포함하는 개념&lt;/li&gt;
-  &lt;li&gt;(예) I/O device. CPU cycle, memory space, semaphore 등&lt;/li&gt;
-  &lt;li&gt;프로세스가 자원을 사용하는 절차
-    &lt;ul&gt;
-      &lt;li&gt;요청 (Request),획득 (Allocate),사용 (Use), 반납 (Release)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;1-deadlock-발생의-4가지-조건&quot;&gt;1. Deadlock 발생의 4가지 조건&lt;/h2&gt;
-
-&lt;p&gt;✔️ Mutual exclusion (상호배제)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;매 순간 하나의 프로세스만이 자원을 사용할 수 있음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ No Preemption(비선점)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 자원을 스스로 내어놓을 뿐 강제로 빼앗기지 않음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Hold and wait&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;내가 가진 자원은 양보하지 않으면서 다른 프로세스의 자원을 기다리면서 보유 자원을 내놓지않고 계속 가지고 있는 현상&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Circular wait&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자원을 기다리는 프로세스간에 사이클이 형성되어야 함&lt;/li&gt;
-  &lt;li&gt;프로세스 P0, P1 …… P5 이 있을 때
-    &lt;ul&gt;
-      &lt;li&gt;P0은 P1에 가진 자원을 기다림&lt;/li&gt;
-      &lt;li&gt;P1은 P2가 가진 자원을 기다림&lt;/li&gt;
-      &lt;li&gt;P2는 P3가 가진 자원을 기다림&lt;/li&gt;
-      &lt;li&gt;P4는 P0이 가진 자원을 기다림&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-resource-allocation-graph-자원할당-그래프&quot;&gt;2. Resource-Allocation Graph (자원할당 그래프)&lt;/h2&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Graph에서 Deadlock 확인 방법&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;그래프에 cycle이 없으면 deadlock이 아니다&lt;/p&gt;
-
-&lt;p&gt;그래프에 cycle이 있을 때 자원의 인스턴스가 여러개이면 deadlock 일 수도 있고 아닐수도 있다.&lt;/p&gt;
-
-&lt;h3 id=&quot;1️⃣graph---1&quot;&gt;1️⃣ Graph - 1&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Vertex&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Process P = {P1, P2, …. Pn}&lt;/li&gt;
-  &lt;li&gt;Resource R = {R1, R2, …. Rn}&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Edge&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;R2를 보유한 상태로 P1 → R1 자원을 요청&lt;/li&gt;
-  &lt;li&gt;R2와 R1을 보유한 상태로 P2 → R3 자원을 요청&lt;/li&gt;
-  &lt;li&gt;P3가 R3를 보유&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;DeadLock ?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;P3에 할당된 R3가 해제될 수 있기 때문에 Cycle은 있으나 &lt;strong&gt;deadlock은 아니다.&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;254&quot; alt=&quot;스크린샷 2022-04-03 오후 7 06 49&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425754-ce5a67f4-0051-4f91-84d7-00279f5e6654.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2️⃣graph---2&quot;&gt;2️⃣ Graph - 2&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;Vertex&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Process P = {P1, P2, …. Pn}&lt;/li&gt;
-  &lt;li&gt;Resource R = {R1, R2, …. Rn}&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Edge&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;R2를 보유한 상태로 P1 → R1 자원을 요청&lt;/li&gt;
-  &lt;li&gt;R2와 R1을 보유한 상태로 P2 → R3 자원을 요청&lt;/li&gt;
-  &lt;li&gt;P3가 R3를 보유한 상태로 P3 → R2 요청&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;DeadLock ?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 서로 가진 자원을 놓지 않고 다른 자원을 기다리고 있기 때문에 &lt;strong&gt;Deadlock 발생&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;238&quot; alt=&quot;스크린샷 2022-04-03 오후 7 07 06&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425752-4a3dd02a-6ac2-4112-ac99-2a6ed349f6b7.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;3-deadlock의-처리-방법&quot;&gt;3. Deadlock의 처리 방법&lt;/h2&gt;
-
-&lt;p&gt;✔️ Deadlock Prevention&lt;/p&gt;
-
-&lt;p&gt;✔️ Deadlock Avoidance&lt;/p&gt;
-
-&lt;p&gt;✔️ Deadlock Detection and recovery&lt;/p&gt;
-
-&lt;p&gt;✔️ Deadlock Ignorance&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Deadlock을 시스템이 책임지지 않음&lt;/li&gt;
-  &lt;li&gt;UNIX를 포함한 대부분의 OS가 채택&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;31-deadlock-prevention&quot;&gt;3.1 Deadlock Prevention&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;자원 할당 시 Deadlock의 4가지 필요 조건 중 어느 하나가 만족되지 않도록 하는 것&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Mutual Exclusion&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;공유해서는 안되는 자원의 경우 반드시 성립해야 함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Hold and Wait&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 자원을 요청할 때 다른 어떤 자원도 가지고 있지 않아야 한다&lt;/li&gt;
-  &lt;li&gt;방법 1. 프로세스 시작 시 모든 필요한 자원을 할당받게 하는 법&lt;/li&gt;
-  &lt;li&gt;방법 2. 다른 필요한 자원이 있으면 보유 자원을 내려놓고 다시 요청&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ No Preemption(비선점)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Process가 어떤 자원을 기다려야 하는 경우 이미 보유한 자원이 선점됨&lt;/li&gt;
-  &lt;li&gt;모든 필요한 자원을 얻을 수 있을 때 그 프로세스는 다시 시작된다.&lt;/li&gt;
-  &lt;li&gt;State를 쉽게 저장할 수 있고 복원할 수 있는 자원에서 주로 사용된다 (CPU, Memory)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Circular Wait&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;모든 자원 유형에 할당 순서를 정하여 정해진 순서대로만 자원 할당
-    &lt;ul&gt;
-      &lt;li&gt;예를 들어 순서가 3인 자원 R1를 보유 중인 프로세스가 순서가 1인 자원 R2를 할당받기 위해서는 우선 R1를  반납해야한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;⚠️  &lt;strong&gt;하지만 아직 발생할지 안할지도 모르는 Deadlock을 위와같은 방법으로 미리 예방하게 된다면 사용성을 저하시키고 성능을 감소되는 문제가 발생할 수 있다. 추가로 기아현상의 위험도 발생한다 ⚠️&lt;/strong&gt; &lt;/p&gt;
-
-&lt;h3 id=&quot;32-deadlock-avoidance&quot;&gt;3.2 Deadlock Avoidance&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;자원 요청에 대한 부가정보를 이용해서 자원 할당이 deadlock으로부터 안전(safe)한지 확인하고 할당한다. 시스템이 unsafe state에 들어가지 않는 것을 보장한다.&lt;/p&gt;
-
-  &lt;p&gt;프로세스들이 필요로 하는 각 자원을 예측하거나 별 최대 사용량을 미리 선언하도록 하는 방법이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img width=&quot;284&quot; alt=&quot;스크린샷 2022-04-03 오후 3 50 26&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425758-2893dc77-0790-4cbd-af5a-26b7aa9af242.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ safe state&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;시스템 내의 프로세스들에 대한 safe sequence가 존재하는 상태&lt;/li&gt;
-  &lt;li&gt;시스템이 safe state에 있으면 deadlock이 발생하지 않음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ unsafe state&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;시스템이 unsafe state에 있으면 deadlock 발생 가능성이 있음&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ avoidance 알고리즘&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Resource Allocation Graph alogorithm
-    &lt;ul&gt;
-      &lt;li&gt;자원의 인스턴스가 하나일 경우 사용하는 알고리즘&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Banker’s Algorithm
-    &lt;ul&gt;
-      &lt;li&gt;자원의 인스턴스가 여러개일 경우 사용하는 알고리즘&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;1️⃣resource-allocoation-graph-alogorithm&quot;&gt;1️⃣ Resource Allocoation Graph Alogorithm&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;이전에 소개한 Resource Allocoation Graph에서 점선(Clain edge)이 추가된 알고리즘&lt;/p&gt;
-
-  &lt;p&gt;점선은 미래에 사용될 수 있는 자산을 가리킨다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Claim edge&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 자원을 미래에 요구할 수 있다는 것을 뜻함 (점선)&lt;/li&gt;
-  &lt;li&gt;프로세스가 해당 자원 요청시 Claime edge가 request edge로 바뀜 (실선)&lt;/li&gt;
-  &lt;li&gt;요청자원이 해제되면 assignment edge는 다시 claim edge로 변경됨&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ request edge가 assignment edge로 변경 시 (점선을 포함하여) cycle이 생기지 않는 경우에만 요청 자원을 할당한다.&lt;/p&gt;
-
-&lt;p&gt;✔️ Cycle 생성 여부 조사시 프로세스의 수가 n일 때 O(n2)시간이 걸린다.&lt;/p&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Resource Allocoation Graph Alogorithm 예시&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img width=&quot;961&quot; alt=&quot;스크린샷 2022-04-03 오후 7 32 33&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425750-3e18dec7-0642-4e3f-8ae9-0d8344aa0261.png&quot; /&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;P1과 P2가 미래에 R2를 요청할 가능성이 있음.&lt;/li&gt;
-  &lt;li&gt;P2가 R1을 요청한 상태로 R2자원을 요청함.&lt;/li&gt;
-  &lt;li&gt;P2가 R2을 할당받음 하지만 실제로 &lt;strong&gt;Resource Allocoation Graph Alogorithm&lt;/strong&gt; 점선을 포함하여 cycle이 생성될 경우 자원을 내어주지 않기 때문에 R2를 할당받지 못한다. P2가 R2를 할당받으려면 R1을 소유하고 있는 P1이 R2를 할당받은 후 P1의 작업이 끝나서 R1과 R2가 해제될 때 P2가 할당받을 수 있다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;2️⃣bankers-algorithm&quot;&gt;2️⃣ Banker’s Algorithm&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;자원의 인스턴스가 여러개일 경우 사용되는 알고리즘&lt;/p&gt;
-
-  &lt;p&gt;모든 프로세스의 자원의 최대 사용량을 미리 명시하여 최대 사용량이 available 가능한 자원으로 충족 될 경우에만 자원을 내어준다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️  가정&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;모든 프로세스는 자원의 최대 사용량을 미리 명시한다.&lt;/li&gt;
-  &lt;li&gt;프로세스가 요청 자원을 모두 할당받은 경우 유한시간 안에 이들 자원을 다시 반납한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️  방법&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;기본 개념 : 자원 요청시 safe 상태를 유지할 경우에만 할당&lt;/li&gt;
-  &lt;li&gt;총 요청 자원의 수가 가용 자원의 수보다 적은 프로세스를 선택함 만약 그런 프로세스가 없다면 unsafe한 상태&lt;/li&gt;
-  &lt;li&gt;그런 프로세스가 있으면 그 프로세스에게 자원을 할당&lt;/li&gt;
-  &lt;li&gt;할당받은 프로세스가 종료되면 모든 자원을 반납&lt;/li&gt;
-  &lt;li&gt;모든 프로세스가 종료될 때까지 이러한 과정을 반복&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Banker’s Algorithm 예시&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Allocation&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;현재 소유하고 있는 자원&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Max&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;최대로 요청할 수 있는 자원의 수&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Available&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;가용 자원의 수&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Need&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;앞으로 요청할수도 있는 남은 자원의 수 (Max - Allocation)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;508&quot; alt=&quot;스크린샷 2022-04-03 오후 7 50 06&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425748-e1727a31-270f-4a79-a9e5-8de74c0c8366.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ 5개의 프로세스가 존재한다고 가정한다.&lt;/p&gt;
-
-&lt;p&gt;✔️ 3개의 자원이 존재한다  A(10), B(5), C(7) 각 자원은 10, 5, 7개의 인스턴스를 가지고 있다.&lt;/p&gt;
-
-&lt;p&gt;✔️  현재 가용 자원보다 Need 자원의 더 클 경우에 해당 프로세스는 자원을 할당받지 못한다. 자원 할당이 가능한 프로세스를 순서대로 나열하면 &amp;lt;P1, P3, P4, P2, P0&amp;gt; 이 된다.&lt;/p&gt;
-
-&lt;h3 id=&quot;33deadlock-detection-and-recovery&quot;&gt;3.3 Deadlock Detection and recovery&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Deadlock 발생은 허용하되 그에 대한 detection 루틴을 두어 deadlock 발견시 recover한다.&lt;/p&gt;
-
-  &lt;blockquote&gt;
-    &lt;p&gt;Resource type 당 single instance인 경우 자원할당 그래프에서의 cycle이 곧 deadlock을 의미한다.&lt;/p&gt;
-
-    &lt;p&gt;Resource type 당 multiple instance인 경우 Banker’s algorithm과 유사한 방법을 활용한다.&lt;/p&gt;
-
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;1️⃣wait-for-graph-algorithm&quot;&gt;1️⃣ Wait-for graph Algorithm&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자원당 하나의 인스턴스를 가지고 있을 경우 사용됨&lt;/li&gt;
-  &lt;li&gt;Wait-for graph
-    &lt;ul&gt;
-      &lt;li&gt;자원할당 그래프의 변형&lt;/li&gt;
-      &lt;li&gt;프로세스만으로 node를 구성함
-        &lt;ul&gt;
-          &lt;li&gt;P1이 가지고 있는 자원을 P2가 기다리는 경우 P2 → P1&lt;/li&gt;
-          &lt;li&gt;Avoidance에선 P2 → R1 → P1&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;그래프에 점선이 없음&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Algorithm
-    &lt;ul&gt;
-      &lt;li&gt;Wait-for graph에 사이클이 존재하는지를 주기적으로 조사함 O(n2)&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img width=&quot;458&quot; alt=&quot;스크린샷 2022-04-03 오후 8 05 13&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425744-b3764fa2-5213-4e4e-8254-a41d87ad2cf2.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;⚠️  Graph에 Cycle이 존재할 경우 Deadlock Detection ⚠️&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;2️⃣-multiple-instance인-경우에-사용되는-알고리즘&quot;&gt;2️⃣  Multiple instance인 경우에 사용되는 알고리즘&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Banker’s Algorithm&lt;/strong&gt; 과 비슷하지만 최대 요청가능한 자산을 예측하지 않고 Allocation, Request, Available 만 관리한다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img width=&quot;398&quot; alt=&quot;스크린샷 2022-04-03 오후 8 11 22&quot; src=&quot;https://user-images.githubusercontent.com/56028408/161425742-92f20077-6814-48c3-ac8b-3ab0da0981a5.png&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;사용중인 자원을 해제한다는 가정하에 가용자원으로 safe sequence를 확인해보면 &amp;lt;P0, P2, P3, P1, P4&amp;gt; 와 같은 순서가 나타난다.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;🌟 Request는 추가요청가능량이 아니라 현재 실제로 요청한 자원량을 나타낸다 🌟&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️ Recovery&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Process termination
-    &lt;ul&gt;
-      &lt;li&gt;Deadlock에 연루된 모든 프로세스를 Abork 한다.&lt;/li&gt;
-      &lt;li&gt;Deadlock에 연루된 프로세스를 하나씩 Abork 해보고 해결되는 지 확인한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Resource Preemption
-    &lt;ul&gt;
-      &lt;li&gt;Deadlock에 연루된 프로세스 중에 비용을 최소화할 victim을 선점하여 자원을 뺏는다.&lt;/li&gt;
-      &lt;li&gt;Safe State로 Rollback하여 Process를 재시작한다.&lt;/li&gt;
-      &lt;li&gt;Stavation 문제 발생 위험
-        &lt;ul&gt;
-          &lt;li&gt;동일한 프로세스가 계속해서 victim으로 선점되는 경우
-            &lt;ul&gt;
-              &lt;li&gt;cost factor에 Rollback횟수도 고려한다.&lt;/li&gt;
-            &lt;/ul&gt;
-          &lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;34deadlock-ignorance&quot;&gt;3.4 Deadlock Ignorance&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Deadlock이 일어나지 않는다고 생각하고 아무런 조치도 취하지 않는 방법으로 대부분의 범용 OS가 채택한 방법이다.&lt;/p&gt;
-
-  &lt;blockquote&gt;
-    &lt;p&gt;Deadlock은 매우 드물게 발생하므로 deadlock에 대한 조치 자체가 더 큰 overhead일 수 있다&lt;/p&gt;
-
-    &lt;p&gt;만약, 시스템에 deadlock이 발생한 경우 시스템이 비정상적으로 작동하는 것을 사용자가 느낀 후 직접 process를 죽이는 방법 등으로 대처한다.&lt;/p&gt;
-
-  &lt;/blockquote&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="데드락" /><category term="운영체제" /><category term="데드락 발생 4가지 조건" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이</title><link href="http://localhost:4000/os/2022/04/02/os-study-07.html" rel="alternate" type="text/html" title="[운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이" /><published>2022-04-02T00:00:00+09:00</published><updated>2022-04-02T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/04/02/os-study-07</id><content type="html" xml:base="http://localhost:4000/os/2022/04/02/os-study-07.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h1 id=&quot;process-synchronizationconcurrency&quot;&gt;Process Synchronization(Concurrency)&lt;/h1&gt;
-&lt;h3 id=&quot;️-프로세스-동기화와-관련된-3가지-문제&quot;&gt;‼️  프로세스 동기화와 관련된 3가지 문제&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Bounded-Buffer Problem&lt;/li&gt;
-  &lt;li&gt;Readers and Writers Problem&lt;/li&gt;
-  &lt;li&gt;Dining-Philosophers Problem&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;1-bounded-buffer-problem-producer-consumer-problem&quot;&gt;1. Bounded-Buffer Problem (Producer-Consumer Problem)&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Bounded-Buffer Problem란 생산자와 사용자의 비율이 맞지않아서 사용자나 생산자가 무한히 대기하거나, 공유데이터에 동시에 접근하여 데이터 통일성이 깨질 수 있는 문제점을 얘기한다.&lt;/p&gt;
-
-  &lt;p&gt;아래 내용은 이러한 문제점을 세마포어로 해결한 예시이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img width=&quot;509&quot; alt=&quot;스크린샷 2022-03-28 오후 8 48 56&quot; src=&quot;https://user-images.githubusercontent.com/56028408/160510432-4cd492fe-4ddf-4088-80a3-6dc21e8ba5c4.png&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;11-bounded-buffer의-문제점-해결-방안&quot;&gt;1.1 Bounded-Buffer의 문제점 해결 방안&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Producer - 데이터를 버퍼에 채워넣는 역할&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;비어있는 버퍼가 있는 지 확인한다. (없을 경우 대기)&lt;/li&gt;
-  &lt;li&gt;비어있는 버퍼가 있으면 공유데이터에 접근하고 lock을 건다.&lt;/li&gt;
-  &lt;li&gt;비어있는 버퍼에 데이터 입력 및 버퍼를 조작한다&lt;/li&gt;
-  &lt;li&gt;Lock을 해제한다.&lt;/li&gt;
-  &lt;li&gt;Full Buffer를 하나 증가시킨다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Consumer - 데이터를 사용하는 역할&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;full 버퍼가 있는 지 확인한다. (없으면 대기)&lt;/li&gt;
-  &lt;li&gt;full 버퍼가 있을 경우 공유데이터에 접근하고 lock을 건다.&lt;/li&gt;
-  &lt;li&gt;full 버퍼에서 데이터를 읽어오고 버퍼를 조작한다.&lt;/li&gt;
-  &lt;li&gt;Lock을 해제한다.&lt;/li&gt;
-  &lt;li&gt;Empty Buffer를 하나 증가시킨다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;‼️  &lt;strong&gt;여기서 말하는 공유데이터는&lt;/strong&gt; ‼️&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Buffer 자체 및 Buffer 조작 변수(empty/full buffer의 시작 위치)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;12-세마포어를-적용한-동기화-기법-예제코드&quot;&gt;1.2 세마포어를 적용한 동기화 기법 예제코드&lt;/h3&gt;
-
-&lt;p&gt; &lt;strong&gt;Producer&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Consumer&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;produce&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt; 
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 비어있는 버퍼의 수 확인 */&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 버퍼가 비어있으면 버퍼에 진입하고 lock */&lt;/span&gt; 
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 버퍼 unlock */&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* full 자원을 증가시킴 */&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 비어있지않은 버퍼의 수 확인 */&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 버퍼가 하나라도 비어있지 않으면 버퍼에 진입하고 lock */&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;remove&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;an&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 버퍼 unlock */&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 비어있는 버퍼의 갯수 증가 */&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;consume&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;the&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;item&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Synchrozination variables&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;semaphore empty = n; semaphore full = 0;
-    &lt;ul&gt;
-      &lt;li&gt;남은 full/empty의 buffer의 수 표시&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;semaphore mutex = 1;
-    &lt;ul&gt;
-      &lt;li&gt;공유 데이터의 상호배제를 위한 변수&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-readers-and-writers-problem&quot;&gt;2. Readers and Writers Problem&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;다수의 Readers Writer가 공용 데이터베이스에 접근하여 데이터 일관성을 해치는 문제점을 말한다. 이는 프로세스 동기화 기법으로 해결할 수 있다.&lt;/p&gt;
-
-  &lt;p&gt;아래 내용은 프로세스 동기화 기법을 사용하여 해결한 예시이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/160510449-35f712bd-9ed8-44eb-8425-ae22d07628e9.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;21-readers-and-writers-문제점-해결-방안&quot;&gt;2.1 Readers and Writers 문제점 해결 방안&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Reader &amp;amp; Writer&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Reader는 데이터를 읽기만 하는 프로세스&lt;/li&gt;
-  &lt;li&gt;Writer는 데이터를 읽고 수정하는 프로세스&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Reader &amp;amp; Writer Problem 방지&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;한 Writer가 임계구역에 진입한 상황일 때는 다른 프로세스가 임계구역에 접근하게 해선 안된다.
-    &lt;ul&gt;
-      &lt;li&gt;일단 Writer가 공유데이터에 접근 중이면 다른 Writer나 Reader들은 접근이 금지된다.&lt;/li&gt;
-      &lt;li&gt;Writer가 공유데이터에서 빠져나가야만 Reader의 접근이 허용된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Reader는 여럿이 임계구역에 접근해도 된다. 하지만 Reader가 접근 중일 때 Writer가 접근하게 해선 안된다.
-    &lt;ul&gt;
-      &lt;li&gt;Writer는 대기 중인 Reader가 하나도 없을 때 공유데이터 접근이 허용된다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Writer가 공유데이터에 접근 허가를 아직 얻지 못한 상태에서는 모든 대기중인 Reader들을 다 임계구역에 접근하게 해준다&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;22-세마포어를-적용한-동기화-기법-예제코드&quot;&gt;2.2 세마포어를 적용한 동기화 기법 예제코드&lt;/h3&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;Shared data&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;int readcount = 0&lt;/li&gt;
-  &lt;li&gt;DB 자체&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Synchronization variables&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;semaphore mutex = 1;&lt;/li&gt;
-  &lt;li&gt;semaphore db = 1;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Writer&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Reader&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;writing&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;performed&lt;/span&gt; 
-&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 동시에 다른 reader가 readcount를 변경하는 문제가 발생하지 않도록 lock */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;readcount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readcount&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;db&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 최초의 접근일 경우 writer가 접근 못하도록 db 봉쇄 */&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* readcount unlock */&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;‼️  하지만 위 코드와 같은 해결방법은 stavation 발생 위험이 있음&lt;/strong&gt; ‼️ &lt;/p&gt;
-
-&lt;p&gt;예를 들어 writer가 대기 중일 때 reader가 끈임없이 진입하게 되면 wrtier가 무한히 대기하게 되는 현상이 발생한다.&lt;/p&gt;
-
-&lt;p&gt;단순한 프로세스 동기화 예제일 뿐 최적의 해결방법이 아니기 때문에 참고만 하자.&lt;/p&gt;
-
-&lt;h2 id=&quot;3-dining-philosophers-problem-식사하는-철학자-문제&quot;&gt;3. Dining-Philosophers Problem (식사하는 철학자 문제)&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;하나 이상의 프로세스가 공유데이터 중 서로에게 필요한 자원을 하나씩만 가지고 양보하지 않아서 Deadlock 이 발생할 수 있는 문제&lt;/p&gt;
-
-  &lt;p&gt;아래 예제를 참고하여 어떤한 경우에 문제가 발생하는지 알아보고 어떻게 해결하는지 알아보자&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;문제-발생-예제-코드&quot;&gt;&lt;strong&gt;[문제 발생 예제 코드]&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;&lt;strong&gt;✔️ Synchronization variables&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;semaphore chopstick[5]
-    &lt;ul&gt;
-      &lt;li&gt;배열의 모든 값을 1로 초기화 했다고 가정한다&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Philosopher i&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chopstick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chopstick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;eat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chopstick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chopstick&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;think&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;...&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://user-images.githubusercontent.com/56028408/160510437-ee36b87b-a22f-4ae4-bd0c-342c1d9630f9.png&quot; alt=&quot;스크린샷 2022-03-29 오전 9 25 43&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;✔️  위 예제 코드의 문제점&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;모든 철학자가 동시에 배가 고파져 왼쪽 젓가락을 집어버린 경우 아무도 먹지 못하는 문제가 발생한다.&lt;/li&gt;
-  &lt;li&gt;Deadlock 발생 위험이 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;해결방안-예제-코드&quot;&gt;&lt;strong&gt;[해결방안 예제 코드]&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;p&gt;✔️ &lt;strong&gt;Synchronization variables&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;enum {thinking, hungry, eating} state[5];&lt;/li&gt;
-  &lt;li&gt;semaphore self[5] = 0;&lt;/li&gt;
-  &lt;li&gt;semaphore mutex = 1;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Philosopher i&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cm&quot;&gt;/* 실행메소드 */&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;pickup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;eat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;putdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;think&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pickup&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hungry&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;pickdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;thinking&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/* 대상 철학자의 오른쪽과 왼쪽 철학자가 식사중인지 검사하고 대상 철학자가 배고픈 상태일 때 식사를 허용한다. */&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;j&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eating&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;hungry&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eating&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;state&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eating&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]);&lt;/span&gt;		
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;✔️ 해결 방안&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;4명의 철학자만이 테이블에 동시에 앉을 수 있도록 한다&lt;/li&gt;
-  &lt;li&gt;젓가락을 두 개 모두 잡을 수 있을 때에만 젓가락을 집을 수 있게 한다&lt;/li&gt;
-  &lt;li&gt;비대칭
-    &lt;ul&gt;
-      &lt;li&gt;짝수(홀수) 철학자는 왼쪽(오른쪽) 젓가락부터 집도록&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;️-여태까지의-예제코드를-살펴봤을-때-semaphore의-문제점-️&quot;&gt;‼️  여태까지의 예제코드를 살펴봤을 때 Semaphore의 문제점 ‼️&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;코딩하기 힘들다&lt;/li&gt;
-  &lt;li&gt;정확성(correctness)의 입증이 어렵다&lt;/li&gt;
-  &lt;li&gt;자발적 협력(voluntary cooperation)이 필요하다&lt;/li&gt;
-  &lt;li&gt;한번의 실수가 모든 시스템에 치명적 영향을 끼친다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;💡 예시 1번&lt;/p&gt;
-
-&lt;p&gt;💡 예시 2번&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Section&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Section&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mutex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;[예시 1번]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Wait 시점과 Signal 시점이 반대가 되어 Mutual Exclusion이 깨진다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;[예시 2번]&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;자원을 해제하는 코드가 없기 때문에 서로 필요한 자원을 얻지 못하여 Deadlock 발생 위험이 있다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;4-monitor&quot;&gt;4. Monitor&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;동시에 수행중인 프로세스 사이에서 추상 데이터 타입의 안전한 공유를 보장하기 위한 high-level synchronization construct이다. 기본적으로 Monitor는 여러 프로세스가 동시적으로 접근할 수 없기 때문에 lock, unlock이 필요없다. 이는 프로그래머가 동기화 제약 조건을 명시적으로 코딩할 필요가 사라지기 때문에 프로그래머의 부담이 줄어든다고 할 수 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Monitor&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;모니터 내에서는 한번에 하나의 프로세스만이 활동 가능&lt;/li&gt;
-  &lt;li&gt;프로세스가 모니터를 사용하다가 타이머 인터럽트가 발생하여도 다른 프로세스가 모니터에 접근하지 못한다. active한 프로세스가 0이 되거나 프로세스가 모니터 내부에서 잠들었을 때 다른 프로세스가 진입한다.&lt;/li&gt;
-  &lt;li&gt;프로세스가 모니터 안에서 기다릴 수 있도록 하기 위해 condition variable 사용&lt;/li&gt;
-  &lt;li&gt;condition x;
-    &lt;ul&gt;
-      &lt;li&gt;condition value는 값을 가지지 않고 자신의 큐에 프로세스를 sleep 시키거나 깨우는 역할만 한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;condition variable은 wait과 signal 연산에 의해서만 접근 가능
-    &lt;ul&gt;
-      &lt;li&gt;x.wait();
-        &lt;ul&gt;
-          &lt;li&gt;x.wait()을 invoke한 프로세스는 다른 프로세스가 x.signal()을 invoke하기 전까지 suspend된다&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-      &lt;li&gt;x.signal();
-        &lt;ul&gt;
-          &lt;li&gt;x.signal()은 정확하게 하나의 suspend된 프로세스를 resume한다. suspend된 프로세스가 없으면 아무 일도 일어나지 않는다.&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;41-모니터를-활용한-bounded-buffer-problem-문제-해결-방법&quot;&gt;4.1 모니터를 활용한 Bounded-Buffer Problem 문제 해결 방법&lt;/h3&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;monitor&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bounded_buffer&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;condition&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-	&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;produce&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;N&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
-			&lt;span class=&quot;cm&quot;&gt;/* add x to empty buffer*/&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 3&lt;/span&gt;
-		
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-	&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;consume&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-	&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
-				&lt;span class=&quot;n&quot;&gt;full&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;      &lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; 
-			&lt;span class=&quot;cm&quot;&gt;/* remove an item from buffer an store it to */&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;signal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;// 3&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;앞에 소개한 Bounded-Buffer 문제를 모니터로 변경한 소스코드이다. 모니터는 한 프로세스만 접근할 수 있으므로&lt;/p&gt;
-
-&lt;p&gt;세마포어처럼 공유변수에 lock/unlock 작업을 수행하지 않아도 된다.&lt;/p&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;produce(int x)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;빈 버퍼가 있는 지 확인한다.&lt;/li&gt;
-  &lt;li&gt;빈 버퍼가 없으면 empty큐에서 대기한다.&lt;/li&gt;
-  &lt;li&gt;빈 버퍼가 있으면 버퍼에 데이터를 추가하고 full큐에 잠들어있는 프로세스 하나를 깨운다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;✔️  &lt;strong&gt;consume(int *x)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;버퍼에 데이터가 있는 지 확인한다.&lt;/li&gt;
-  &lt;li&gt;버퍼에 데이터가 없으면 full큐에 대기한다.&lt;/li&gt;
-  &lt;li&gt;데이터가 있을 경우 버퍼에서 데이터 하나를 읽어오고 empty큐에 잠들어있는 프로세스 하나를 깨운다.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://mangkyu.tistory.com/104&quot;&gt;https://mangkyu.tistory.com/104&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="식사하는 철학자" /><category term="모니터" /><category term="세마포어" /><category term="뮤텍스" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry><entry><title type="html">[운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어</title><link href="http://localhost:4000/os/2022/03/28/os-study-06.html" rel="alternate" type="text/html" title="[운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어" /><published>2022-03-28T00:00:00+09:00</published><updated>2022-03-28T00:00:00+09:00</updated><id>http://localhost:4000/os/2022/03/28/os-study-06</id><content type="html" xml:base="http://localhost:4000/os/2022/03/28/os-study-06.html">&lt;p&gt;🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟&lt;/p&gt;
-
-&lt;h2 id=&quot;1-프로세스-동기화-프로그램적-해결법의-충족-조건&quot;&gt;1. 프로세스 동기화 프로그램적 해결법의 충족 조건&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스가 임계구역에 동시에 접근하는 것을 방지하고 데이터 일관성을 유지하려면 아래 세가지 조건을 충족해야한다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Mutual Exclustion&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스 Pi가 Critical Section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 Critical Section에 접근하면 안된다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Progress&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Critical Section에 접근한 프로세스가 없는 상황에서 Critical Section에 접근하고자 하는 프로세스가 있으면 Critical Section에 접근하게 해야한다.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Bounded Waiting&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;프로세스가 Critical Section에 들어가려고 요청한 후부터 그 요청이 허용될 때까지 다른 프로세스들이 Critical Section에 들어가는 횟수에는 한계가 있어야 한다. (기다리는 시간이 유한 해야함)
-    &lt;ul&gt;
-      &lt;li&gt;기아현상 방지&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;‼️  &lt;strong&gt;예제 알고리즘으로 위 세가지 조건에 만족할 수 있는 방법이 무엇인지 알아보자&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  실습 가정 !&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;모든 프로세스 수행 속도는 0보다 크다&lt;/li&gt;
-  &lt;li&gt;프로세스들 간의 상대적인 수행 속도는 가정하지 않는다&lt;/li&gt;
-  &lt;li&gt;예제 알고리즘은  두개의 프로세스가 있다고 가정한다 (P1, P2)&lt;/li&gt;
-  &lt;li&gt;프로세스들은 수행의 동기화를 위해 몇몇 변수를 공유할 수 있다 (Synchronization variable)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;2-algorithm---1&quot;&gt;2. Algorithm - 1&lt;/h2&gt;
-
-&lt;h3 id=&quot;변수-초기화&quot;&gt;[변수 초기화]&lt;/h3&gt;
-
-&lt;p&gt;✔️ Synchronization variable&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;int turn; →  프로세스가 임계구역에 들어갈 수 있는 조건인지 확인하는 변수&lt;/li&gt;
-  &lt;li&gt;initially turn = 1; →  첫 진입을 P1에게 허용하기 위해 1로 초기화 함&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;구현-코드&quot;&gt;[구현 코드]&lt;/h3&gt;
-
-&lt;p&gt;✔️ Process P1 구현 코드&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* P1가 접근 가능한 상황이 될 때까지 while */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 임계구역 */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/* 프로세스 P2(이)가 접근할 수 있게 값 변경*/&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;✔️ Process P2 구현 코드&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* P2가 접근 가능한 상황이 될 때까지 while */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 임계구역 */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;****&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;****=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;         &lt;span class=&quot;cm&quot;&gt;/* 프로세스 P1(이)가 접근할 수 있게 값 변경 */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  Algorithm - 1 은 Mutual Exclustion 을 만족하지만 Progress 조건은 만족하지 못한다. 💡&lt;/strong&gt; &lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Algorithm - 1&lt;/strong&gt; 을 예로 들면 반드시 교대로 임계구역에 들어갈 수 있게 설계되어있기 때문에 P1이 임계구역 접근에 시도를 하지않을 경우 turn의 값은 영원히 바뀌지 않는다. turn이 변경되지 않을 경우 P2이 입계구역에 접근하려고 해도 접근할 수 없게 된다. 또한 임계구역 접근 빈도가 서로 다를 경우에도 문제가 발생할 수 있다.&lt;/p&gt;
-
-&lt;h2 id=&quot;3-algorithm---2&quot;&gt;3. Algorithm - 2&lt;/h2&gt;
-
-&lt;h3 id=&quot;변수-초기화-1&quot;&gt;[변수 초기화]&lt;/h3&gt;
-
-&lt;p&gt;✔️ Synchronization variable&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;boolean falg[2];&lt;/li&gt;
-  &lt;li&gt;initially flag[모두] = false; /* no one is in CS */&lt;/li&gt;
-  &lt;li&gt;프로세스가 임계구역에 접근할 준비가 되면 (flag[i] == true)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;구현코드&quot;&gt;[구현코드]&lt;/h3&gt;
-
-&lt;p&gt;✔️ Process P1 구현 코드&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 임계구역에 들어갈 준비가 되었다 */&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* P2가 임계구역에 접근한 상태인지? 접근했다면 P1은 대기 */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;  &lt;span class=&quot;cm&quot;&gt;/* 임계구역 */&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;✔️ Process P2 구현 코드&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 임계구역에 들어갈 준비가 되었다 */&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* P1가 임계구역에 접근한 상태인지? 접근했다면 P2은 대기 */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 임계구역 */&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;💡  Algorithm - 2 은 Mutual Exclustion 을 만족하지만 Progress 조건은 만족하지 못한다. 💡&lt;/strong&gt; &lt;/p&gt;
-
-&lt;p&gt;P1과 P2가 둘 다 임계구역에 접근하려고 값을 true로 변경했을 경우 2행까지 수행 후 끊임 없이 양보하는 상황이 발생할 수 있다. 이럴 경우 P1, P2 두 프로세스가 전부 임계구역에 접근하지 못하는 상황이 발생하기 때문에 &lt;strong&gt;Progress&lt;/strong&gt; 조건을 만족하지 못한다.&lt;/p&gt;
-
-&lt;h2 id=&quot;4-algorithm---3-petersons-algorithm&quot;&gt;4. Algorithm - 3 (Peterson’s Algorithm)&lt;/h2&gt;
-
-&lt;h3 id=&quot;변수-초기화-2&quot;&gt;[변수 초기화]&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Combined syschronization variables of algorithms 1 and 2
-    &lt;ul&gt;
-      &lt;li&gt;Peterson’s Algorithm은 Algorithm - 1 , Algorithm - 2 에서 사용했던 모든 변수를 사용한다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;구현코드-1&quot;&gt;[구현코드]&lt;/h3&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* My intention is to enter */&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;       &lt;span class=&quot;cm&quot;&gt;/* Set to his turn */&lt;/span&gt;
-		&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;turn&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* wait only if */&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 임계구역 */&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;💡 Algorithm - 3는 프로세스 동기화의 세가지 요구사항을 모두 만족한다. 💡&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;피터슨의 알고리즘은 다른 프로세스가 임계구역에 접근한 상황인지와 다른 프로세스의 임계구역 접근 차례를 모두 검사하고 접근을 시도하기 때문에 세가지 요구사항을 모두 만족한다.&lt;/p&gt;
-
-&lt;p&gt;‼️  &lt;strong&gt;Algorithm - 3 의 문제점 → Busy Waiting(=spin lock)! (계속 CPU와 memory를 쓰면서 wait)&lt;/strong&gt; ‼️&lt;/p&gt;
-
-&lt;p&gt;만약 한 프로세스가 임계구역에 접근한 상황에서 다른 프로세스가 CPU를 할당받을 경우 while 조건에 충족하기 때문에 다른 작업은 수행하지 못하고 CPU를 빼앗길 때까지 while을 반복하게 된다. (의미없이 CPU 수행시간을 낭비하게 됨)&lt;/p&gt;
-
-&lt;h2 id=&quot;5-synchronization-hardware&quot;&gt;5. Synchronization Hardware&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;프로세스 동기화 문제는 소프트웨어가 Input과 Output을 하나의 인스트럭션으로 진행할 수 없어서 생긴 문제점이다. 이러한 문제점을 하드웨어적으로 test &amp;amp; modify를 atomic하게 수행할 수 있도록 지원하면 앞의 문제는 간단히 해결된다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;✔️ Counting semaphore (세마포어)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;도메인이 0 이상인 임의의 정수값&lt;/li&gt;
-  &lt;li&gt;자원의 갯수가 여러개인 경우&lt;/li&gt;
-  &lt;li&gt;주로 resource counting에 사용&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Binary semaphore (=mutex)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;0 또는 1 값만 가질 수 있는 세마포어
-    &lt;ul&gt;
-      &lt;li&gt;자원의 갯수가 하나인 경우&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;주로 mutual exclusion (lock/unlock)에 사용 (=mutex)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;51-mutex&quot;&gt;5.1 Mutex&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Mutex는 Mutual Exclustion의 약자이고 상호배재 한다는 뜻으로 사용된다. Mutex는 Locking 매커니즘으로 오직 하나의 쓰레드만이 동일한 시점에 뮤텍스를 얻어 임계 영역에 들어올 수 있고 오직 이 쓰레드만이 임계 영역에서 나갈 때 뮤텍스를 해제할 수 있다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;52-mutual-exclustion-with-test--set&quot;&gt;5.2 Mutual Exclustion with Test &amp;amp; Set&lt;/h3&gt;
-
-&lt;h3 id=&quot;변수-초기화-3&quot;&gt;[변수 초기화]&lt;/h3&gt;
-
-&lt;p&gt;✔️ Synchronization variable&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;boolean lock = false;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;구현코드-2&quot;&gt;[구현코드]&lt;/h3&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Test_and_Set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;critical&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;lock&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-	&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;remainder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;section&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;💡 &lt;strong&gt;Test_and_set()&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;파라미터 변수의 값을 읽고, TRUE로 변경작업을 수행한다. 이전 알고리즘 1,2,3은 값을 읽고 변경하는 작업을 따로따로 진행했다면, &lt;strong&gt;Test_and_set()&lt;/strong&gt;은 값을 읽고 변경하는 작업을 하나의 인터럭션으로 수행하므로 조금 더 간결하게 해결할 수 있도록 도와준다.&lt;/p&gt;
-
-&lt;h2 id=&quot;6-semaphores&quot;&gt;6. Semaphores&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;세마포어란 임계구역에 진입하기 어려울 때 프로세스가 자발적으로 대기 상태로 들어가는 방식이다. 세마포어는 앞의 방식들을 추상화 시킨 방식이다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;p&gt;❓ 세마포어&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;block/wakeup 알고리즘&lt;/li&gt;
-  &lt;li&gt;진입 불가능 시에는 대기상태로 전환&lt;/li&gt;
-  &lt;li&gt;임계구역을 떠나는 프로세스가 대기 프로세스를 준비 상태로 깨워줌&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;❓ 세마포어 구성&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;하나의 정수값 (정수변수 value)&lt;/li&gt;
-  &lt;li&gt;프로세스 대기 큐&lt;/li&gt;
-  &lt;li&gt;정수에 대한 3가지 연산 : init, wait, signal
-    &lt;ul&gt;
-      &lt;li&gt;wait 은 P 연산이라고도 불린다.&lt;/li&gt;
-      &lt;li&gt;signal 은 V 연산이라고도 불린다.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;✔️ Semaphore 객체를 S 라 할 때&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;S.value: 자원 활용 현황
-    &lt;ul&gt;
-      &lt;li&gt;양수: 남아있는 자원의 수&lt;/li&gt;
-      &lt;li&gt;음수: 부족하여 대기하고 있는 대기자 수&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;S.value의 초기값 n : 자원의 개수&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;아래의 두 가지 atomic 연산에 의해서만 자원에 접근 가능하다.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;P&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;op&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/*wait*/&lt;/span&gt;
-			&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;V&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;cm&quot;&gt;/* 자원 반납 */&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;세마포어의 모든 오퍼레이션은 atomic하게 실행되어야 한다. wait 연산을 하는 동안 signal 연산을 하거나, 또는 그 반대의 경우 모두 발생해서는 안된다. 이를 보장하기 위해 각 연산이 실행되는 동안 인터럽트를 disable 시킴으로써 해결할 수 있다. 만약 다중 CPU 환경이라면 모든 CPU의 인터럽트를 disable 시켜야 한다. 헌데 모든 인터럽트를 디스에이블 할 경우 성능이 저하될 수 있기 때문에 compare_and_swap()을 사용하거나 spinlock 과 같은 busy waiting 기법을 사용하기도 한다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;61-block--wakeup-inmplementation&quot;&gt;6.1 Block &amp;amp; Wakeup Inmplementation&lt;/h2&gt;
-
-&lt;p&gt;✔️ Busy-wait 과 Block/wakeup&lt;/p&gt;
-
-&lt;p&gt;busy-wait과 block/wakeup 방식을 비교하자면 block/wakeup 방식을 사용하는 것이 효율적이다. busy-wait 방식은 자기 차례가 아니면 의미없이 CPU 시간을 낭비하는 반면에 block/wakeup 방식은 자기 차례가 아닐 경우 block 상태로 전환하기 때문이다.&lt;/p&gt;
-
-&lt;p&gt;그런데 임계구역의 코드가 짧을 경우에는 block/wakeup 방식보다 busy-wait 방식이 더 효율적일 수 있다. ready 상태에서 block 상태로 전환하고 다시 block 상태에서 ready 상태로 전환하는 것에 오버헤드가 따르기 때문이다.&lt;/p&gt;
-
-&lt;p&gt;정리하자면 임계구역이 짧을 경우에는 busy-wait 방식이 효율적이고 임계구역 코드가 길 경우에는 block/wakeup 방식이 효율적이다.&lt;/p&gt;
-
-&lt;h2 id=&quot;7-deadlock&quot;&gt;7. Deadlock&lt;/h2&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;둘 이상의 프로세스가 서로 원하는 리소스가 상대방에게 할당되어 있을 경우 무한히 대기하는 현상을 말한다. 보통 시스템적으로 한정된 자원을 여러 곳에서 사용하려고 할 때 발생한다.&lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;reference&quot;&gt;&lt;strong&gt;Reference&lt;/strong&gt;&lt;/h3&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://mangkyu.tistory.com/104&quot;&gt;https://mangkyu.tistory.com/104&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="교착상태" /><category term="프로세스 동기화" /><category term="세마포어" /><category term="뮤텍스" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
+&lt;p&gt;이화여자대학교 반효경 교수님 운영체제 강의&lt;/p&gt;</content><author><name></name></author><category term="반효경" /><category term="메모리관리" /><category term="운영체제" /><category term="가변분할" /><category term="외부조각과 내부조각" /><summary type="html">🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</summary></entry></feed>
