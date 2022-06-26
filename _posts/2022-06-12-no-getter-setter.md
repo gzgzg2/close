@@ -27,10 +27,10 @@ Getter Setter가 존재하는 이상 그 클래스는 능도적인 객체가 아
 
 ### **OOP 4대 원칙**
 **1. 추상화(Abstraction)**
-- 구체적인 것을 <span id="important">분해</span>하여 <span id="important">재조립</span> 하는 것
+- 구체적인 것을 __분해__ 하여 __재조립__ 하는 것
 
 **2. 상속(Inheritance)**
-- <span id="important">상위 클래스</span>의 특성을 <span id="important">하위 클래스</span>가 물려받는 것
+- __상위 클래스__ 의 특성을 __하위 클래스__ 가 물려받는 것
 
 **3. 캡슐화, 정보은닉 (Encapsulation)**
 - 역할에 관련있는 객체의 속성과 실제 행위를 묶어 실제 구현 내용을 외부에 노출하지 않는 것
