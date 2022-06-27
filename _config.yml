@@ -218,5 +218,6 @@ plugins:
   - jekyll-paginate
   - jekyll-spaceship
 
-remote_theme: gzgzg2/ramirami
+remote_theme: "jeffreytse/jekyll-theme-yat"
+
 
