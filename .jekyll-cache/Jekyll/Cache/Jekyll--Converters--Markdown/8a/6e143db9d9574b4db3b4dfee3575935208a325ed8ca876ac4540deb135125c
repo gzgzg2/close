@@ -1,4 +1,4 @@
-I"�F<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
+I"$K<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
 
 <h2 id="1-프로세스-동기화-프로그램적-해결법의-충족-조건">1. 프로세스 동기화 프로그램적 해결법의 충족 조건</h2>
 
@@ -55,23 +55,35 @@
 
 <p>✔️ Process P1 구현 코드</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 		<span class="k">while</span><span class="p">(</span><span class="n">turn</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">);</span> <span class="cm">/* P1가 접근 가능한 상황이 될 때까지 while */</span>
 		<span class="o">**</span><span class="n">critical</span> <span class="n">section</span><span class="o">**</span>  <span class="cm">/* 임계구역 */</span>
 		<span class="o">****</span><span class="n">turn</span> <span class="o">****=</span> <span class="mi">2</span><span class="p">;</span>         <span class="cm">/* 프로세스 P2(이)가 접근할 수 있게 값 변경*/</span>
 		<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">);</span> 
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>✔️ Process P2 구현 코드</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 		<span class="k">while</span><span class="p">(</span><span class="n">turn</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">);</span> <span class="cm">/* P2가 접근 가능한 상황이 될 때까지 while */</span>
 		<span class="o">**</span><span class="n">critical</span> <span class="n">section</span><span class="o">**</span>  <span class="cm">/* 임계구역 */</span>
 		<span class="o">****</span><span class="n">turn</span> <span class="o">****=</span> <span class="mi">1</span><span class="p">;</span>         <span class="cm">/* 프로세스 P1(이)가 접근할 수 있게 값 변경 */</span>
 		<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">);</span> 
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><strong>💡  Algorithm - 1 은 Mutual Exclustion 을 만족하지만 Progress 조건은 만족하지 못한다. 💡</strong> </p>
 
@@ -93,25 +105,39 @@
 
 <p>✔️ Process P1 구현 코드</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 		<span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span> <span class="cm">/* 임계구역에 들어갈 준비가 되었다 */</span>
 		<span class="k">while</span> <span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="cm">/* P2가 임계구역에 접근한 상태인지? 접근했다면 P1은 대기 */</span>
 		<span class="o">**</span><span class="n">critical</span> <span class="n">section</span><span class="o">**</span>  <span class="cm">/* 임계구역 */</span>
 		<span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 		<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>✔️ Process P2 구현 코드</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 		<span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span> <span class="cm">/* 임계구역에 들어갈 준비가 되었다 */</span>
 		<span class="k">while</span> <span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="cm">/* P1가 임계구역에 접근한 상태인지? 접근했다면 P2은 대기 */</span>
 		<span class="o">**</span><span class="n">critical</span> <span class="n">section</span><span class="o">**</span> <span class="cm">/* 임계구역 */</span>
 		<span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 		<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><strong>💡  Algorithm - 2 은 Mutual Exclustion 을 만족하지만 Progress 조건은 만족하지 못한다. 💡</strong> </p>
 
@@ -131,7 +157,15 @@
 
 <h3 id="구현코드-1">[구현코드]</h3>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 		<span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="cm">/* My intention is to enter */</span>
 		<span class="n">turn</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>       <span class="cm">/* Set to his turn */</span>
 		<span class="k">while</span><span class="p">(</span><span class="n">flag</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">turn</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="cm">/* wait only if */</span>
@@ -139,7 +173,7 @@
 		<span class="n">flag</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 		<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><strong>💡 Algorithm - 3는 프로세스 동기화의 세가지 요구사항을 모두 만족한다. 💡</strong></p>
 
@@ -194,13 +228,19 @@
 
 <h3 id="구현코드-2">[구현코드]</h3>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="k">do</span> <span class="p">{</span>
 	<span class="k">while</span> <span class="p">(</span><span class="n">Test_and_Set</span><span class="p">(</span><span class="n">lock</span><span class="p">));</span>
 	<span class="o">**</span><span class="n">critical</span> <span class="n">section</span><span class="o">**</span>
 	<span class="n">lock</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
 	<span class="o">**</span><span class="n">remainder</span> <span class="n">section</span><span class="o">**</span>
 <span class="p">}</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>💡 <strong>Test_and_set()</strong></p>
 
@@ -248,11 +288,15 @@
 
 <p>아래의 두 가지 atomic 연산에 의해서만 자원에 접근 가능하다.</p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">:</span> <span class="k">while</span> <span class="p">(</span><span class="n">s</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="n">no</span><span class="o">-</span><span class="n">op</span><span class="p">;</span> <span class="cm">/*wait*/</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="n">P</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">:</span> <span class="k">while</span> <span class="p">(</span><span class="n">s</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span> <span class="k">do</span> <span class="n">no</span><span class="o">-</span><span class="n">op</span><span class="p">;</span> <span class="cm">/*wait*/</span>
 			<span class="n">S</span><span class="o">--</span><span class="p">;</span>
 
 <span class="n">V</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">:</span> <span class="n">S</span><span class="o">++</span><span class="p">;</span> <span class="cm">/* 자원 반납 */</span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <blockquote>
   <p>세마포어의 모든 오퍼레이션은 atomic하게 실행되어야 한다. wait 연산을 하는 동안 signal 연산을 하거나, 또는 그 반대의 경우 모두 발생해서는 안된다. 이를 보장하기 위해 각 연산이 실행되는 동안 인터럽트를 disable 시킴으로써 해결할 수 있다. 만약 다중 CPU 환경이라면 모든 CPU의 인터럽트를 disable 시켜야 한다. 헌데 모든 인터럽트를 디스에이블 할 경우 성능이 저하될 수 있기 때문에 compare_and_swap()을 사용하거나 spinlock 과 같은 busy waiting 기법을 사용하기도 한다.</p>

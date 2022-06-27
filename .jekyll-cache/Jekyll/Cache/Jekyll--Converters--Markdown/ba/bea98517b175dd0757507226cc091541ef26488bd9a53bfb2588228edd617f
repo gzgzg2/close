@@ -1,4 +1,4 @@
-I"�1<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
+I"w2<p>🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟</p>
 
 <h2 id="1-컴퓨터-구조">1. 컴퓨터 구조</h2>
 
@@ -127,8 +127,9 @@
 
 <p>✔️ 동기식 입출력은 어떤 프로그램이 입출력 요청을 했을 때</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>입출력 작업이 완료된 후에야 그 프로그램이 후속 작업을 수행할 수 있는 방식을 말한다.
-</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>입출력 작업이 완료된 후에야 그 프로그램이 후속 작업을 수행할 수 있는 방식을 말한다.
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>🌟  <strong>동기식 입출력의 실행 방식</strong> 🌟</p>
 

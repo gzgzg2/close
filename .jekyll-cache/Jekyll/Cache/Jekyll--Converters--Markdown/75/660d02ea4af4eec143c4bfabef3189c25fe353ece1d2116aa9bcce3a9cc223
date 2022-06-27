@@ -1,4 +1,4 @@
-I"w]<h1 id="-chapter_01-웹-브라우저가-메세지를-만든다">📗 Chapter_01 웹 브라우저가 메세지를 만든다</h1>
+I"^<h1 id="-chapter_01-웹-브라우저가-메세지를-만든다">📗 Chapter_01 웹 브라우저가 메세지를 만든다</h1>
 <h2 id="1-http-리퀘스트-메세지를-작성한다"><strong>1. HTTP 리퀘스트 메세지를 작성한다</strong></h2>
 
 <h3 id="1️⃣-url"><strong>1️⃣  URL</strong></h3>
@@ -44,9 +44,11 @@
 
 <p><strong>URL을 요소별로 분리하여 나열한 것은 아래와 같다.</strong></p>
 
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">http</span><span class="o">:</span><span class="c1">//www.example.co.kr](http://user:passwork@www.cyber.co.kr):80/dir/file1.html</span>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="p">[</span><span class="n">http</span><span class="o">:</span><span class="c1">//www.example.co.kr](http://user:passwork@www.cyber.co.kr):80/dir/file1.html</span>
 <span class="p">[</span> <span class="n">http</span> <span class="p">]</span><span class="o">:</span> <span class="o">+</span> <span class="p">[</span> <span class="c1">// ] + [ 웹 서버명 ] + [ / ] + [ 디렉토리명 ] +[ / ] + .... + [ 파일명 ]   </span>
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></div></div>
 
 <p>http는 앞서 설명한 프로토콜이 되는 것이고 //는 나중에 이어지는 문자열이 서버의 이름임을 나타낸다.</p>
 

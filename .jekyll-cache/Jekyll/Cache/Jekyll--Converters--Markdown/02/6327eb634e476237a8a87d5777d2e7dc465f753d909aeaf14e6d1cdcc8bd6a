@@ -1,0 +1,141 @@
+I"A(<h2 id="들어가며">들어가며</h2>
+<p>이전에 무지성으로 남발하여 주로 사용하였던 Getter Setter가 객체지향 세계에선 아주 지양해야할 패턴이라는 것을 알게 되었다.<br />
+Getter Setter가 존재하는 이상 그 클래스는 능도적인 객체가 아닌 자료구조에 불과하다고 한다. 그런데 가끔 특정한 라이브러리에서 Getter Setter 를 필요로 하는 것을 느꼈다.<br />
+물론 옵션을 설정할 수 있지만 주의해야 하는 것은 마찬가지이다. 그래서 이번에는 Getter Setter 에서 벗어나고 싶은데, 완전히 자유로워지기 힘든 이유를 정리하고자 한다.</p>
+
+<h2 id="getter-setter-지양해야-하는-이유">Getter, Setter 지양해야 하는 이유</h2>
+<p>자바 개발자라면 객제지향 프로그래밍의 4대 원칙을 한번쯤 들어봤을 것이다. 간단하게 소개하자면 아래와 같다.</p>
+
+<h3 id="oop-4대-원칙"><strong>OOP 4대 원칙</strong></h3>
+<p><strong>1. 추상화(Abstraction)</strong></p>
+<ul>
+  <li>구체적인 것을 <strong>분해</strong> 하여 <strong>재조립</strong> 하는 것</li>
+</ul>
+
+<p><strong>2. 상속(Inheritance)</strong></p>
+<ul>
+  <li><strong>상위 클래스</strong> 의 특성을 <strong>하위 클래스</strong> 가 물려받는 것</li>
+</ul>
+
+<p><strong>3. 캡슐화, 정보은닉 (Encapsulation)</strong></p>
+<ul>
+  <li>역할에 관련있는 객체의 속성과 실제 행위를 묶어 실제 구현 내용을 외부에 노출하지 않는 것</li>
+</ul>
+
+<p><strong>4. 다형성(Polymorphism)</strong></p>
+<ul>
+  <li>같은 형태를 가지고 있지만 다른 행위를 할 수 있음</li>
+</ul>
+
+<h3 id="1-캡슐화">1. 캡슐화</h3>
+<p>Getter와 Setter의 경우 캡슐화를 위반한다. 객체가 무엇을 캡슐화 하고 있는지와 객체 내부의 복잡성은 오직 객체만이 알고 있어야 한다.<br />
+그런데 Getter와 Setter는 외부에 객체의 데이터를 노출하게 만든다. 물론 필드에 직접 접근하는 것이 아닌 메서드를 이용하여 접근하는 것이지만 <br />
+우리는 Getter가 데이터에 직접 접근하여 해당 필드의 데이터만을 반환할 것이라고 믿고있다.</p>
+
+<p><br /></p>
+
+<p>객체지향 세계에선 객체에게 특정한 행위를 요청했을 때, 외부에서는 객체가 어떠한 재료들로 무엇을 만드는지 알아선 안되고 알 필요도 없다.</p>
+
+<h3 id="2-객체를-자료구조로-전락시킨다">2. 객체를 자료구조로 전락시킨다</h3>
+<p>객체지향 세계에서의 객체는 살아있고 능동적이다. 그런데 Getter/Setter가 남발된 객체는 생명이 없다. 그저 데이터를 외부에 노출하는 단순 자료구조일 뿐이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre></td><td class="rouge-code"><pre><span class="c1">//안 좋은 예시</span>
+<span class="kd">class</span> <span class="nc">Cash</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span> 
+
+  <span class="kd">public</span>  <span class="kt">int</span> <span class="nf">getDollars</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">value</span><span class="o">();</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 좋은 예시</span>
+<span class="kd">class</span> <span class="nc">Cash</span> <span class="o">{</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
+
+  <span class="kd">public</span> <span class="kt">int</span> <span class="nf">dollars</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>차이는 메서드 이름밖에 없다고 생각할 수 있다. 그렇지만 메서드 이름에서 가져오는 뉘앙스는 완전히 다르다.<br />
+앞에서 설명했듯 객체는 살아있고 능동적이다. 그런데 getDollars()는 객체에게 달러를 찾아 반환하라고 <strong>명령</strong> 한다.<br />
+반면 dollars()의 경우 객체에게 얼마나 많은 달러가 필요한지 묻는다. 객체를 생명체로서 존중하고 있는 것이다.<br />
+또한 dollars()는 객체가 요청을 듣고 반환할 때 외부에선 객체가 어떠한 재료와 행위로 값을 반환하는지 유추하기 힘들다.</p>
+
+<h3 id="3-불변객체가-될-수-없다">3. 불변객체가 될 수 없다</h3>
+<p><strong>Setter</strong>를 사용하면 누구나 객체의 값을 쉽게 수정할 수 있다. 이는 Setter가 존재하는 클래스는 불변객체가 될 수 없다는 의미이다.<br />
+불변객체는 생성과 동시에 값을 초기화 하므로 개발자가 이후에 객체의 상태값을 변경할 수 없다. 값이 변하지 않으면 <strong>“식별자 가변성”</strong>  문제와 <strong>“부수효과”</strong> <strong>“시간적 결합”</strong> 문제에서 자유롭다. 뿐만 아니라 불변객체는 <strong>“실패 원자성”</strong> 의 장점이 있다. 그런데 <strong>Setter</strong>를 사용하게 되면 이러한 장점을 전부 누리기 어려워진다.</p>
+
+<p><br />
+객체의 값을 쉽게 수정할 수 있게 된다면 개발자의 실수로 의도하지 않았던 결과를 초래할 수 있다. 문제를 해결하기 위해 실수로 발생한 부수효과(side effect)를 제거하려면 값을 수정하는 코드를 전부 찾아서 디버깅 해야하기 때문에 많은 시간이 소요된다.</p>
+
+<h2 id="getter-setter-없어도-아무런-문제가-없을까">Getter, Setter 없어도 아무런 문제가 없을까?</h2>
+<p>앞에서 설명한 내용들을 보면 java beans pattern 은 정말 안티패턴 처럼 느껴진다. 나만 그럴수도,,?</p>
+
+<p>여튼 그래서 실제로 업무를 진행하면서 Setter 뿐만 아니라 Getter도 생성하지 않고 개발했던 적이 있었다.  자주 사용하던 방법이 아니여서 익숙하진 않았지만 크게 불편함은 없었다. 그런데 .. 예상하지도 못했던 부분에서 문제가 발생하였다. ObjectMapper로 Json을 역직렬화 할 때 멤버변수를 찾지 못하여 실패하는 이슈가 발생한 것이었다.</p>
+
+<h3 id="1-objectmapper">1. ObjectMapper</h3>
+<p>ObjectMapper에서 JSON을 자바 객체로 역직렬화 할 때 getter, setter 메서드 이름의 “get”과 “set”을 제거하여 객체의 멤버변수를 찾는다. getter, setter 없이 다른 방법으로도 필드명을 알아낼 수 있지만 따로 옵션을 설정하거나 어노테이션을 지정해줘야 한다.</p>
+
+<p><br /></p>
+
+<p><strong>📌 @JsonProperty</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="p">{</span><span class="w">
+  </span><span class="nl">"dollars"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></pre></td></tr></tbody></table></code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kd">class</span> <span class="nc">Cash</span> <span class="o">{</span>
+
+  <span class="nd">@JsonProperty</span><span class="o">(</span><span class="s">"dollars"</span><span class="o">)</span>
+  <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">dollars</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>📌 ObjectMapper 설정 변경</strong></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="nc">ObjectMapper</span> <span class="n">objectMapper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjectMapper</span><span class="o">();</span>
+<span class="n">objectMapper</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="nc">PropertyAccessor</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="nc">JsonAutoDetect</span><span class="o">.</span><span class="na">Visibility</span><span class="o">.</span><span class="na">ANY</span><span class="o">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<h3 id="결론">결론</h3>
+<p>Getter/Setter는 특별한 이유가 아니라면 지양하는 것이 맞다고 생각하지만, 자주 사용되는 라이브러리에서 ObjectMapper와 같이 Getter/Setter를 필요로 할 수 있기 때문에 주의하는 것이 좋을 것 같다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="reference">Reference</h1>
+<p><a href="https://jenkov.com/tutorials/java-json/jackson-objectmapper.html#how-jackson-objectmapper-matches-json-fields-to-java-fields">https://jenkov.com/tutorials/java-json/jackson-objectmapper.html#how-jackson-objectmapper-matches-json-fields-to-java-fields</a></p>
+
+<p><a href="https://bactoria.github.io/2019/08/16/ObjectMapper%EB%8A%94-Property%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B0%BE%EC%9D%84%EA%B9%8C/">https://bactoria.github.io/2019/08/16/ObjectMapper%EB%8A%94-Property%EB%A5%BC-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%B0%BE%EC%9D%84%EA%B9%8C/</a></p>
+
+:ET

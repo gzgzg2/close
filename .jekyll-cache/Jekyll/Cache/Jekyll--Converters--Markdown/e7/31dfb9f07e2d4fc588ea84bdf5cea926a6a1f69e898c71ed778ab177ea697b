@@ -1,4 +1,4 @@
-I"�<h1 id="-chapter_02-tcpip의-데이터를-전기-신호로-만들어-보낸다">📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다</h1>
+I"<h1 id="-chapter_02-tcpip의-데이터를-전기-신호로-만들어-보낸다">📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다</h1>
 <h3 id="2장의-요점-짚고-넘어가기-">🌟 2장의 요점 짚고 넘어가기 🌟</h3>
 
 <blockquote>
@@ -57,12 +57,17 @@
   <li>LAN 드라이버 아래에 있는 LAN 어댑터가 실제 송 수신 동작, 즉 케이블에 대해 신호를 송 수신 하는 동작을 실행함</li>
 </ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">💡 프로토콜</span><span class="w"> </span><span class="err">스택이란</span><span class="w"> </span><span class="err">네트워크</span><span class="w"> </span><span class="err">제어용</span><span class="w"> </span><span class="err">소프트웨어이다.</span><span class="w"> </span><span class="err">프로토콜</span><span class="w"> </span><span class="err">스택은</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보를</span><span class="w"> </span><span class="err">저장하거나</span><span class="w"> </span><span class="err">패킷을</span><span class="w"> </span><span class="err">LAN</span><span class="w"> </span><span class="err">어댑터에</span><span class="w"> </span><span class="err">넘기는</span><span class="w"> </span><span class="err">역할을</span><span class="w"> </span><span class="err">담당한다.</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="err">💡 프로토콜</span><span class="w"> </span><span class="err">스택이란</span><span class="w"> </span><span class="err">네트워크</span><span class="w"> </span><span class="err">제어용</span><span class="w"> </span><span class="err">소프트웨어이다.</span><span class="w"> </span><span class="err">프로토콜</span><span class="w"> </span><span class="err">스택은</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보를</span><span class="w"> </span><span class="err">저장하거나</span><span class="w"> </span><span class="err">패킷을</span><span class="w"> </span><span class="err">LAN</span><span class="w"> </span><span class="err">어댑터에</span><span class="w"> </span><span class="err">넘기는</span><span class="w"> </span><span class="err">역할을</span><span class="w"> </span><span class="err">담당한다.</span><span class="w">
 
 </span><span class="err">💡 브라우저나</span><span class="w"> </span><span class="err">메일</span><span class="w"> </span><span class="err">등의</span><span class="w"> </span><span class="err">일반적인</span><span class="w"> </span><span class="err">애플리케이션이</span><span class="w"> </span><span class="err">데이터를</span><span class="w"> </span><span class="err">송</span><span class="w"> </span><span class="err">수신할</span><span class="w"> </span><span class="err">경우에는</span><span class="w"> </span><span class="err">TCP를</span><span class="w"> </span><span class="err">주로</span><span class="w"> </span><span class="err">사용</span><span class="w">
 
 </span><span class="err">💡 DNS</span><span class="w"> </span><span class="err">서버에</span><span class="w"> </span><span class="err">대한</span><span class="w"> </span><span class="err">조회</span><span class="w"> </span><span class="err">등에서</span><span class="w"> </span><span class="err">짧은</span><span class="w"> </span><span class="err">제어용</span><span class="w"> </span><span class="err">데이터를</span><span class="w"> </span><span class="err">송수신할</span><span class="w"> </span><span class="err">경우에는</span><span class="w"> </span><span class="err">UDP 사용</span><span class="w">
-</span></code></pre></div></div>
+</span></pre></td></tr></tbody></table></code></pre></div></div>
 
 <p><strong>✔️  소켓의 메세지 송신 동작</strong>  </p>
 
@@ -119,11 +124,15 @@
   <li>소켓에 기록되는 정보는 상대측에서 볼 수 없다. 이미 서로 필요한 정보를 헤더로 주고받기 때문에 통신에는 문제가 없다.</li>
 </ul>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">🌟 </span><span class="w"> </span><span class="err">통신</span><span class="w"> </span><span class="err">동작에</span><span class="w"> </span><span class="err">이용하는</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보는</span><span class="w"> </span><span class="err">다음의</span><span class="w"> </span><span class="err">두</span><span class="w"> </span><span class="err">종류</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="err">🌟 </span><span class="w"> </span><span class="err">통신</span><span class="w"> </span><span class="err">동작에</span><span class="w"> </span><span class="err">이용하는</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보는</span><span class="w"> </span><span class="err">다음의</span><span class="w"> </span><span class="err">두</span><span class="w"> </span><span class="err">종류</span><span class="w">
 
 </span><span class="mi">1</span><span class="err">.</span><span class="w"> </span><span class="err">헤더에</span><span class="w"> </span><span class="err">기입되는</span><span class="w"> </span><span class="err">정보</span><span class="w">
 </span><span class="mi">2</span><span class="err">.</span><span class="w"> </span><span class="err">소켓에</span><span class="w"> </span><span class="err">기록되는</span><span class="w"> </span><span class="err">정보</span><span class="w">
-</span></code></pre></div></div>
+</span></pre></td></tr></tbody></table></code></pre></div></div>
 
 <h3 id="3️⃣접속-동작의-실체">3️⃣ 접속 동작의 실체</h3>
 
@@ -135,7 +144,25 @@
 </ul>
 
 <p><strong>✔️  클라이언트와 서버의 대화 과정</strong> </p>
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">1</span><span class="err">.</span><span class="w"> </span><span class="err">데이터</span><span class="w"> </span><span class="err">송</span><span class="w"> </span><span class="err">수신</span><span class="w"> </span><span class="err">동작의</span><span class="w"> </span><span class="err">개시를</span><span class="w"> </span><span class="err">나타내는</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보를</span><span class="w"> </span><span class="err">기록한</span><span class="w"> </span><span class="err">헤더를</span><span class="w"> </span><span class="err">만든다.</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="rouge-code"><pre><span class="mi">1</span><span class="err">.</span><span class="w"> </span><span class="err">데이터</span><span class="w"> </span><span class="err">송</span><span class="w"> </span><span class="err">수신</span><span class="w"> </span><span class="err">동작의</span><span class="w"> </span><span class="err">개시를</span><span class="w"> </span><span class="err">나타내는</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보를</span><span class="w"> </span><span class="err">기록한</span><span class="w"> </span><span class="err">헤더를</span><span class="w"> </span><span class="err">만든다.</span><span class="w">
     </span><span class="mi">1</span><span class="err">.</span><span class="w"> </span><span class="err">헤더의</span><span class="w"> </span><span class="err">내용</span><span class="w"> </span><span class="err">중</span><span class="w"> </span><span class="err">중요한</span><span class="w"> </span><span class="err">것은</span><span class="w"> </span><span class="err">송신처와</span><span class="w"> </span><span class="err">수신처의</span><span class="w"> </span><span class="err">포트번호이다.</span><span class="w"> </span><span class="err">이를</span><span class="w"> </span><span class="err">통해</span><span class="w"> </span><span class="err">송신처와</span><span class="w"> </span><span class="err">수신처를</span><span class="w"> </span><span class="err">지정할</span><span class="w"> </span><span class="err">수</span><span class="w"> </span><span class="err">있다.</span><span class="w">
     
 </span><span class="mi">2</span><span class="err">.</span><span class="w"> </span><span class="err">TCP</span><span class="w"> </span><span class="err">헤더가</span><span class="w"> </span><span class="err">만들어지면</span><span class="w"> </span><span class="err">이를</span><span class="w"> </span><span class="err">IP</span><span class="w"> </span><span class="err">담당</span><span class="w"> </span><span class="err">소프트웨어에</span><span class="w"> </span><span class="err">건네주어</span><span class="w"> </span><span class="err">송신하도록</span><span class="w"> </span><span class="err">의뢰한다.</span><span class="w">
@@ -153,7 +180,7 @@
    </span><span class="err">서버</span><span class="w"> </span><span class="err">측의</span><span class="w"> </span><span class="err">접속이</span><span class="w"> </span><span class="err">성공했으면</span><span class="w"> </span><span class="err">클라이언트</span><span class="w"> </span><span class="err">소켓에</span><span class="w"> </span><span class="err">서버</span><span class="w"> </span><span class="err">IP</span><span class="w"> </span><span class="err">주소나</span><span class="w"> </span><span class="err">포트</span><span class="w"> </span><span class="err">번호</span><span class="w"> </span><span class="err">등과</span><span class="w"> </span><span class="err">함께</span><span class="w"> </span><span class="err">접속</span><span class="w"> </span><span class="err">완료를</span><span class="w"> </span><span class="err">나타내는</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">정보를</span><span class="w"> </span><span class="err">기록한다.</span><span class="w">
     
 </span><span class="mi">8</span><span class="err">.</span><span class="w"> </span><span class="err">마지막으로</span><span class="w"> </span><span class="err">클라이언트에</span><span class="w"> </span><span class="err">패킷이</span><span class="w"> </span><span class="err">정상적으로</span><span class="w"> </span><span class="err">도착했다는</span><span class="w"> </span><span class="err">것을</span><span class="w"> </span><span class="err">알리기</span><span class="w"> </span><span class="err">위해</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">비트를</span><span class="w"> </span><span class="mi">1</span><span class="err">로</span><span class="w"> </span><span class="err">만든</span><span class="w"> </span><span class="err">TCP</span><span class="w"> </span><span class="err">헤더를</span><span class="w"> </span><span class="err">서버측에</span><span class="w"> </span><span class="err">반송한다.</span><span class="w">
-</span></code></pre></div></div>
+</span></pre></td></tr></tbody></table></code></pre></div></div>
 <p><strong>🌟 ACK는 패킷이 대상에게 잘 도착했는지 확인하는 용도로 사용된다.</strong></p>
 
 <h2 id="3-데이터를-송수신-한다">3. 데이터를 송수신 한다.</h2>
@@ -249,11 +276,15 @@
   </li>
 </ol>
 
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">🌟 </span><span class="w"> </span><span class="err">시퀀스</span><span class="w"> </span><span class="err">번호와</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">번호로</span><span class="w"> </span><span class="err">패킷이</span><span class="w"> </span><span class="err">수신측에</span><span class="w"> </span><span class="err">도착한</span><span class="w"> </span><span class="err">것을</span><span class="w"> </span><span class="err">확인한다.</span><span class="w">
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="err">🌟 </span><span class="w"> </span><span class="err">시퀀스</span><span class="w"> </span><span class="err">번호와</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">번호로</span><span class="w"> </span><span class="err">패킷이</span><span class="w"> </span><span class="err">수신측에</span><span class="w"> </span><span class="err">도착한</span><span class="w"> </span><span class="err">것을</span><span class="w"> </span><span class="err">확인한다.</span><span class="w">
 
 </span><span class="err">🌟 ACK</span><span class="w"> </span><span class="err">번호를</span><span class="w"> </span><span class="err">통지할</span><span class="w"> </span><span class="err">때는</span><span class="w"> </span><span class="err">단순히</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">번호에</span><span class="w"> </span><span class="err">값을</span><span class="w"> </span><span class="err">설정할</span><span class="w"> </span><span class="err">뿐만</span><span class="w"> </span><span class="err">아니라</span><span class="w"> </span><span class="err">제어</span><span class="w"> </span><span class="err">비트의</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">비트도</span><span class="w"> </span><span class="mi">1</span><span class="err">로</span><span class="w"> </span><span class="err">설정한다.</span><span class="w"> 
 </span><span class="err">이렇게하면</span><span class="w"> </span><span class="err">ACK</span><span class="w"> </span><span class="err">번호</span><span class="w"> </span><span class="err">필드가</span><span class="w"> </span><span class="err">유효하다는</span><span class="w"> </span><span class="err">의미가</span><span class="w"> </span><span class="err">된다.</span><span class="w">
-</span></code></pre></div></div>
+</span></pre></td></tr></tbody></table></code></pre></div></div>
 
 <h3 id="4️⃣-패킷-평균-왕복-시간으로-ack-번호의-대기-시간을-조정한다"><strong>4️⃣  패킷 평균 왕복 시간으로 ACK 번호의 대기 시간을 조정한다.</strong></h3>
 
