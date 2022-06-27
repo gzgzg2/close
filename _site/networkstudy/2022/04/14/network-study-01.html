@@ -1,123 +1,838 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-	<link rel="icon" type="image/png" href="/public/favicon/favicon.ico">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="나비랑 나리 주인님의 블로그" /></head>
-<style>@import url(/public/css/syntax/monokai.css);</style>
-  <title>나비랑 나리 주인님의 블로그</title>
-  <!-- <link href="/public/css/bootstrap.min.css" rel="stylesheet"> -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다 | Your awesome title</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다">
+<meta name="author" content="GitHub User">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="📗 Chapter_01 웹 브라우저가 메세지를 만든다 1. HTTP 리퀘스트 메세지를 작성한다">
+<meta property="og:description" content="📗 Chapter_01 웹 브라우저가 메세지를 만든다 1. HTTP 리퀘스트 메세지를 작성한다">
+<link rel="canonical" href="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">
+<meta property="og:url" content="http://localhost:4000/networkstudy/2022/04/14/network-study-01.html">
+<meta property="og:site_name" content="Your awesome title">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-04-14T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2022-04-14T00:00:00+09:00","datePublished":"2022-04-14T00:00:00+09:00","description":"📗 Chapter_01 웹 브라우저가 메세지를 만든다 1. HTTP 리퀘스트 메세지를 작성한다","headline":"[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/networkstudy/2022/04/14/network-study-01.html"},"url":"http://localhost:4000/networkstudy/2022/04/14/network-study-01.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
 
-  <link href="/public/css/style.css" rel="stylesheet">
-  <body>
-  	<div class="container"> 
-		<div class="sidebar">
-			<div class="sidebar-item sidebar-header">
-	<div class='sidebar-brand'>
-		<a href="/about/">나비랑 나리 주인님의 블로그</a>
-	</div>
-	<div class='sidebar-brand'>
-		<div class="profile-image">
-			<img src="/public/img/navi_3.jpeg"></img>
-		</div>
-	</div>
-	<p class="lead">잠자는 시간이 제일 좋아</p></div>
 
 
-<div class="sidebar-item sidebar-nav">
-	<ul class="nav">
-      <li class="nav-title">Pages</li>
-	  <li>
-	  	<a class="nav-item" href="/">Articles</a>
-	  </li>
-	  
-	  
-	    
-	  
-	    
-	      
-	    
-	  
-	    
-	  
-	    
-	  
-	</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Your awesome title" src="" onerror="this.style.display='none'">
+  Your awesome title
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
 </div>
 
-<div class="sidebar-item sidebar-nav">
-  	<ul class="nav">
-			<li class="nav-title">Categories</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#SpringBoot">
-				<span class="name">SpringBoot</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Tobi">
-				<span class="name">Tobi</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#OS">
-				<span class="name">OS</span>
-				<span class="badge">12</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#networkStudy">
-				<span class="name">networkStudy</span>
-				<span class="badge">4</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Web">
-				<span class="name">Web</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#daily">
-				<span class="name">daily</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Java">
-				<span class="name">Java</span>
-				<span class="badge">2</span>
-	    	</a>
- 		</li>
-	    
-	  </nav>
-	</ul>
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
 </div>
 
-<div class="sidebar-item sidebar-footer">
-	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
-</div>
-		</div>
-		<div class="content">
-			<article class="post">
-	<header class="post-header">
-		<div class="post-title"> 
-			[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다
-		</div>
-		<time class="post-date dt-published" datetime="2022-04-14T00:00:00+09:00" itemprop="datePublished">2022/04/14
-		</time>		
-	</header>
 
-	<div class="post-content">
-		<h1 id="-chapter_01-웹-브라우저가-메세지를-만든다">📗 Chapter_01 웹 브라우저가 메세지를 만든다</h1>
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-04-14T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Apr 14, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/tags.html#HTTP">#HTTP</a><a class="post-tag" href="/tags.html#Socket">#Socket</a><a class="post-tag" href="/tags.html#DNS">#DNS</a><a class="post-tag" href="/tags.html#TCP">#TCP</a><a class="post-tag" href="/tags.html#%EC%84%B1%EA%B3%B5%EA%B3%BC%20%EC%8B%A4%ED%8C%A8%EB%A5%BC%20%EC%9C%84%ED%95%9C%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%201%%EC%9D%98%20%EC%9B%90%EB%A6%AC">#성공과 실패를 위한 네트워크 1%의 원리</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h1 id="-chapter_01-웹-브라우저가-메세지를-만든다">📗 Chapter_01 웹 브라우저가 메세지를 만든다</h1>
 <h2 id="1-http-리퀘스트-메세지를-작성한다"><strong>1. HTTP 리퀘스트 메세지를 작성한다</strong></h2>
 
 <h3 id="1️⃣-url"><strong>1️⃣  URL</strong></h3>
@@ -130,14 +845,15 @@
   <li>프로토콜 →  http</li>
   <li>사용자명 (생략 가능) → user</li>
   <li>패스워드 (생략 가능) → password</li>
-  <li>웹 서버의 도메인명 → <a href="http://www.example.co.kr">www.example.co.kr</a></li>
+  <li>웹 서버의 도메인명 → <a href="http://www.example.co.kr">www.example.co.kr</a>
+</li>
   <li>포트번호 (생략 가능) → 80</li>
   <li>파일의 경로명 → /dir/file1.html</li>
 </ul>
 
 <p><strong>💡 HTTP 의 경우 기본 포트는 80이고 HTTPS의 기본 포트는 443이다.</strong></p>
 
-<p><br /></p>
+<p><br></p>
 
 <p>✔️ <strong>URL 은 여러 종류가 있다.</strong></p>
 
@@ -145,19 +861,20 @@
 
 <p>메일클라이언트의 기능도 가지고 있기 때문이다. 브라우저는 URL을 토대로 여러개의 기능 중 어느것을 사용하여 데이터에 엑세스하면 될지를 판단한다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ 다양한 URL의 구성</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163106926-34b4cb16-6547-41bb-b016-0b2c4e6b081a.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163106926-34b4cb16-6547-41bb-b016-0b2c4e6b081a.png" alt="image"></p>
 
 <p>이와같이 쓰는 방법은 다양하지만 모든 URL에는 하나의 공통점이 있다. URL 맨 앞에 있는 프로토콜에 따라서 액세스 하는 대상이 달라진다는 것이다.</p>
 
 <p>예를 들어 액세스 대상이 웹 서버라면 HTTP 프로토콜을 사용하고, FTP 서버라면 FTP, 메일을 송신할 때는 mailto 프로토콜을 사용하면 된다.</p>
 
-<p><br /></p>
+<p><br></p>
 
-<h3 id="2️⃣--브라우저의-url-해독-방식">2️⃣  <strong>브라우저의 URL 해독 방식</strong></h3>
+<h3 id="2️⃣--브라우저의-url-해독-방식">2️⃣  <strong>브라우저의 URL 해독 방식</strong>
+</h3>
 
 <p>웹 서버에 보내는 리퀘스트 메세지를 작성하기 전에 URL을 해독한다. 아래 내용은 브라우저가 웹 서버에 엑세스하는 경우를 예로들어 설명한다.</p>
 
@@ -171,7 +888,7 @@
 
 <p>웹 서버명 다음에 이어지는 것은 서버에 파일이 저장된 위치인데 이는 생략이 가능하다.</p>
 
-<hr />
+<hr>
 
 <p><strong>✔️  파일명을 생략한 경우</strong></p>
 
@@ -200,11 +917,11 @@
 
 <p>서버가 클라이언트의 상태를 보존하지 않는 것 매번 요청에 모든 상태값들을 전달해줘야 함 상태를 유지해줘야 할 경우 쿠키나 세션을 사용 함</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ HTTP Reuqest 패킷 구성</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209206-2d7e3008-230e-4da7-9041-453bcfa2d23d.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209206-2d7e3008-230e-4da7-9041-453bcfa2d23d.png" alt="image"></p>
 
 <p>HTTP 요청 패킷은 크게 요청라인, 메세지 정보, 본문으로 나눌 수 있다.</p>
 
@@ -214,11 +931,11 @@
   <li>본문(body) → 해당 요청의 실제 내용. POST가 아니여도 body를 사용할 수 있지만, 주로 Body를 사용하는 메소드는 POST이다.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ HTTP Response 패킷 구성</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209182-d49ace5d-d8c1-4e7b-aa31-976c9cdbafb5.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209182-d49ace5d-d8c1-4e7b-aa31-976c9cdbafb5.png" alt="image"></p>
 
 <p>HTTP 응답 패킷은 크게 상태라인, 메세지 정보, 본문으로 나눌 수 있다.</p>
 
@@ -232,7 +949,7 @@
   <li>본문(body) → 요청의 Body와 일반적으로 동일하다. body 존재할 수도 있고 존재하지 않을수도 있다. 가장 많이 사용되는 Body의 데이터 타입은 JSON(JavaScript Object Notation)이다.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ HTTP Method</strong></p>
 
@@ -285,11 +1002,11 @@
   </tbody>
 </table>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ HTTP 간단한 통신과정 예시</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209168-f37b8432-03fc-4dbf-883e-001f24d63871.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209168-f37b8432-03fc-4dbf-883e-001f24d63871.png" alt="image"></p>
 
 <ol>
   <li>웹서버에 특정 리소스를 얻기 위해 URI와 헤더에 요청에 필요한 정보를 담아 서버에 전송한다.</li>
@@ -314,7 +1031,7 @@
 <p>TCP/IP 네트워크는 IP 주소로 통신 상대를 지정하므로 IP주소를 모르는 상대에게 메세지를 전달할 수 없다. 이러한 이유 때문에 도메인 명과 IP 주소를 구분하는 것이다. 웹 브라우저는 Socket 라이브러리를 사용하여 도메인 명으로 IP 주소를 조회한다. 
 그렇다면 URL 안에서는 서버명이 아니라 IP 주소를 사용하는 것이 더 효율적이라는 생각이 들 수 있다. 실제로 서버명 대신에 IP 주소를 사용해도 올바르게 작동한다.그렇지만 기억하기 어렵다는 단점이 있다. 실행 효율 관점에서 바라보면 IP 주소대신 도메인명으로 사용하는 것이 좋은 방법이라고 할 수 없다. IP 주소는 32비트로 4바이트에 해당하는 개수밖에 없지만, 도메인 명은 수십 바이트 부터 최대 255 바이트 까지 존재한다. 그러면 그만큼 라우터가 부하되어 데이터를 운반하는 동작에 더 많은 시간이 걸릴 것이다. 하지만 이름을 알면 IP 주소를 알 수 있다거나 IP 주소를 사용하면 이름을 알 수있다는 원리를 이용하여 양쪽의 차이를 해소한 DNS가 라우터 부하의 문제점을 해결해준다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️ Socket 라이브러리의 IP 주소 조회</strong></p>
 
@@ -324,7 +1041,7 @@
 
 <p>DNS 원리를 이용하여 IP 주소를 조사하는 것을 네임 리졸루션 (name resolution) 이라고 하는데 리졸루션을 수행하는 것이 리졸버이다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>💡 Socket 라이브러리</strong></p>
 
@@ -332,11 +1049,11 @@
   <li>OS를 이용하여 네트워크의 기능을 호출하기 위한 프로그램의 부품집</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="️리졸버-내부의-작동">✔️ 리졸버 내부의 작동</h3>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209513-02792b34-4c07-4427-9ed5-0f0a68b403ce.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209513-02792b34-4c07-4427-9ed5-0f0a68b403ce.png" alt="image"></p>
 
 <p>✔️  <strong>리졸버를 이용하여 DNS 서버를 조회한다.</strong></p>
 
@@ -349,17 +1066,18 @@
   <li>응답 메세지에서 IP 주소를 추출하고 메모리 영역에 저장한 뒤 애플리케이션으로 돌아간다.</li>
 </ol>
 
-<p><br /></p>
+<p><br></p>
 
 <p>🌟  DNS 서버에 메세지를 송신할 때도 DNS 서버의 IP 주소가 필요한데, 이는 컴퓨터의 TCP/IP 설정 항목의 하나로 컴퓨터에 미리 설정되어 있다. </p>
 
 <h2 id="3-전-세계의-dns-서버가-연대한다">3. 전 세계의 DNS 서버가 연대한다</h2>
 
-<h3 id="1️⃣-dns-서버의-기본동작">1️⃣ <strong>DNS 서버의 기본동작</strong></h3>
+<h3 id="1️⃣-dns-서버의-기본동작">1️⃣ <strong>DNS 서버의 기본동작</strong>
+</h3>
 
 <p>DNS 서버의 기본 동작은 클라이언트에서 조회 메세지를 받고 조회의 내용에 응답하는 형태로 정보를 회답하는 일이다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️  조회 메세지 구성</strong></p>
 
@@ -385,7 +1103,7 @@
 
 <p>해당 메세지를 수신했을 때 DNS가 어떠한 동작을 하는지 알아보자</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>[요청 메세지 예시 ]</strong></p>
 
@@ -395,7 +1113,7 @@
   <li>타입 = A</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>[DNS 서버 내부 등록 정보 예시]</strong></p>
 
@@ -424,7 +1142,7 @@
   </tbody>
 </table>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>[DNS 서버의 동작]</strong></p>
 
@@ -435,7 +1153,7 @@
 
 <p> <strong>💡  DNS 서버는 서버에 등록된 도메인명과 IP 주소의 대응표를 조사하여 IP 주소를 회답한다.</strong></p>
 
-<p><br /></p>
+<p><br></p>
 
 <h3 id="2️⃣-도메인의-계층">2️⃣  도메인의 계층</h3>
 
@@ -448,7 +1166,7 @@
 
 <p>DNS 서버에 등록된 모든 정보는 모든 도메인명이라는 계층적 구조를 가진 이름이 붙여져 있다. DNS에서 취급하는 이름은 <a href="http://www.example.com">www.example.com</a> 처럼 점으로 구분되어 있는데, 점으로 게층을 구분한다. 오른쪽에 위치한 것이 상위 계층이다. 계층구조와 같은 형태로 DNS 서버가 배치되며,  각 계층은 각자의 DNS 서버에 저장된다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>[계층 구조 예시]</strong></p>
 
@@ -468,7 +1186,7 @@
   </li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>✔️  담당 DNS 서버를 찾아 IP 주소를 가져온다</strong></p>
 
@@ -493,11 +1211,11 @@
 
 <p>💡 <strong>이러한 방식은 상위 DNS 서버에서 하위의 DNS 서버의 IP 주소를 알 수 있다. (루트 도메인을 모든 DNS 서버에 등록하면 루트 도메인의 모든 하위 DNS 서버를 조회할 수 있음)</strong></p>
 
-<p><br /></p>
+<p><br></p>
 
 <h4 id="ip-조회"><strong>[IP 조회]</strong></h4>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209731-4d525bc3-91f4-4d27-8a0e-e297b3456a1a.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209731-4d525bc3-91f4-4d27-8a0e-e297b3456a1a.png" alt="image"></p>
 
 <ol>
   <li>가장 가까운 DNS 서버에게 해당 도메인 명의 IP를 요청한다.</li>
@@ -505,7 +1223,7 @@
   <li>루트 도메인에도 해당 IP가 등록되지 않았을 경우 하향식으로 접근하여 IP를 찾을 때까지 하위 도메인 서버에 해당 IP 정보를 요청한다.</li>
 </ol>
 
-<p><br /></p>
+<p><br></p>
 
 <p>💡  <strong>앞서 설명한 내용은 기본이 되는 동작을 설명한 것으로 현실의 인터넷과 모든 동작이 일치하진 않는다. 현실의 인터넷은 한 대의 DNS 서버에 복수의 DNS 서버를 등록할 수 있으므로 한 도메인에 한대씩 DNS 서버가 존재한다고 단정할 수 없다.</strong></p>
 
@@ -513,17 +1231,18 @@
 
 <p>DNS 서버는 한번 조사한 도메인 명을 캐싱할 수 있다. 요청받은 도메인 명이 캐싱되어 있으면 캐싱되어 있는 정보를 전달한다. 정보가 없을 경우에도 캐싱하기 때문에 정보가 존재하지 않는 다는 것도 빠르게 회답할 수 있다. 하지만 캐시된 정보가 변경될 수도 있으므로 캐시안에 저장된 정보를 올바르다고 단언할 수는 없다.</p>
 
-<h2 id="4-프로토콜-스택에-메시지-송신을-의뢰한다">4. <strong>프로토콜 스택에 메시지 송신을 의뢰한다</strong></h2>
+<h2 id="4-프로토콜-스택에-메시지-송신을-의뢰한다">4. <strong>프로토콜 스택에 메시지 송신을 의뢰한다</strong>
+</h2>
 
 <p>IP 주소를 조사를 마치면 액세스 대상 웹 서버에 메세지를 송신하도록 OS 내부 프로토콜 스택에 의뢰한다.</p>
 
 <p>이 동작에서도 Socket 라이브러리를 사용하는데, 복수의 부품을 결정된 순서대로 호출해야하므로 복잡하다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p>🌟 <strong>Socket 라이브러리를 이용한 데이터 송 수신 동작</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209131-ddef6b53-6743-413a-abae-c4b862dcfde6.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209131-ddef6b53-6743-413a-abae-c4b862dcfde6.png" alt="image"></p>
 
 <ol>
   <li>서버측에서 소켓을 생성하고 클라이언트가 파이프를 연결하기를 기다린다. (소켓 생성 단계)</li>
@@ -532,11 +1251,11 @@
   <li>송 수신 동작이 끝나면 파이프 연결을 해제한다. (연결은 클라이언트, 서버 둘 중 어느 쪽에서 분리해도 상관없다.)</li>
 </ol>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>🌟  결정된 순서대로 Socket 라이브러리를 호출하는 애플리케이션 예시</strong></p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/163209107-a08c09a6-c0f1-4509-b64c-adae70159364.png" alt="image" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/163209107-a08c09a6-c0f1-4509-b64c-adae70159364.png" alt="image"></p>
 
 <ul>
   <li>socket()
@@ -566,7 +1285,7 @@
   </li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>🌟  디스크립터  =  애플리케이션이 소켓을 식별하는 용도</strong></p>
 
@@ -574,8 +1293,8 @@
 
 <p><strong>🌟  요청에는 하나의 리소스 정보만을 표시하고 있기 때문에 여러 파일의 정보를 읽으려면 요청을 각각 보내야한다. 요청을 각각 보내면 매번 TCP Connection 을 새로 맺어야하는데, 이는 비효율적일 수 있다. 그래서 HTTP 1.1 버전부터 일정시간동안 연결을 유지할 수 있는 옵션이 추가되었다.</strong></p>
 
-<p><br />
-<br /></p>
+<p><br>
+<br></p>
 
 <h1 id="reference">Reference</h1>
 
@@ -583,17 +1302,167 @@
 
 <p>성공과 실패를 결정하는 1%의 네트워크</p>
 
-	</div>
-	<script src="https://utteranc.es/client.js"
-        repo="gzgzg2/blog-comments"
-        issue-term="pathname"
-        label="Comment 🐱"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-	</script>
+
+    </div>
+
 </article>
-		</div>
-	</div>
-  </body>
+<div class="post-nav">
+<a class="previous" href="/os/2022/04/04/os-study-08.html" title="[운영체제 스터디] 데드락과 데드락 발생조건 4가지">[운영체제 스터디] 데드락과 데드락 발생조건 4가지...</a><a class="next" href="/os/2022/04/15/os-study-09.html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소">[운영체제 스터디] 메모리 관리 - 논리적...</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/os/2022/03/28/os-study-06.html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소">[운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어</a></li>
+<li><a class="post-link" href="/java/2022/06/26/java-syncronized.html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소">[Java] synchronized</a></li>
+<li><a class="post-link" href="/tobi/2022/02/21/spring-applicationcontext.html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소">SpringFramework - Web ApplicationContext</a></li>
+<li><a class="post-link" href="/springboot/2022/02/16/spring-boot-redis.html" title="[운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소">SpringBoot - Redis Client 적용기</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2022 GitHub User</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
 </html>

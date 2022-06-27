@@ -1,213 +1,3044 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-	<link rel="icon" type="image/png" href="/public/favicon/favicon.ico">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="나비랑 나리 주인님의 블로그" /></head>
-<style>@import url(/public/css/syntax/monokai.css);</style>
-  <title>나비랑 나리 주인님의 블로그</title>
-  <!-- <link href="/public/css/bootstrap.min.css" rel="stylesheet"> -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Home | Your awesome title</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="Home">
+<meta name="author" content="GitHub User">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<meta property="og:description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+<link rel="canonical" href="http://localhost:4000/">
+<meta property="og:url" content="http://localhost:4000/">
+<meta property="og:site_name" content="Your awesome title">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="Home">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"GitHub User"},"description":"Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.","headline":"Home","name":"Your awesome title","url":"http://localhost:4000/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
 
-  <link href="/public/css/style.css" rel="stylesheet">
-  <body>
-  	<div class="container"> 
-		<div class="sidebar">
-			<div class="sidebar-item sidebar-header">
-	<div class='sidebar-brand'>
-		<a href="/about/">나비랑 나리 주인님의 블로그</a>
-	</div>
-	<div class='sidebar-brand'>
-		<div class="profile-image">
-			<img src="/public/img/navi_3.jpeg"></img>
-		</div>
-	</div>
-	<p class="lead">잠자는 시간이 제일 좋아</p></div>
 
 
-<div class="sidebar-item sidebar-nav">
-	<ul class="nav">
-      <li class="nav-title">Pages</li>
-	  <li>
-	  	<a class="nav-item" href="/">Articles</a>
-	  </li>
-	  
-	  
-	    
-	  
-	    
-	      
-	    
-	  
-	    
-	  
-	    
-	  
-	</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header site-header-transparent" role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Your awesome title" src="" onerror="this.style.display='none'">
+  Your awesome title
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
 </div>
 
-<div class="sidebar-item sidebar-nav">
-  	<ul class="nav">
-			<li class="nav-title">Categories</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#SpringBoot">
-				<span class="name">SpringBoot</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Tobi">
-				<span class="name">Tobi</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#OS">
-				<span class="name">OS</span>
-				<span class="badge">12</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#networkStudy">
-				<span class="name">networkStudy</span>
-				<span class="badge">4</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Web">
-				<span class="name">Web</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#daily">
-				<span class="name">daily</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Java">
-				<span class="name">Java</span>
-				<span class="badge">2</span>
-	    	</a>
- 		</li>
-	    
-	  </nav>
-	</ul>
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;documentElement.setAttribute("data-header-transparent", "");var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="page-banner">
+    <div class="page-banner-img">
+<div style="background-image: url(/assets/images/banners/home.jpeg)"></div>
+        <img class="img-placeholder" src="/assets/images/banners/home.jpeg">
+</div>
+    <div class="wrapper">
+      <div class="page-banner-inner"><div class="page-banner-default">
+            <h1 class="page-banner-heading">
+              Your awesome heading
+            </h1>
+            <h2 class="page-banner-subheading">
+              Your awesome subheading
+            </h2>
+          </div></div>
+    </div>
+  </section><script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
 </div>
 
-<div class="sidebar-item sidebar-footer">
-	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
+
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
 </div>
-		</div>
-		<div class="content">
-			<article class="post">
-  <header class="post-header home">
-    <div class="post-title">Articles</div>
-  </header>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
 
-  <div class="post-content"><ul class="post-list"><li class="post-list-item">
-        <!----><span class="post-date">2022/06/26</span>
-      	<a class="post-link" href="/java/2022/06/26/java-syncronized.html">
-    	    [Java] synchronized
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/06/12</span>
-      	<a class="post-link" href="/java/2022/06/12/no-getter-setter.html">
-    	    [Java] Getter Setter 필요없을까?
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/06/08</span>
-      	<a class="post-link" href="/networkstudy/2022/06/08/network-study-04.html">
-    	    [네트워크 스터디] Chapter_04 엑세스 회선을 통해 인터넷의 내부로 !
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/05/29</span>
-      	<a class="post-link" href="/networkstudy/2022/05/29/network-study-03.html">
-    	    [네트워크 스터디] Chapter_03 케이블의 앞은 LAN 기기였다.
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/05/14</span>
-      	<a class="post-link" href="/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">
-    	    [글또 7기] 다짐
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/05/01</span>
-      	<a class="post-link" href="/web/2022/05/01/dns.html">
-    	    DNS 란?
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/29</span>
-      	<a class="post-link" href="/networkstudy/2022/04/29/network-study-02.html">
-    	    [네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/16</span>
-      	<a class="post-link" href="/os/2022/04/16/os-study-11.html">
-    	    [운영체제 스터디] 가상 메모리와 Page Fault
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/15</span>
-      	<a class="post-link" href="/os/2022/04/15/os-study-10.html">
-    	    [운영체제 스터디] 불연속할당
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/15</span>
-      	<a class="post-link" href="/os/2022/04/15/os-study-09.html">
-    	    [운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/14</span>
-      	<a class="post-link" href="/networkstudy/2022/04/14/network-study-01.html">
-    	    [네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/04</span>
-      	<a class="post-link" href="/os/2022/04/04/os-study-08.html">
-    	    [운영체제 스터디] 데드락과 데드락 발생조건 4가지
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/04/02</span>
-      	<a class="post-link" href="/os/2022/04/02/os-study-07.html">
-    	    [운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/28</span>
-      	<a class="post-link" href="/os/2022/03/28/os-study-06.html">
-    	    [운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/23</span>
-      	<a class="post-link" href="/os/2022/03/23/os-study-05.html">
-    	    [운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/22</span>
-      	<a class="post-link" href="/os/2022/03/22/os-study-04.html">
-    	    [운영체제 스터디] 프로세스 생성과 프로세스의 협력
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/22</span>
-      	<a class="post-link" href="/os/2022/03/22/os-study-04-02.html">
-    	    [운영체제 스터디] 프로세스의 특성과 CPU 스케줄링
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/16</span>
-      	<a class="post-link" href="/os/2022/03/16/os-study-03.html">
-    	    [운영체제 스터디] 프로세스와 쓰레드
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/15</span>
-      	<a class="post-link" href="/os/2022/03/15/os-study-02.html">
-    	    [운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/03/14</span>
-      	<a class="post-link" href="/os/2022/03/14/os-study-01.html">
-    	    [운영체제 스터디] 운영체제란 무엇인가?
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/02/21</span>
-      	<a class="post-link" href="/tobi/2022/02/21/spring-applicationcontext.html">
-    	    SpringFramework - Web ApplicationContext
-		</a></li><li class="post-list-item">
-        <!----><span class="post-date">2022/02/16</span>
-      	<a class="post-link" href="/springboot/2022/02/16/spring-boot-redis.html">
-    	    SpringBoot - Redis Client 적용기
-		</a></li></ul></div>
-</article>
+     <div class="articles">
+  
+
+  
+
+
+  <div class="pagination">
+  <!-- Post list links -->
+  <ul class="post-list">
+<li>
+      
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/java/2022/06/26/java-syncronized.html">
+          [Java] synchronized
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Jun 26, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+      </div>
+      <a class="post-excerpt" href="/java/2022/06/26/java-syncronized.html">
+        <p>
+        Java synchronized
+Java의 synchronized는 Thread간의 동기화 매커니즘이다. synchronized는 하나의 객체를 여러 스레드에서 동시에 사용하거나
+static으로 선언한 객체를 여러 스레드에서 사용할 경우에 적용한다. 주의할 점은 synchronized는 객체 단위로 동작하기 때문에
+한 객체에서 synchronized를 사용하는 여러개의 메서드가 있다면 해당 키워드가 적용된 메서드는 동시에 실행되지 않는다.
+또한 내부에서 동기화를 위해 Monitor를 사용하고 있으므로 성능저하 문제가 발생할 수 있다.
+
+Monitor
+모니터란 동시에 수행중인 프로세스나 스레드 사이에서 동기화를 적용... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#Java">#Java</a><a class="post-tag" href="/tags.html#monitor">#monitor</a><a class="post-tag" href="/tags.html#synchronized">#synchronized</a><a class="post-tag" href="/tags.html#Thread">#Thread</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/java/2022/06/12/no-getter-setter.html">
+          [Java] Getter Setter 필요없을까?
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Jun 12, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+      </div>
+      <a class="post-excerpt" href="/java/2022/06/12/no-getter-setter.html">
+        <p>
+        들어가며
+이전에 무지성으로 남발하여 주로 사용하였던 Getter Setter가 객체지향 세계에선 아주 지양해야할 패턴이라는 것을 알게 되었다.
+Getter Setter가 존재하는 이상 그 클래스는 능도적인 객체가 아닌 자료구조에 불과하다고 한다. 그런데 가끔 특정한 라이브러리에서 Getter Setter 를 필요로 하는 것을 느꼈다.
+물론 옵션을 설정할 수 있지만 주의해야 하는 것은 마찬가지이다. 그래서 이번에는 Getter Setter 에서 벗어나고 싶은데, 완전히 자유로워지기 힘든 이유를 정리하고자 한다.
+
+Getter, Setter 지양해야 하는 이유
+자바 개발자라면 객제지향 프로그래밍의 4대 원칙을 한번쯤 ... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#Java">#Java</a><a class="post-tag" href="/tags.html#Getter,%20Setter">#Getter, Setter</a><a class="post-tag" href="/tags.html#OOP">#OOP</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/networkstudy/2022/06/08/network-study-04.html">
+          [네트워크 스터디] Chapter_04 엑세스 회선을 통해 인터넷의 내부로 !
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Jun 08, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+      </div>
+      <a class="post-excerpt" href="/networkstudy/2022/06/08/network-study-04.html">
+        <p>
+        ADSL 기술을 이용한 엑세스 회선의 구조와 동작
+
+✔️  인터넷의 기본은 가정이나 회사의 LAN과 같다
+
+
+  인터넷은 거대하고 복잡한 시스템이지만 패킷을 중재하는 부분은 가정, 회사의 LAN과 동일하다.
+  라우터의 기본적인 구조나 동작도 전혀 다르지 않다
+  가정이나 회사의 네트워크 규모가 커진 것이 인터넷
+
+
+✔️ 가정, 회사의 네트워크와 인터넷의 차이점
+
+
+  인터넷은 중계 장치의 거리가 매우 멀다.
+  대한민국과 미국을 연결하려면 태평양을 넘어야하기 때문에 이더넷 케이블로 연결은 어렵다.
+  라우터의 등록정보가 수시로 바뀌기 때문에 경로 등록을 자동화 해야한다.
+    
+      통신 장애가 발생하거나... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EC%9D%B8%ED%84%B0%EB%84%B7">#인터넷</a><a class="post-tag" href="/tags.html#%EC%95%A1%EC%84%B8%EC%8A%A4%20%ED%9A%8C%EC%84%A0">#액세스 회선</a><a class="post-tag" href="/tags.html#ADSL">#ADSL</a><a class="post-tag" href="/tags.html#LAN">#LAN</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/networkstudy/2022/05/29/network-study-03.html">
+          [네트워크 스터디] Chapter_03 케이블의 앞은 LAN 기기였다.
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> May 29, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 10 mins</span>
+      </div>
+      <a class="post-excerpt" href="/networkstudy/2022/05/29/network-study-03.html">
+        <p>
+        📗 Chapter_03 케이블의 앞은 LAN 기기였다. _허브와 스위치, 라우터의 탐험
+
+🌟 3장의 요점 짚고 넘어가기 🌟
+
+
+  해당 챕터는 클라이언트 PC가 가정이나 회사의 LAN에 접속되고, 앞부분이 ADSL이나 광섬유(FTTH)등의 광대역 회선에 의해 인터넷에 접속된다는 최신의 대표적인 상황을 가정하여 설명한다.
+
+  이 경우 LAN 어댑터가 송신한 패킷은 스위칭 허브 등을 경유하여 인터넷 접속용 라우터에 도착한다. 라우터의 앞부분은 이미 인터넷이므로여기에서부터 앞부분은 통신사가 패킷을 상대에게 운반한다. 우체통에 봉투를 넣으면 그 후에는 집배원이 편지를 상대에게 전달하는 것과 유사하다.
+
+
+
+1. 케이블과... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%A6%AC%ED%94%BC%ED%84%B0%20%ED%97%88%EB%B8%8C">#리피터 허브</a><a class="post-tag" href="/tags.html#%EC%8A%A4%EC%9C%84%EC%B9%AD%20%ED%97%88%EB%B8%8C">#스위칭 허브</a><a class="post-tag" href="/tags.html#%EB%9D%BC%EC%9A%B0%ED%8C%85">#라우팅</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">
+          [글또 7기] 다짐
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> May 14, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 2 mins</span>
+      </div>
+      <a class="post-excerpt" href="/daily/2022/05/14/%EA%B8%80%EB%98%907%EA%B8%B0-%EB%8B%A4%EC%A7%90.html">
+        <p>
+        들어가며
+읽기 좋은 글을 꾸준하게 작성하고 싶어서 글또라는 개발자 커뮤니티에서 활동하게 되었다. 
+꾸준하게 글을 작성하는 것이 목표인데….  5월 초에 포스팅한 이후로 인제야 글을 작성한다. 느슨해지지 않기 위해 활동하면서 이루고 싶은 목표들을 정하기로 결심 !
+
+참여한 이유
+1. 가독성 높은 글
+많은 글을 작성해보진 않았지만, 지금까지 포스팅했던 내용을 다시 읽어보면 가독성이 매우 떨어진다. 그리고 불친절한 설명 때문에 다른 사람이 내가 작성한 글을 읽었을 때 큰 혼란이 올 것 같았다. 이런 문제점을 어떻게 고쳐야 하나 고민하고 있을 때 운 좋게 발견한 것이 글또이다.
+
+2. 게으름 탈출
+강의를 듣거나 책을 읽는... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags"><a class="post-tag" href="/tags.html#%EA%B8%80%EB%98%90%207%EA%B8%B0">#글또 7기</a></div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/web/2022/05/01/dns.html">
+          DNS 란?
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> May 01, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 2 mins</span>
+      </div>
+      <a class="post-excerpt" href="/web/2022/05/01/dns.html">
+        <p>
+        브라우저에 “www.naver.com” 입력하면?
+
+DNS가 무엇인지 알아보기 전에 먼저 브라우저에 “www.naver.com” 을 입력했을 때 벌어지는 일들의 일부만 간략하게 알아보자.
+
+
+  브라우저 애플리케이션이 “도메인명”을 조회하는 DNS 리졸버 호출
+  DNS 리졸버가 DNS 서버에 보내는 조회 메시지를 생성
+  프로토콜 스택이 DNS 서버에 DNS 리졸버가 생성한 메시지를 송신
+  DNS 리졸버가 응답 결과를 수신
+
+
+🤔 브라우저 애플리케이션이 “도메인명”을 조회한다고 했는데, 여기서 “도메인명” 이란 무엇을 말하는 걸까? 
+“www.naver.com”를 예시로 들었을 때 도메인명이란 www, nave... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags"><a class="post-tag" href="/tags.html#DNS">#DNS</a></div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/networkstudy/2022/04/29/network-study-02.html">
+          [네트워크 스터디] Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 29, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 16 mins</span>
+      </div>
+      <a class="post-excerpt" href="/networkstudy/2022/04/29/network-study-02.html">
+        <p>
+        📗 Chapter_02 TCP/IP의 데이터를 전기 신호로 만들어 보낸다
+🌟 2장의 요점 짚고 넘어가기 🌟
+
+
+  Chapter 02에선 OS에 내장된 프로토콜 스택이 처음 등장한다. 프로토콜 스택은 네트워크 제어용 소프트웨어이다. 프로토콜 스택은 브라우저에서 받은 메세지를 패킷 속에 저장하고, 수신처 주소 등의 제어 정보를 덧붙인다. 프로토콜 스택은 통신 오류가 발생했을 때 패킷을 고쳐서 보내거나 통신의 기본을 조절하는 등의 다양한 역할을 한다.
+
+  이뿐만 아니라 프로토콜 스택은 패킷을 LAN어댑터(이더넷이나 무선 LAN으로 통신할 때 사용하는 하드웨어)에 넘긴다. 그리고 LAN 어댑터가 패킷을 전기신호로 변환... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#3%20way%20handshake">#3 way handshake</a><a class="post-tag" href="/tags.html#4%20way%20handshake">#4 way handshake</a><a class="post-tag" href="/tags.html#Socket">#Socket</a><a class="post-tag" href="/tags.html#DNS">#DNS</a><a class="post-tag" href="/tags.html#TCP">#TCP</a><a class="post-tag" href="/tags.html#%EC%84%B1%EA%B3%B5%EA%B3%BC%20%EC%8B%A4%ED%8C%A8%EB%A5%BC%20%EC%9C%84%ED%95%9C%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%201%%EC%9D%98%20%EC%9B%90%EB%A6%AC">#성공과 실패를 위한 네트워크 1%의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/04/16/os-study-11.html">
+          [운영체제 스터디] 가상 메모리와 Page Fault
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 16, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/04/16/os-study-11.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+🗳️ Virtual Memory
+
+
+  물리적 메모리의 주소변환은 운영체제가 관여하지 않지만 Virtual Memory 기법은 운영체제가 관여한다.
+
+
+
+1. Demand Paging
+
+
+  실제로 사용자 프로그램에선 자주 사용되지 않는 코드가 대부분이다.
+
+  Demand Paging 기법은 실제로 사용될 경우 메모리에 올리기 때문에 많은 프로세스를 메모리에 동시에 올릴 수 있다.
+
+  Demand Paging 기법에선 무조건 한번은 page fault가 발생한다. (참조될 경우에 메모리... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EA%B0%80%EC%83%81%20%EB%A9%94%EB%AA%A8%EB%A6%AC">#가상 메모리</a><a class="post-tag" href="/tags.html#%EC%9A%94%EA%B5%AC%20%ED%8E%98%EC%9D%B4%EC%A7%95">#요구 페이징</a><a class="post-tag" href="/tags.html#page%20fault">#page fault</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/04/15/os-study-10.html">
+          [운영체제 스터디] 불연속할당
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 15, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/04/15/os-study-10.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+🗳️ Memory Management 2
+
+1. Noncontiguous allocation(불연속할당)
+
+
+  불연속할당(noncontiguous allocation) 기법이란 하나의 프로세스가 물리적 메모리의 여러 위치에 분산되어 올라갈 수 있는 메모리 할당 기법을 말한다. 불연속할당 방식에는 하나의 프로그램을 분할하는 기준에 따라 동일한 크기로 나누어 메모리에 올리는 페이징 기법과, 크기는 일정하지 않지만 의미 단위(코드, 데이터, 스택 영역)로 나누어 메모리에 올리는 세그멘테이션 기... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EB%B6%88%EC%97%B0%EC%86%8D%ED%95%A0%EB%8B%B9">#불연속할당</a><a class="post-tag" href="/tags.html#%ED%8E%98%EC%9D%B4%EC%A7%95">#페이징</a><a class="post-tag" href="/tags.html#%EC%84%B8%EA%B7%B8%EB%A9%98%ED%85%8C%EC%9D%B4%EC%85%98">#세그멘테이션</a><a class="post-tag" href="/tags.html#Invalid%20Bit%20/%20Protection%20Bit">#Invalid Bit / Protection Bit</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/04/15/os-study-09.html">
+          [운영체제 스터디] 메모리 관리 - 논리적 주소와 물리적 주소
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 15, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/04/15/os-study-09.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+🗳️ Memory Management 1
+
+1. 논리적 주소와 물리적 주소
+
+✔️  논리적 주소란(Logical address)?
+
+
+  프로세스마다 독립적으로 가지는 주소 공간
+  각 프로세스마다 0번지부터 시작
+  CPU가 보는 주소는 logical address이다.
+
+
+✔️  물리적 주소란(Logical address)?
+
+
+  실제 메모리에 올라가는 위치
+
+
+1.2 주소 바인딩(Address Binding)
+
+
+  프로세스의 물리적 메모리 주소를 결정하는 것
+
+  Symbolic ... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EB%A9%94%EB%AA%A8%EB%A6%AC%EA%B4%80%EB%A6%AC">#메모리관리</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C">#운영체제</a><a class="post-tag" href="/tags.html#%EA%B0%80%EB%B3%80%EB%B6%84%ED%95%A0">#가변분할</a><a class="post-tag" href="/tags.html#%EC%99%B8%EB%B6%80%EC%A1%B0%EA%B0%81%EA%B3%BC%20%EB%82%B4%EB%B6%80%EC%A1%B0%EA%B0%81">#외부조각과 내부조각</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/networkstudy/2022/04/14/network-study-01.html">
+          [네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 14, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 12 mins</span>
+      </div>
+      <a class="post-excerpt" href="/networkstudy/2022/04/14/network-study-01.html">
+        <p>
+        📗 Chapter_01 웹 브라우저가 메세지를 만든다
+1. HTTP 리퀘스트 메세지를 작성한다
+
+1️⃣  URL
+
+✔️ HTTP URL 의 구성
+
+ex ) http://user:password@www.example.co.kr:80/dir/file1.html
+
+
+  프로토콜 →  http
+  사용자명 (생략 가능) → user
+  패스워드 (생략 가능) → password
+  웹 서버의 도메인명 → www.example.co.kr
+  포트번호 (생략 가능) → 80
+  파일의 경로명 → /dir/file1.html
+
+
+💡 HTTP 의 경우 기본 포트는 80이고 HTTPS의 기본 포트는 443이다.
+
+
+
+✔️ URL ... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#HTTP">#HTTP</a><a class="post-tag" href="/tags.html#Socket">#Socket</a><a class="post-tag" href="/tags.html#DNS">#DNS</a><a class="post-tag" href="/tags.html#TCP">#TCP</a><a class="post-tag" href="/tags.html#%EC%84%B1%EA%B3%B5%EA%B3%BC%20%EC%8B%A4%ED%8C%A8%EB%A5%BC%20%EC%9C%84%ED%95%9C%20%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC%201%%EC%9D%98%20%EC%9B%90%EB%A6%AC">#성공과 실패를 위한 네트워크 1%의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/04/04/os-study-08.html">
+          [운영체제 스터디] 데드락과 데드락 발생조건 4가지
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 04, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 7 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/04/04/os-study-08.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+⚠️ Deadlock
+
+✔️ Deadlock
+
+
+  이련의 프로세스들이 서로가 가진 자원을 기다리며 block된 상태
+
+
+✔️ Resource(자원)
+
+
+  하드웨어, 소프트웨어 등을 포함하는 개념
+  (예) I/O device. CPU cycle, memory space, semaphore 등
+  프로세스가 자원을 사용하는 절차
+    
+      요청 (Request),획득 (Allocate),사용 (Use), 반납 (Release)
+    
+  
+
+
+1. Deadlock 발생의 4가지... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EB%8D%B0%EB%93%9C%EB%9D%BD">#데드락</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C">#운영체제</a><a class="post-tag" href="/tags.html#%EB%8D%B0%EB%93%9C%EB%9D%BD%20%EB%B0%9C%EC%83%9D%204%EA%B0%80%EC%A7%80%20%EC%A1%B0%EA%B1%B4">#데드락 발생 4가지 조건</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/04/02/os-study-07.html">
+          [운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Apr 02, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 10 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/04/02/os-study-07.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+Process Synchronization(Concurrency)
+‼️  프로세스 동기화와 관련된 3가지 문제
+
+
+  Bounded-Buffer Problem
+  Readers and Writers Problem
+  Dining-Philosophers Problem
+
+
+1. Bounded-Buffer Problem (Producer-Consumer Problem)
+
+
+  Bounded-Buffer Problem란 생산자와 사용자의 비율이 맞지않아서 사용자나 생산자가 무한히 대기하거나, 공유... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%8B%9D%EC%82%AC%ED%95%98%EB%8A%94%20%EC%B2%A0%ED%95%99%EC%9E%90">#식사하는 철학자</a><a class="post-tag" href="/tags.html#%EB%AA%A8%EB%8B%88%ED%84%B0">#모니터</a><a class="post-tag" href="/tags.html#%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4">#세마포어</a><a class="post-tag" href="/tags.html#%EB%AE%A4%ED%85%8D%EC%8A%A4">#뮤텍스</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/28/os-study-06.html">
+          [운영체제 스터디] 프로세스 동기화 조건 3가지와 뮤텍스 세마포어
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 28, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 8 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/28/os-study-06.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. 프로세스 동기화 프로그램적 해결법의 충족 조건
+
+
+  프로세스가 임계구역에 동시에 접근하는 것을 방지하고 데이터 일관성을 유지하려면 아래 세가지 조건을 충족해야한다.
+
+
+
+✔️ Mutual Exclustion
+
+
+  프로세스 Pi가 Critical Section 부분을 수행 중이면 다른 모든 프로세스들은 그들의 Critical Section에 접근하면 안된다.
+
+
+✔️ Progress
+
+
+  Critical Section에 접근한 프로세스가 없는 상황에서 Critical Section... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EA%B5%90%EC%B0%A9%EC%83%81%ED%83%9C">#교착상태</a><a class="post-tag" href="/tags.html#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20%EB%8F%99%EA%B8%B0%ED%99%94">#프로세스 동기화</a><a class="post-tag" href="/tags.html#%EC%84%B8%EB%A7%88%ED%8F%AC%EC%96%B4">#세마포어</a><a class="post-tag" href="/tags.html#%EB%AE%A4%ED%85%8D%EC%8A%A4">#뮤텍스</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/23/os-study-05.html">
+          [운영체제 스터디] 다단계 큐 스케줄링과 프로세스 동기화
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 23, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 4 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/23/os-study-05.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. Multilevel Queue (SingleCore Cpu 기준)
+
+✔️ Multilevel Feedback Queue보다 프로세스 차별적인 방식
+
+✔️ Ready queue를 여러 개로 분할
+
+
+  foreground (interactive)
+  background (batch - no human interaction)
+
+
+✔️  각 큐는 독립적인 스케줄링 알고리즘을 가짐
+
+
+  foreground - RR (라운드 로빈)
+    
+      사용자와 대화하는 프로세스이기 때문에 응... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EB%A9%80%ED%8B%B0%20%ED%94%BC%EB%93%9C%EB%B0%B1%20%ED%81%90">#멀티 피드백 큐</a><a class="post-tag" href="/tags.html#%EB%A9%80%ED%8B%B0%EB%A0%88%EB%B2%A8%20%ED%81%90">#멀티레벨 큐</a><a class="post-tag" href="/tags.html#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20%EB%8F%99%EA%B8%B0%ED%99%94">#프로세스 동기화</a><a class="post-tag" href="/tags.html#Operating%20System">#Operating System</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/22/os-study-04.html">
+          [운영체제 스터디] 프로세스 생성과 프로세스의 협력
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 22, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/22/os-study-04.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. 프로세스와 관련한 시스템 콜
+
+✔️ fork()
+
+
+  create a child (copy)
+
+
+✔️ exec()
+
+
+  overlay new image
+
+
+✔️ wait()
+
+
+  sleep until child is done
+
+
+✔️ exit()
+
+
+  frees all the resources, notify parent
+
+
+2. 프로세스 생성 (Process Creation)
+
+‼️  Copy-on-wirte(COW)
+
+
+  자원의 내용이 변경될 때 메모리 영역을 복제하고 변경... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%20%EC%83%9D%EC%84%B1">#프로세스 생성</a><a class="post-tag" href="/tags.html#%EB%B6%80%EB%AA%A8%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4">#부모 프로세스</a><a class="post-tag" href="/tags.html#%EC%9E%90%EC%8B%9D%20%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4">#자식 프로세스</a><a class="post-tag" href="/tags.html#Operating%20System">#Operating System</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/22/os-study-04-02.html">
+          [운영체제 스터디] 프로세스의 특성과 CPU 스케줄링
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 22, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/22/os-study-04-02.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. CPU and I/O Bursts In Program Execution
+
+
+  어떤 프로그램이든 프로그램을 실행한다는 것은 CPU Burst와 I/O Burst를 반복하게 되는 것이다.
+
+
+
+❓CPU Burst
+
+
+  CPU에서 instruction을 수행하는 것
+
+
+❓ I/O Burst
+
+
+  I/O를 instruction을 수행하는 작업
+
+
+💡 프로세스의 특성 분류
+
+✔️ I/O-bound process
+
+
+  CPU를 잡고 계산하는 시간보다 I/O에 많은 시간이 필요한 Job
+ ... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#CPU%20%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81">#CPU 스케줄링</a><a class="post-tag" href="/tags.html#Round%20Robin">#Round Robin</a><a class="post-tag" href="/tags.html#SJF%20%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81">#SJF 스케줄링</a><a class="post-tag" href="/tags.html#FCFS">#FCFS</a><a class="post-tag" href="/tags.html#%EC%9A%B0%EC%84%A0%EC%88%9C%EC%9C%84%20%EC%8A%A4%EC%BC%80%EC%A4%84%EB%A7%81">#우선순위 스케줄링</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/16/os-study-03.html">
+          [운영체제 스터디] 프로세스와 쓰레드
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 16, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/16/os-study-03.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. 프로세스
+
+
+  “Process is a program in execution”
+
+
+
+✔️ 프로세스의 문맥(context)
+
+
+  CPU 수행 상태를 나타내는 하드웨어 문맥
+    
+      하드웨어 문맥
+        
+          Program Counter
+          각종 register
+        
+      
+    
+  
+  프로세스의 주소 공간 (프로세스마다 각자의 주소공간을 가지고 있음)
+    
+      code, data, stack
+    
+  ... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4">#프로세스</a><a class="post-tag" href="/tags.html#%EC%8A%A4%EC%BC%80%EC%A4%84%EB%9F%AC">#스케줄러</a><a class="post-tag" href="/tags.html#OS">#OS</a><a class="post-tag" href="/tags.html#Operating%20System">#Operating System</a><a class="post-tag" href="/tags.html#%EC%93%B0%EB%A0%88%EB%93%9C">#쓰레드</a><a class="post-tag" href="/tags.html#Thread">#Thread</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/15/os-study-02.html">
+          [운영체제 스터디] 컴퓨터 구조와 컴퓨터 시스템 동작원리
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 15, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 6 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/15/os-study-02.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. 컴퓨터 구조
+
+
+
+✔️ 전문가적 입장에서 컴퓨터를 말할 때, 보통 CPU와 Memory를 말한다.
+
+✔️ 컴퓨터는 CPU, Memory, I/O Device, Disk, 네트워크 장비들로 이뤄져있다.
+
+2. 컴퓨터 시스템 구조
+
+✔️  CPU
+
+
+  CPU는 매 클럭사이클 마다 메모리에서 instruction을 하나씩 읽어서 실행한다.
+  instruction 수행이 종료되면 Interrupt Line을 체크하고 인터럽트 신호가 확인되면 수행한다.
+
+
+✔️  Modebit
+
+
+  사용... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C">#운영체제</a><a class="post-tag" href="/tags.html#%EC%BB%B4%ED%93%A8%ED%84%B0%20%EA%B5%AC%EC%A1%B0">#컴퓨터 구조</a><a class="post-tag" href="/tags.html#OS">#OS</a><a class="post-tag" href="/tags.html#Operating%20System">#Operating System</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/os/2022/03/14/os-study-01.html">
+          [운영체제 스터디] 운영체제란 무엇인가?
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Mar 14, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 5 mins</span>
+      </div>
+      <a class="post-excerpt" href="/os/2022/03/14/os-study-01.html">
+        <p>
+        🌟 본 게시물은 이화여자대학교 반효경 교수님 강의를 참고로 작성한 게시물 입니다. 틀린 내용은 꼬옥 지적 부탁드립니다 ! 🌟
+
+1. 운영체제란 무엇인가?
+
+
+  컴퓨터 하드웨어 바로 윗단에 설치되는 소프트웨어를 말한다.
+운영체제는 하드웨어와 소프트웨어를 연결하는 소프트웨어 계층이다.
+
+
+
+✔️ 운영체제의 주요역할
+
+
+  하드웨어 자원을 효율적으로 관리
+  사용자가 컴퓨터를 쉽게 다룰 수 있게 GUI 인터페이스 제공
+
+
+✔️ 자원이란 CPU, 메모리, 하드웨어 뿐만 아니라 소프트웨어 자원까지 포함하여 부르는 말이다. 자원관리는 운영체제의 중요한 역할 중 하나이다*
+
+✔️ 협의의 운영체제(커널)
+
+
+  운영체제의 핵심... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EB%9E%80?">#운영체제란?</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%9D%98%20%EB%AA%A9%EC%A0%81">#운영체제의 목적</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%20%EA%B5%AC%EC%A1%B0">#운영체제 구조</a><a class="post-tag" href="/tags.html#Operating%20System">#Operating System</a><a class="post-tag" href="/tags.html#%EB%B0%98%ED%9A%A8%EA%B2%BD">#반효경</a><a class="post-tag" href="/tags.html#%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%99%80%20%EC%A0%95%EB%B3%B4%EA%B8%B0%EC%88%A0%EC%9D%98%20%EC%9B%90%EB%A6%AC">#운영체제와 정보기술의 원리</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/tobi/2022/02/21/spring-applicationcontext.html">
+          SpringFramework - Web ApplicationContext
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Feb 21, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 3 mins</span>
+      </div>
+      <a class="post-excerpt" href="/tobi/2022/02/21/spring-applicationcontext.html">
+        <p>
+        1.  IoC 컨테이너 : 빈 팩토리와 애플리케이션 컨텍스트
+
+
+  스프링 애플리케이션에서는 오브젝트의 생성과 관계설정, 사용, 제거 등의 작업을 애플리케이션 코드 대신 독립적인 컨테이너가 담당한다.
+  이를 컨테이너가 코드 대신 오브젝트 제어권을 갖고있다고 해서 IoC 라고 부른다. 그래서 스프링 컨테이너를 IoC 컨테이너 라고도 한다.
+  스프링에선 IoC를 담당하는 컨테이너를 빈 팩토리 또는 애플리케이션 컨텍스트라고 부르기도 한다.
+  오브젝트의 생성과 오브젝트 사이의 런타임 관계를 설정하는 DI 관점으로 볼 때는 컨테이너를 빈 팩토리라고 한다.
+  그런데 스프링 컨테이너는 단순한 DI 작업보다 더 많은 일을... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#springframework">#springframework</a><a class="post-tag" href="/tags.html#applicationContext">#applicationContext</a><a class="post-tag" href="/tags.html#dispatcherServlet">#dispatcherServlet</a><a class="post-tag" href="/tags.html#%ED%86%A0%EB%B9%84%EC%9D%98%20%EC%8A%A4%ED%94%84%EB%A7%81%203.1">#토비의 스프링 3.1</a>
+</div>
+    </li>
+<li>
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2 class="post-title">
+        <a class="post-link" href="/springboot/2022/02/16/spring-boot-redis.html">
+          SpringBoot - Redis Client 적용기
+        </a>
+      </h2>
+      <div class="post-meta">
+        <span class="post-date"><i class="fa fa-calendar"></i> Feb 16, 2022</span>
+        <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+      </div>
+      <a class="post-excerpt" href="/springboot/2022/02/16/spring-boot-redis.html">
+        <p>
+        들어가며
+
+스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.
+예제코드로 적용 방법을 알아보자
+
+🌟 Redis 의존 설정
+
+Spring은 다양한 Redis 의존설정 방법을 제공한다.
+
+1 - Gradle이나 Maven 설정 파일에 의존 추가하기
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
+
+
+2 - Intellij tool 을 사용하여 SpringBoot 프로젝트 생성시점에 Spring Data Redis 를 추가하는 방법이다.
+
+
+
+3 - Spring initializr 로 프로젝... <span class="read_more">Read More</span>
+        </p>
+      </a>
+      <div class="post-tags">
+<a class="post-tag" href="/tags.html#springBoot">#springBoot</a><a class="post-tag" href="/tags.html#redis">#redis</a><a class="post-tag" href="/tags.html#lettuce">#lettuce</a>
+</div>
+    </li>
+</ul>
+
+  <!-- Pagination links -->
+</div>
 </div>
 
-		</div>
-	</div>
-  </body>
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="common-list">
+  <ul>
+    <li>
+      <a href="/index.html">
+        All<span>22</span>
+      </a>
+    </li>
+
+    
+      <li>
+        <a href="/categories.html#h-Java">
+          Java <span>2</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-OS">
+          OS <span>12</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-SpringBoot">
+          SpringBoot <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-Tobi">
+          Tobi <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-Web">
+          Web <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-daily">
+          daily <span>1</span>
+        </a>
+      </li>
+    
+      <li>
+        <a href="/categories.html#h-networkStudy">
+          networkStudy <span>4</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2022 GitHub User</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
 </html>

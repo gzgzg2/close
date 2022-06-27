@@ -1,123 +1,838 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-	<link rel="icon" type="image/png" href="/public/favicon/favicon.ico">
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="나비랑 나리 주인님의 블로그" /></head>
-<style>@import url(/public/css/syntax/monokai.css);</style>
-  <title>나비랑 나리 주인님의 블로그</title>
-  <!-- <link href="/public/css/bootstrap.min.css" rel="stylesheet"> -->
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-translate-customization" content="108d9124921d80c3-80e20d618ff053c8-g4f02ec6f3dba68b7-c">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>SpringBoot - Redis Client 적용기 | Your awesome title</title>
+<meta name="generator" content="Jekyll v4.2.2">
+<meta property="og:title" content="SpringBoot - Redis Client 적용기">
+<meta name="author" content="GitHub User">
+<meta property="og:locale" content="en_US">
+<meta name="description" content="들어가며">
+<meta property="og:description" content="들어가며">
+<link rel="canonical" href="http://localhost:4000/springboot/2022/02/16/spring-boot-redis.html">
+<meta property="og:url" content="http://localhost:4000/springboot/2022/02/16/spring-boot-redis.html">
+<meta property="og:site_name" content="Your awesome title">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2022-02-16T00:00:00+09:00">
+<meta name="twitter:card" content="summary">
+<meta property="twitter:title" content="SpringBoot - Redis Client 적용기">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"GitHub User"},"dateModified":"2022-02-21T00:00:00+09:00","datePublished":"2022-02-16T00:00:00+09:00","description":"들어가며","headline":"SpringBoot - Redis Client 적용기","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/springboot/2022/02/16/spring-boot-redis.html"},"url":"http://localhost:4000/springboot/2022/02/16/spring-boot-redis.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="shortcut icon" href="">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-noto-sans@0.0.72/index.min.css">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script src="/assets/js/main.js"></script><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Your awesome title">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<script charset="UTF-8" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/go.min.js"></script>
 
-  <link href="/public/css/style.css" rel="stylesheet">
-  <body>
-  	<div class="container"> 
-		<div class="sidebar">
-			<div class="sidebar-item sidebar-header">
-	<div class='sidebar-brand'>
-		<a href="/about/">나비랑 나리 주인님의 블로그</a>
-	</div>
-	<div class='sidebar-brand'>
-		<div class="profile-image">
-			<img src="/public/img/navi_3.jpeg"></img>
-		</div>
-	</div>
-	<p class="lead">잠자는 시간이 제일 좋아</p></div>
 
 
-<div class="sidebar-item sidebar-nav">
-	<ul class="nav">
-      <li class="nav-title">Pages</li>
-	  <li>
-	  	<a class="nav-item" href="/">Articles</a>
-	  </li>
-	  
-	  
-	    
-	  
-	    
-	      
-	    
-	  
-	    
-	  
-	    
-	  
-	</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Init highlight js
+document.addEventListener('DOMContentLoaded', function(event) {
+  var els = document.querySelectorAll('pre code')
+
+  function addLangData(block) {
+    var outer = block.parentElement.parentElement.parentElement;
+    var lang = block.getAttribute('data-lang');
+    for (var i = 0; i < outer.classList.length; i++) {
+      var cls = outer.classList[i];
+      if (cls.startsWith('language-')) {
+        lang = cls;
+        break;
+      }
+    }
+    if (!lang) {
+      cls = block.getAttribute('class');
+      lang = cls ? cls.replace('hljs ', '') : '';
+    }
+    if (lang.startsWith('language-')) {
+      lang = lang.substr(9);
+    }
+    block.setAttribute('class', 'hljs ' + lang);
+    block.parentNode.setAttribute('data-lang', lang);
+  }
+
+  function addBadge(block) {
+    var enabled = ('true' || 'true').toLowerCase();
+    if (enabled == 'true') {
+      var pre = block.parentElement;
+      pre.classList.add('badge');
+    }
+  }
+
+  function handle(block) {
+    addLangData(block);
+    addBadge(block)
+    hljs.highlightBlock(block);
+  }
+
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    handle(el);
+  }
+});
+</script>
+
+<style>
+  /* code language badge */
+  pre.badge::before {
+    content: attr(data-lang);
+    color: #fff;
+    background-color: #ff4e00;
+    padding: 0 .5em;
+    border-radius: 0 2px;
+    text-transform: uppercase;
+    text-align: center;
+    min-width: 32px;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+  /* fix wrong badge display for firefox browser */
+  code > table pre::before {
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="site-header " role="banner">
+
+  <div class="wrapper">
+    <div class="site-header-inner">
+<span class="site-brand"><a class="site-brand-inner" rel="author" href="/">
+  <img class="site-favicon" title="Your awesome title" src="" onerror="this.style.display='none'">
+  Your awesome title
+</a>
+</span><nav class="site-nav">
+          <input type="checkbox" id="nav-trigger" class="nav-trigger">
+          <label for="nav-trigger">
+            <span class="menu-icon">
+              <svg viewbox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+              </svg>
+            </span>
+          </label>
+
+          <div class="trigger">
+<a class="page-link" href="/about.html">ABOUT</a><a class="page-link" href="/archives.html">ARCHIVES</a><a class="page-link" href="/categories.html">CATEGORIES</a><a class="page-link" href="/">HOME</a><a class="page-link" href="/tags.html">TAGS</a>
+
+
+
+
+
+
+
+
+
+<span class="page-link">
+
+
+
+<div id="google_translate_element" style="display: none;">
 </div>
 
-<div class="sidebar-item sidebar-nav">
-  	<ul class="nav">
-			<li class="nav-title">Categories</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#SpringBoot">
-				<span class="name">SpringBoot</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Tobi">
-				<span class="name">Tobi</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#OS">
-				<span class="name">OS</span>
-				<span class="badge">12</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#networkStudy">
-				<span class="name">networkStudy</span>
-				<span class="badge">4</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Web">
-				<span class="name">Web</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#daily">
-				<span class="name">daily</span>
-				<span class="badge">1</span>
-	    	</a>
- 		</li>
-	    
-	    <li>
-	    	<a class="nav-item" href="/category/#Java">
-				<span class="name">Java</span>
-				<span class="badge">2</span>
-	    	</a>
- 		</li>
-	    
-	  </nav>
-	</ul>
+<span class="ct-language">
+  <ul class="list-unstyled ct-language-dropdown">
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="en">
+          
+          <img src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-400.png" title="English">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="fr">
+          
+          <img src="https://cdn.countryflags.com/thumbs/france/flag-400.png" title="French">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="zh-CN">
+          
+          <img src="https://cdn.countryflags.com/thumbs/china/flag-400.png" title="Chinese(Simple)">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ja">
+          
+          <img src="https://cdn.countryflags.com/thumbs/japan/flag-400.png" title="Japanese">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ko">
+          
+          <img src="https://cdn.countryflags.com/thumbs/south-korea/flag-400.png" title="Korean">
+          
+        </a>
+      </li>
+    
+      <li>
+        <a href="#" class="lang-select" data-lang="ru">
+          
+          <img src="https://cdn.countryflags.com/thumbs/russia/flag-400.png" title="Russian">
+          
+        </a>
+      </li>
+    
+  </ul>
+</span>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false,
+    layout: google.translate.TranslateElement.InlineLayout.VERTICAL
+  }, 'google_translate_element');
+
+  // Links to cross-origin destinations are unsafe
+  var gll = document.getElementsByClassName('goog-logo-link')[0];
+  if (gll) {
+    gll.setAttribute('rel', 'noopener');
+  }
+
+  function restoreLang() {
+    var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
+    if (!iframe) return;
+
+    var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+    var restore_el = innerDoc.getElementsByTagName("button");
+
+    for (var i = 0; i < restore_el.length; i++) {
+      if (restore_el[i].id.indexOf("restore") >= 0) {
+        restore_el[i].click();
+        var close_el = innerDoc.getElementsByClassName("goog-close-link");
+        close_el[0].click();
+        return;
+      }
+    }
+  }
+
+  function triggerHtmlEvent(element, eventName) {
+    var event;
+    if (document.createEvent) {
+      event = document.createEvent('HTMLEvents');
+      event.initEvent(eventName, true, true);
+      element.dispatchEvent(event);
+    } else {
+      event = document.createEventObject();
+      event.eventType = eventName;
+      element.fireEvent('on' + event.eventType, event);
+    }
+  }
+
+  var googleCombo = document.querySelector("select.goog-te-combo");
+  var langSelect = document.querySelector('.ct-language');
+  langSelect.addEventListener('click', function(event) {
+    if (!event.target) {
+      return;
+    }
+
+    var selected = document.querySelector('.ct-language .ct-language-selected');
+    if (selected) {
+      selected.classList.remove('ct-language-selected');
+    }
+
+    var target = event.target;
+    while (target && target !== langSelect ) {
+      if (target.matches('.lang-select')) {
+        break;
+      }
+      target = target.parentElement;
+    }
+
+    if (target && target.matches('.lang-select')) {
+      var lang = target.getAttribute('data-lang');
+      if (googleCombo.value == lang) {
+        restoreLang();
+      } else {
+        target.parentElement.classList.add('ct-language-selected');
+        googleCombo.value = lang;
+        triggerHtmlEvent(googleCombo, 'change');
+      }
+    }
+
+    event.preventDefault();
+  });
+}
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</span>
+</div>
+        </nav>
+</div>
+  </div>
+</header>
+
+<script>
+  function initHeader() {
+    var lastScrollY = getScrollPos().y;
+    var documentElement = document.documentElement;
+
+    function storeScrollData() {
+      var y = getScrollPos().y;var scrollStatus = "";
+
+      if (y <= 0) {
+        scrollStatus = "top";
+      } else if ((window.innerHeight + y) >= document.body.offsetHeight) {
+        scrollStatus = "bottom";
+      } else {
+        var isScrollDown = (y - lastScrollY > 0) ? true : false;
+        scrollStatus = isScrollDown ? "down" : "up";
+      }
+
+      lastScrollY = y;
+      documentElement.setAttribute("data-scroll-status", scrollStatus);
+    }
+
+    window.addEventListener('scroll', function(e) {
+      storeScrollData();
+    });
+
+    storeScrollData();
+  }
+  document.addEventListener('DOMContentLoaded', initHeader);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  function hashLocate(hashValue) {
+    hashValue = hashValue.replace(/^.*#h-/, '');
+    hashValue = decodeURIComponent(hashValue);
+    var element = document.getElementById(hashValue);
+
+    if (!element) {
+      return;
+    }
+
+    var header = document.querySelector('header.site-header');
+    var headerRect = header.getBoundingClientRect();
+    var headerTop = Math.floor(headerRect.top);
+    var headerHeight = Math.floor(headerRect.height);
+    var scrollPos = getScrollPos();
+    var offsetY = element.offsetTop - (headerTop + headerHeight + 20);
+
+    if (offsetY == scrollPos.y) {
+      return;
+    }
+
+    if (headerTop == 0  && offsetY > scrollPos.y) {
+      offsetY += headerHeight + 2;
+    } else if (headerTop < 0  && offsetY < scrollPos.y) {
+      offsetY -= headerHeight - 2;
+    }
+
+    smoothScrollTo(offsetY);
+  }
+
+  // The first event occurred
+  window.addEventListener('load', function(event) {
+    if (window.location.hash) {
+      hashLocate(window.location.hash);
+    }
+  });
+
+  // The first event occurred
+  window.addEventListener('click', function(event) {
+    if (event.target.tagName.toLowerCase() == 'a') {
+      hashLocate(event.target.getAttribute('href'));
+    }
+  });
+</script>
+<div class="theme-toggle">
+  <input type="checkbox" id="theme-switch">
+  <label for="theme-switch">
+    <div class="toggle"></div>
+    <div class="names">
+      <p class="light">Light</p>
+      <p class="dark">Dark</p>
+    </div>
+  </label>
 </div>
 
-<div class="sidebar-item sidebar-footer">
-	<p>Powered by <a href="https://github.com/jekyll/jekyll">Jekyll</a></p>
-</div>
-		</div>
-		<div class="content">
-			<article class="post">
-	<header class="post-header">
-		<div class="post-title"> 
-			SpringBoot - Redis Client 적용기
-		</div>
-		<time class="post-date dt-published" datetime="2022-02-16T00:00:00+09:00" itemprop="datePublished">2022/02/16
-		</time>		
-	</header>
 
-	<div class="post-content">
-		<h2 id="들어가며">들어가며</h2>
+
+
+<script>
+  (function() {
+    var sw = document.getElementById('theme-switch');
+    var html = document.getElementsByTagName('html')[0];
+    var nightModeOption = ('auto' || 'auto').toLowerCase();
+    var storage = nightModeOption === 'manual'
+        ? localStorage
+        : sessionStorage;
+    var themeData = loadThemeData();
+
+    function saveThemeData(data) {
+      storage.setItem('theme', JSON.stringify(data));
+    }
+
+    function loadThemeData() {
+      var data = storage.getItem('theme');
+      try {
+        data = JSON.parse(data ? data : '');
+      } catch(e) {
+        data = { nightShift: undefined, autoToggleAt: 0 };
+        saveThemeData(data);
+      }
+      return data;
+    }
+
+    function handleThemeToggle(nightShift) {
+      themeData.nightShift = nightShift;
+      saveThemeData(themeData);
+      html.dataset.theme = nightShift ? 'dark' : 'light';
+      setTimeout(function() {
+        sw.checked = nightShift ? true : false;
+      }, 50);
+    }
+
+    function autoThemeToggle() {
+      // Next time point of theme toggle
+      var now = new Date();
+      var toggleAt = new Date();
+      var hours = now.getHours();
+      var nightShift = hours >= 19 || hours <=7;
+
+      if (nightShift) {
+        if (hours > 7) {
+          toggleAt.setDate(toggleAt.getDate() + 1);
+        }
+        toggleAt.setHours(7);
+      } else {
+        toggleAt.setHours(19);
+      }
+
+      toggleAt.setMinutes(0);
+      toggleAt.setSeconds(0);
+      toggleAt.setMilliseconds(0)
+
+      var delay = toggleAt.getTime() - now.getTime();
+
+      // auto toggle theme mode
+      setTimeout(function() {
+        handleThemeToggle(!nightShift);
+      }, delay);
+
+      return {
+        nightShift: nightShift,
+        toggleAt: toggleAt.getTime()
+      };
+    }
+
+    // Listen the theme toggle event
+    sw.addEventListener('change', function(event) {
+      handleThemeToggle(event.target.checked);
+    });
+
+    if (nightModeOption == 'auto') {
+      var data = autoThemeToggle();
+
+      // Toggle theme by local setting
+      if (data.toggleAt > themeData.autoToggleAt) {
+        themeData.autoToggleAt = data.toggleAt;
+        handleThemeToggle(data.nightShift);
+      } else {
+        handleThemeToggle(themeData.nightShift);
+      }
+    } else if (nightModeOption == 'manual') {
+      handleThemeToggle(themeData.nightShift);
+    } else {
+      var nightShift = themeData.nightShift;
+      if (nightShift === undefined) {
+        nightShift = nightModeOption === 'on';
+      }
+      handleThemeToggle(nightShift);
+    }
+  })();
+</script>
+<div id="click-to-top" class="click-to-top">
+  <i class="fa fa-arrow-up"></i>
+</div>
+<script>
+  (function () {
+    const clickToTop = document.getElementById('click-to-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        clickToTop.classList.add('show')
+      }else {
+        clickToTop.classList.remove('show')
+      }
+    });
+    clickToTop.addEventListener('click', () => {
+      window.smoothScrollTo(0);
+    });
+  })();
+</script>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="framework">
+  <section class="main">
+
+     <div class="post">
+  <section>
+
+
+
+
+
+
+
+
+
+<header class="post-header">
+  <h1 class="post-title p-name" itemprop="name headline">SpringBoot - Redis Client 적용기</h1>
+  <h2 class="post-subtitle"></h2>
+
+  <p class="post-meta">
+    <time class="dt-published" datetime="2022-02-16T00:00:00+09:00" itemprop="datePublished"><i class="fa fa-calendar"></i> Feb 16, 2022
+    </time>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <span class="post-reading-time left-vsplit"><i class="fa fa-clock-o"></i> About 11 mins</span>
+  </p>
+<div class="post-tags">
+<a class="post-tag" href="/tags.html#springBoot">#springBoot</a><a class="post-tag" href="/tags.html#redis">#redis</a><a class="post-tag" href="/tags.html#lettuce">#lettuce</a>
+</div></header>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="post-content e-content" itemprop="articleBody">
+
+      <h2 id="들어가며">들어가며</h2>
 
 <p>스프링부트 Redis 적용 방법을 공유하고자 게시물을 작성하였다.
 예제코드로 적용 방법을 알아보자</p>
@@ -132,18 +847,18 @@
 	<span class="nv">implementation</span> <span class="ss">'org</span><span class="o">.</span><span class="nv">springframework</span><span class="o">.</span><span class="nv">boot:spring-boot-starter-data-redis</span><span class="o">'</span>
 <span class="err">}</span>
 </code></pre></div></div>
-<p><br />
+<p><br>
 2 - Intellij tool 을 사용하여 SpringBoot 프로젝트 생성시점에 Spring Data Redis 를 추가하는 방법이다.</p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" width="550" height="500" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/154784437-6aff0467-1b9e-401d-a3da-928f16524194.png" alt="redis-intellij" width="550" height="500"></p>
 
 <p>3 - Spring initializr 로 프로젝트 생성 시점에 Spring Data Redis 추가하기</p>
 
-<p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" width="700" height="500" /></p>
+<p><img src="https://user-images.githubusercontent.com/56028408/154784439-d6dafd63-1c91-47b5-b38f-4533574a972b.png" alt="initalizr-redis" width="700" height="500"></p>
 
-<p><br /></p>
+<p><br></p>
 
-<p><code class="highlighter-rouge">💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다</code></p>
+<p><code class="language-plaintext highlighter-rouge">💡 참고로 Springboot 2 부터는 Lettuce가 기본 Redis Client로 사용된다. 본 프로젝트도 Lettuce를 사용하였다</code></p>
 
 <h2 id="applicationyml-설정">🌟 A<strong>pplication.yml</strong> 설정</h2>
 
@@ -164,8 +879,8 @@
 	<span class="nv">password:</span> <span class="ss">'vldpsxl1q2w3e</span><span class="o">'</span>
 </code></pre></div></div>
 
-<p>Redis 에 관한 정보만 입력한다고 가정하면 이게 끝이다.  설정 정보는 아래 표 참조 바람<br />
-<br /></p>
+<p>Redis 에 관한 정보만 입력한다고 가정하면 이게 끝이다.  설정 정보는 아래 표 참조 바람<br>
+<br></p>
 
 <p><strong>Redis Option</strong></p>
 
@@ -295,11 +1010,11 @@
 <p>기존 xml 파일은 번거롭게 Serializer 클래스를 매번 bean으로 등록해서 redisTemplate에 주입했다.
 그런데 자바코드는 간단하게 인스턴스만 생성해서 주입하고 있는 것을 확인할 수 있다.</p>
 
-<p><br /></p>
+<p><br></p>
 
-<p><code class="highlighter-rouge">💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.</code></p>
+<p><code class="language-plaintext highlighter-rouge">💡 참고로 RedisTemplate는 RedisTemplate뿐만 아니라 StringRedisTemplate 도 존재한다.  게시물 주제와 연관이 없으므로 자세한 내용은 생략한다.</code></p>
 
-<p><br /></p>
+<p><br></p>
 
 <h2 id="redis-message-listener">🌟 Redis Message Listener</h2>
 
@@ -331,9 +1046,12 @@
 </code></pre></div></div>
 
 <ol>
-  <li><code class="highlighter-rouge">MessageListenerAdapter</code> 빈에  <code class="highlighter-rouge">MessageListener</code> 를 주입한다.</li>
-  <li><code class="highlighter-rouge">RedisMessageListenerContainer</code> 빈 등록 <code class="highlighter-rouge">connectionFactory</code>, <code class="highlighter-rouge">messageListeners</code> 주입</li>
-  <li><code class="highlighter-rouge">redisKeyExpireMessageListener</code> 가 수신할 채널 혹은 패턴을 등록한다. 패턴은 이벤트 또는 채널명이 될 수 있다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">MessageListenerAdapter</code> 빈에  <code class="language-plaintext highlighter-rouge">MessageListener</code> 를 주입한다.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">RedisMessageListenerContainer</code> 빈 등록 <code class="language-plaintext highlighter-rouge">connectionFactory</code>, <code class="language-plaintext highlighter-rouge">messageListeners</code> 주입</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">redisKeyExpireMessageListener</code> 가 수신할 채널 혹은 패턴을 등록한다. 패턴은 이벤트 또는 채널명이 될 수 있다.</li>
 </ol>
 
 <h3 id="java-1">JAVA</h3>
@@ -371,10 +1089,10 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </code></pre></div></div>
-<p><br />
-❗ spring boot 의 <code class="highlighter-rouge">@EnableAutoConfiguration</code></p>
+<p><br>
+❗ spring boot 의 <code class="language-plaintext highlighter-rouge">@EnableAutoConfiguration</code></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spring boot 는  프로젝트에 추가된 라이브러리를 기반으로 실행에 필요한 환경을 자동으로 설정해준다.
 어떻게 보면 정말 편리한 기능이지만, 섬세한 설정이 필요한 경우엔 직접 설정하는 것이 안전하다.
 </code></pre></div></div>
 
@@ -411,7 +1129,7 @@
 
 <p>@EnableCaching 어노테이션 뿐만 아니라 xml 파일에서 cacheManger 를 선언해서 사용할 때도 동일하게 동작한다.</p>
 
-<p><br /></p>
+<p><br></p>
 
 <p><strong>CacheManagerConfig.class</strong></p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
@@ -449,7 +1167,7 @@
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p><code class="highlighter-rouge">application.yml</code></p>
+<p><code class="language-plaintext highlighter-rouge">application.yml</code></p>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">config:</span>
   <span class="nl">redis:</span>
@@ -476,12 +1194,13 @@
   <li>Jedis보다 다양한 DataType지원</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 <details>
   <summary>❗connection 인스턴스를 여러 쓰레드에서 공유할 수 있는 것이 장점인 이유는?</summary>
   <div>
 
-    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.
+    <div class="language-plaintext highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>Redis 서버 인스턴스는 여러 클라이언트에 연결하여 명령을 동시에 보내고 받을 수 있지만, 명령을 실행할 때 각 인스턴스는 단일 스레드이다.
     
 이는 애플리케이션이 멀티스레딩+단일 연결을 통해 Redis를 운영할 수 있다면 Redis 서버의 전체 연결 수를 효율화 할 수 있고,
     
@@ -499,14 +1218,14 @@
   <li>하나의 connection을 공유하기 때문에 connection pool을 생성하지 않으면 transaction을 사용할 수 없다.</li>
 </ul>
 
-<p><br /></p>
+<p><br></p>
 
 <h2 id="jedis와-lettuce-비교">🌟 Jedis와 Lettuce 비교</h2>
 
 <p>그렇다면 Jedis와 Lettuce의 차이점이 무엇이길래 Springboot2 이후로는 Lettuce가 기본 Redis Client로 선택되었는지 알아보자
-<br />
-<br />
-<br /></p>
+<br>
+<br>
+<br></p>
 
 <p><strong>Jedis보다 뛰어난 성능</strong></p>
 
@@ -538,9 +1257,9 @@
   </tbody>
 </table>
 
-<p><br />
-<br />
-<br /></p>
+<p><br>
+<br>
+<br></p>
 
 <p><strong>Jedis와 Lettuce 기능비교</strong></p>
 
@@ -621,8 +1340,8 @@
   </tbody>
 </table>
 
-<p><br />
-<br /></p>
+<p><br>
+<br></p>
 
 <p><strong><em>참고 → O 표시는 지원되는 기능이다.</em></strong></p>
 
@@ -633,15 +1352,15 @@
   <li>Jedis에서 지원하지 않는 기능도 Lettuce에서 지원한다.</li>
 </ul>
 
-<p><br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br /></p>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br></p>
 
 <h1 id="reference">🌟<strong>**Reference</strong>**</h1>
 
@@ -655,17 +1374,167 @@
 
 <p><a href="https://mandlife.tistory.com/entry/Springboot-redis-%EC%84%A4%EC%A0%95-Jedis%EB%B3%B4%EB%8B%A4%EB%8A%94-Lettuce">https://mandlife.tistory.com/entry/Springboot-redis-설정-Jedis보다는-Lettuce</a></p>
 
-	</div>
-	<script src="https://utteranc.es/client.js"
-        repo="gzgzg2/blog-comments"
-        issue-term="pathname"
-        label="Comment 🐱"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-	</script>
+
+    </div>
+
 </article>
-		</div>
-	</div>
-  </body>
+<div class="post-nav">
+<span></span><a class="next" href="/tobi/2022/02/21/spring-applicationcontext.html" title="SpringFramework - Web ApplicationContext">SpringFramework - Web ApplicationContext</a>
+</div>
+<div class="post-related">
+      <div>Related Articles</div>
+      <ul>
+        <li><a class="post-link" href="/os/2022/04/02/os-study-07.html" title="SpringFramework - Web ApplicationContext">[운영체제 스터디] 프로세스 동기화 문제 3가지 해결방법과 세마포어 뮤텍스 차이</a></li>
+<li><a class="post-link" href="/networkstudy/2022/05/29/network-study-03.html" title="SpringFramework - Web ApplicationContext">[네트워크 스터디] Chapter_03 케이블의 앞은 LAN 기기였다.</a></li>
+<li><a class="post-link" href="/tobi/2022/02/21/spring-applicationcontext.html" title="SpringFramework - Web ApplicationContext">SpringFramework - Web ApplicationContext</a></li>
+<li><a class="post-link" href="/networkstudy/2022/04/14/network-study-01.html" title="SpringFramework - Web ApplicationContext">[네트워크 스터디] Chapter_01 웹 브라우저가 메세지를 만든다</a></li>
+</ul>
+    </div>
+<div class="post-comments"></div></section>
+</div>
+
+
+  </section>
+  <section class="sidebar" style="margin-left: 15px;">
+    <!-- Get sidebar items --><style type="text/css" media="screen">
+.post-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+</style>
+
+<div class="post-menu">
+  <div class="post-menu-title">TOC</div>
+  <div class="post-menu-content"></div>
+</div>
+
+<script>
+  function generateContent() {
+    var menu = document.querySelector(".post-menu");
+    var menuContent =  menu.querySelector(".post-menu-content");
+    var headings = document.querySelector(".post-content").querySelectorAll("h2, h3, h4, h5, h6");
+
+    // Hide menu when no headings
+    if (headings.length === 0) {
+      return menu.style.display = "none";
+    }
+
+    // Generate post menu
+    var menuHTML = '';
+    for (var i = 0; i < headings.length; i++) {
+      var h = headings[i];
+      menuHTML += (
+        '<li class="h-' + h.tagName.toLowerCase() + '">'
+        + '<a href="#h-' + h.getAttribute('id') + '">' + h.textContent + '</a></li>');
+    }
+
+    menuContent.innerHTML = '<ul>' + menuHTML + '</ul>';
+
+    // The header element
+    var header = document.querySelector('header.site-header');
+
+    function doMenuCollapse(index, over_items) {
+      var items = menuContent.firstChild.children;
+
+      if (over_items == undefined) {
+        over_items = 20;
+      }
+
+      if (items.length < over_items) {
+        return;
+      }
+
+      var activeItem = items[index];
+      var beginItem = activeItem
+      var endItem = activeItem
+      var beginIndex = index;
+      var endIndex = index + 1;
+      while (beginIndex >= 0
+        && !items[beginIndex].classList.contains('h-h2')) {
+        beginIndex -= 1;
+      }
+      while (endIndex < items.length
+        && !items[endIndex].classList.contains('h-h2')) {
+        endIndex += 1;
+      }
+      for (var i = 0; i < beginIndex; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+      for (var i = beginIndex + 1; i < endIndex; i++) {
+        item = items[i]
+        // if (!item.classList.contains('h-h2')) {
+          item.style.display = '';
+        // }
+      }
+      for (var i = endIndex; i < items.length; i++) {
+        item = items[i]
+        if (!item.classList.contains('h-h2')) {
+          item.style.display = 'none';
+        }
+      }
+    }
+
+    // Init menu collapsed
+    doMenuCollapse(-1);
+
+    // Active the menu item
+    window.addEventListener('scroll', function (event) {
+      var lastActive = menuContent.querySelector('.active');
+      var changed = true;
+      var activeIndex = -1;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        var h = headings[i];
+        var headingRect = h.getBoundingClientRect();
+        var headerRect = header.getBoundingClientRect();
+        var headerTop = Math.floor(headerRect.top);
+        var headerHeight = Math.floor(headerRect.height);
+        var headerHeight = headerTop + headerHeight + 20;
+        if (headingRect.top <= headerHeight) {
+          var id = 'h-' + h.getAttribute('id');
+          var a = menuContent.querySelector('a[href="#' + id  + '"]');
+          var curActive = a.parentNode;
+          if (curActive) {
+            curActive.classList.add('active');
+            activeIndex = i;
+          }
+          if (lastActive == curActive) {
+            changed = false;
+          }
+          break;
+        }
+      }
+      if (changed) {
+        if (lastActive) {
+          lastActive.classList.remove('active');
+        }
+        doMenuCollapse(activeIndex);
+      }
+      event.preventDefault();
+    });
+  }
+  generateContent();
+</script>
+</section>
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+    <div class="site-footer-inner">
+<div>Unpublished Work <span class="copyleft">©</span> 2017-2022 GitHub User</div>
+      <div>Powered by <a title="Jekyll is a simple, blog-aware, static site
+      generator." href="https://jekyllrb.com/">Jekyll</a> &amp; <a title="Yat, yet
+      another theme." href="https://github.com/jeffreytse/jekyll-theme-yat">Yat Theme</a>.</div>
+      <div class="footer-col rss-subscribe">Subscribe <a href="/feed.xml">via RSS</a>
+</div>
+    </div>
+  </div>
+</footer>
+</body>
 </html>
